@@ -1,0 +1,7 @@
+{
+  "name": "com.tagabukid.wall",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
