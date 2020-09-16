@@ -1,9 +1,9 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
+    <ion-menu contentId="main-content" type="overlay" >
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>PGB.WALL</ion-list-header>
+        <ion-list id="menu-list">
+          <ion-title >PGB.WALL</ion-title>
           <ion-note>Covid-19 Inforamtion</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
@@ -21,6 +21,14 @@
             <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
             <ion-label>{{ agency }}</ion-label>
           </ion-item>
+          
+          <!-- <ion-item>
+            <ion-icon slot="start" name="moon-outline"></ion-icon>
+            <ion-label>
+              Dark Mode
+            </ion-label>
+            <ion-toggle [(ngModel)]="dark"></ion-toggle>
+          </ion-item> -->
         </ion-list>
       </ion-content>
     </ion-menu>
