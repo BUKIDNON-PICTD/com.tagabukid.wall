@@ -18,7 +18,17 @@ export class AppComponent implements OnInit {
       icon: 'bar-chart'
     },
     {
-      title: 'Maps',
+      title: 'Municipality View',
+      url: 'muncitydashboard',
+      icon: 'bar-chart'
+    },
+    {
+      title: 'PICTD Map Portal',
+      url: 'mapportal',
+      icon: 'map'
+    },
+    {
+      title: 'Covid Map',
       url: 'maps',
       icon: 'map'
     },

@@ -1,0 +1,173 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Municipality Dashboard as of {{currentdatetime}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label>Select Municipality</ion-label>
+    <ion-select [(ngModel)]="selectedMunicipality" (ionChange)="onMunicipalityChange()">
+      <ion-select-option *ngFor="let x of muncities">{{x}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  &nbsp;
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>{{totalactive}}</h3>
+            <p>Active Cases</p>
+            <label>{{totalactivetoday}} New Confirmed Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer"></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{totalrecovered}}</h3>
+            <p>Recovered</p>
+            <label>{{totalrecoveredtoday}} New Recovered Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-checkmark"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-secondary">
+          <div class="inner">
+            <h3>{{totaldeceased}}</h3>
+            <p>Deceased</p>
+            <label>{{totaldeceasedtoday}} Deceased Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-close"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{totalconfirmed}}</h3>
+            <p>Total Confirmed</p>
+            <label>&nbsp;</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-information"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-indigo">
+          <div class="inner">
+            <h3>{{totalprobable}}</h3>
+            <p>Probable Cases</p>
+            <label>{{totalprobabletoday}} New Probable Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-alert"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer"></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>{{totalsuspect}}</h3>
+            <p>Suspect Cases</p>
+            <label>{{totalsuspecttoday}} New Suspect Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-help"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-purple">
+          <div class="inner">
+            <h3>{{totalquarantined}}</h3>
+            <p>Ongoing Quarantined</p>
+            <label>&nbsp;</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-locked"></i>
+          </div>
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-lime">
+          <div class="inner">
+            <h3>{{totalcompleted}}</h3>
+            <p>Completed</p>
+            <label>{{totalcompletedtoday}} New Cleared Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-unlocked"></i>
+          </div>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Case Summary
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:350px">
+              <canvas #barChartCaseSummary></canvas>
+            </div>
+          </div>
+        </div>
+       </div>
+       <div class="col-lg-4">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-pie-graph"></i>
+              Case by Gender
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:350px">
+              <canvas #pieChartGenderSummary></canvas>
+            </div>
+          </div>
+        </div>
+       </div>
+    </div>
+  </div>
+
+</ion-content>

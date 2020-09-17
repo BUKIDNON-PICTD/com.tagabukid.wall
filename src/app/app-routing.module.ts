@@ -26,6 +26,14 @@ const routes: Routes = [
   {
     path: 'cases',
     loadChildren: () => import('./pages/cases/cases.module').then( m => m.CasesPageModule)
+  },
+  {
+    path: 'muncitydashboard',
+    loadChildren: () => import('./pages/muncitydashboard/muncitydashboard.module').then( m => m.MuncitydashboardPageModule)
+  },
+  {
+    path: 'mapportal',
+    loadChildren: () => import('./pages/mapportal/mapportal.module').then( m => m.MapportalPageModule)
   }
 ];
 
