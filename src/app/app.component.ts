@@ -21,27 +21,28 @@ export class AppComponent implements OnInit {
       title: 'Municipality View',
       url: 'muncitydashboard',
       icon: 'bar-chart'
-    },
-    {
-      title: 'PICTD Map Portal',
-      url: 'mapportal',
-      icon: 'map'
-    },
-    {
-      title: 'Covid Map',
-      url: 'maps',
-      icon: 'map'
-    },
-    {
-      title: 'Advisories',
-      url: 'advisories',
-      icon: 'warning'
-    },
-    {
-      title: 'Cases',
-      url: 'cases',
-      icon: 'people'
     }
+    // ,
+    // {
+    //   title: 'PICTD Map Portal',
+    //   url: 'mapportal',
+    //   icon: 'map'
+    // },
+    // {
+    //   title: 'Covid Map',
+    //   url: 'maps',
+    //   icon: 'map'
+    // },
+    // {
+    //   title: 'Advisories',
+    //   url: 'advisories',
+    //   icon: 'warning'
+    // },
+    // {
+    //   title: 'Cases',
+    //   url: 'cases',
+    //   icon: 'people'
+    // }
   ];
   public agencies = ['PGB', 'PNP', 'DOH', 'PICTD'];
 

@@ -3,8 +3,9 @@
     <ion-menu contentId="main-content" type="overlay" >
       <ion-content>
         <ion-list id="menu-list">
-          <ion-title >PGB.WALL</ion-title>
-          <ion-note>Covid-19 Inforamtion</ion-note>
+          <ion-title >LUWAS</ion-title>
+          <ion-note>Bukidnon Covid-19 Dashboard</ion-note>
+          <ion-note>Please be advised that the information displayed in this dashboard are still in process. Live data will be available soon. "LUWAS" is still a working title.</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">

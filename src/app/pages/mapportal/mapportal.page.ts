@@ -27,6 +27,7 @@ export class MapportalPage implements OnInit {
 
   ngOnInit() {
     this.mapportalsvc.getmaps().subscribe(res => {
+      console.log(res)
       Object(res).forEach(function(element) {
         element.url = "http://192.168.50.2/" + element.foldername;
         element.id = element.foldername;
