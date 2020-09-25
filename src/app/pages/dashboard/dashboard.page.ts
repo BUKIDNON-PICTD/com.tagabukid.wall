@@ -47,7 +47,8 @@ export class DashboardPage implements OnInit {
   private barChartCaseByMunicipality: Chart;
   private barChartCaseByGender: Chart;
   private barChartCaseByAgeGroup: Chart;
-
+  @ViewChild("barChartCaseSummary") barChartCaseSummary: ElementRef;
+  private barChart: Chart;
   // public barChartOptions: ChartOptions;
   // public barChartLabels: Label[];
   // public barChartType: ChartType = 'bar';
@@ -67,10 +68,12 @@ export class DashboardPage implements OnInit {
     this.currentdatetime = new Date().toLocaleString();
     setTimeout((_) => this.getcovidtotals(), 2000);
     setTimeout((_) => this.createbarcharts(), 2000);
+    setTimeout((_) => this.createprovincestackbarchart(), 2000);
 
     setInterval(data => {
       this.currentdatetime = new Date().toLocaleString();
       this.updatebarcharts();
+      this.updateprovincestackbarchart();
     }, 20000);
   }
 
@@ -386,6 +389,110 @@ export class DashboardPage implements OnInit {
       this.totalconfirmed60abovemale = items[0].properties['totalconfirmed60abovemale'];
       this.totalconfirmed60abovefemale = items[0].properties['totalconfirmed60abovefemale'];
 
+    });
+  }
+
+  createprovincestackbarchart(){
+      this.coviddatasvc.getCovidProvinceDashboard().then(items => {
+      this.barChart = new Chart(this.barChartCaseSummary.nativeElement, {
+        type: "bar",
+        data: {
+          labels: items.map(a => a.properties['selected_date']),
+          datasets: [
+            {
+              label: 'Active Cases',
+              data: items.map(a => a.properties['totalactive']),
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor:  "rgba(255,99,132,1)",
+              borderWidth: 1
+            },
+            {
+              label: 'Recovered',
+              data: items.map(a => a.properties['totalrecovered']),
+              backgroundColor: "rgba(99, 255, 132, 0.2)",
+              borderColor:  "rgba(99,255,132,1)",
+              borderWidth: 1
+            },
+            {
+              label: 'Deceased',
+              data: items.map(a => a.properties['totaldeceased']),
+              backgroundColor: "rgba(128,128,128, 0.2)",
+              borderColor:  "rgba(128,128,128,1)",
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: false,
+            text: 'Cases Dashboard'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect : true
+          },
+          plugins: {
+            datalabels: {
+                display: false,
+            },
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            xAxes: [{
+              stacked: true,
+              ticks: {
+                stepSize: 10
+              }
+            }],
+            yAxes: [{
+              stacked: true,
+              ticks: {
+                stepSize: 1,
+                suggestedMin: 1,
+                suggestedMax: this.totalconfirmed + 50
+              }
+            }]
+          },
+        }
+      });
+      this.barChart.update();
+    });
+  }
+
+  updateprovincestackbarchart(){
+    this.barChart.data.datasets.length = 0;
+    this.barChart.update();
+    this.coviddatasvc.getCovidProvinceDashboard().then(async items => {
+      // console.log(items);
+      let data = {
+        labels: items.map(a => a.properties['selected_date']),
+        datasets: [
+          {
+            label: 'Active Cases',
+            data: items.map(a => a.properties['totalactive']),
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor:  "rgba(255,99,132,1)",
+            borderWidth: 1
+          },
+          {
+            label: 'Recovered',
+            data: items.map(a => a.properties['totalrecovered']),
+            backgroundColor: "rgba(99, 255, 132, 0.2)",
+            borderColor:  "rgba(99,255,132,1)",
+            borderWidth: 1
+          },
+          {
+            label: 'Deceased',
+            data: items.map(a => a.properties['totaldeceased']),
+            backgroundColor: "rgba(128,128,128, 0.2)",
+            borderColor:  "rgba(128,128,128,1)",
+            borderWidth: 1
+          }
+        ]
+      };
+      this.barChart.data = data;
+      this.barChart.update();
     });
   }
 

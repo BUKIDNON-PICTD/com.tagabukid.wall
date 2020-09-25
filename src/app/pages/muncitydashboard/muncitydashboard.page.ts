@@ -4,7 +4,7 @@ import { Renderer2 } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { CoviddataService } from 'src/app/services/coviddata.service';
-
+// Chart.defaults.global.legend.display = false;
 @Component({
   selector: 'app-muncitydashboard',
   templateUrl: './muncitydashboard.page.html',
@@ -46,6 +46,9 @@ export class MuncitydashboardPage implements OnInit {
   @ViewChild("pieChartGenderSummary") pieChartGenderSummary: ElementRef;
   private barChart: Chart;
   private pieChart: Chart;
+  @ViewChild("barChartCanvasCaseByAgeGroup") barChartCanvasCaseByAgeGroup: ElementRef;
+  private barChartCaseByAgeGroup: Chart;
+  
   
   constructor(private coviddatasvc: CoviddataService, private renderer: Renderer2, private el: ElementRef) { }
 
@@ -134,19 +137,29 @@ export class MuncitydashboardPage implements OnInit {
           },
           tooltips: {
             mode: 'index',
-            intersect : false
+            intersect : true
+          },
+          plugins: {
+            datalabels: {
+                display: false,
+            },
           },
           responsive: true,
           maintainAspectRatio: false,
           scales: {
             xAxes: [{
               stacked: true,
+              ticks: {
+                stepSize: 10
+              }
             }],
             yAxes: [{
               stacked: true,
               ticks: {
-                stepSize: 1
-            }
+                stepSize: 1,
+                suggestedMin: 1,
+                suggestedMax: this.totalconfirmed + 50
+              }
             }]
           },
         }
@@ -215,11 +228,69 @@ export class MuncitydashboardPage implements OnInit {
       }
     });
     this.pieChart.update();
+
+    this.coviddatasvc.getCovidDataAgeGroupByMunicipality(this.selectedMunicipality).then(items => {
+      // console.log(items.map(a => a.properties['agerange']));
+      this.barChartCaseByAgeGroup = new Chart(this.barChartCanvasCaseByAgeGroup.nativeElement, {
+        type: "horizontalBar",
+        data: {
+          labels: ["below 10","11-20","21-30","31-40","41-50","61-70","71-80","above 81"],
+          datasets: [
+            {
+              label: 'Active Cases',
+              data: items.map(a => a.properties['totalactive']),
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor:  "rgba(255,99,132,1)",
+              borderWidth: 1
+            },
+            {
+              label: 'Recovered',
+              data: items.map(a => a.properties['totalrecovered']),
+              backgroundColor: "rgba(99, 255, 132, 0.2)",
+              borderColor:  "rgba(99,255,132,1)",
+              borderWidth: 1
+            },
+            {
+              label: 'Deceased',
+              data: items.map(a => a.properties['totaldeceased']),
+              backgroundColor: "rgba(128,128,128, 0.2)",
+              borderColor:  "rgba(128,128,128,1)",
+              borderWidth: 1
+            },
+          ]
+        },
+        options: {
+          title: {
+            display: false,
+            text: 'Cases by Age Group'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect : false
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            xAxes: [{
+              stacked: true,
+              ticks: {
+                  stepSize: 1
+              }
+            }],
+            yAxes: [{
+              stacked: true,
+            }]
+          },
+        }
+      });
+    });
   }
 
   updatepiechartdata(){
     this.pieChart.data.datasets.length = 0;
     this.pieChart.update();
+    this.barChartCaseByAgeGroup.data.datasets.length = 0;
+    this.barChartCaseByAgeGroup.update();
     let data = {
       labels: ['Male', 'Female'],
       datasets: [
@@ -239,6 +310,40 @@ export class MuncitydashboardPage implements OnInit {
     };
     this.pieChart.data = data;
     this.pieChart.update();
+
+    this.coviddatasvc.getCovidDataAgeGroupByMunicipality(this.selectedMunicipality).then(items => {
+      let data3 = {
+        labels: ["below 10","11-20","21-30","31-40","41-50","61-70","71-80","above 81"],
+        datasets: [
+          {
+            label: 'Active Cases',
+            data: items.map(a => a.properties['totalactive']),
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor:  "rgba(255,99,132,1)",
+            borderWidth: 1
+          },
+          {
+            label: 'Recovered',
+            data: items.map(a => a.properties['totalrecovered']),
+            backgroundColor: "rgba(99, 255, 132, 0.2)",
+            borderColor:  "rgba(99,255,132,1)",
+            borderWidth: 1
+          },
+          {
+            label: 'Deceased',
+            data: items.map(a => a.properties['totaldeceased']),
+            backgroundColor: "rgba(128,128,128, 0.2)",
+            borderColor:  "rgba(128,128,128,1)",
+            borderWidth: 1
+          },
+        ]
+      };
+  
+      this.barChartCaseByAgeGroup.data = data3;
+      this.barChartCaseByAgeGroup.update();
+    });
   }
+
+ 
 
 }

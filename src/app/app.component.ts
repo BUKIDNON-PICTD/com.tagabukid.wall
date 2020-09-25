@@ -21,18 +21,18 @@ export class AppComponent implements OnInit {
       title: 'Municipality View',
       url: 'muncitydashboard',
       icon: 'bar-chart'
-    }
+    },
     // ,
     // {
     //   title: 'PICTD Map Portal',
     //   url: 'mapportal',
     //   icon: 'map'
     // },
-    // {
-    //   title: 'Covid Map',
-    //   url: 'maps',
-    //   icon: 'map'
-    // },
+    {
+      title: 'Covid Map',
+      url: 'maps',
+      icon: 'map'
+    },
     // {
     //   title: 'Advisories',
     //   url: 'advisories',
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     //   icon: 'people'
     // }
   ];
-  public agencies = ['PGB', 'PNP', 'DOH', 'PICTD'];
+  public agencies = ['PGB', 'PNP', 'PHO', 'PICTD'];
 
   constructor(
     private platform: Platform,
