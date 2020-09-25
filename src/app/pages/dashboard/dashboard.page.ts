@@ -198,7 +198,7 @@ export class DashboardPage implements OnInit {
       this.barChartCaseByAgeGroup = new Chart(this.barChartCanvasCaseByAgeGroup.nativeElement, {
         type: "horizontalBar",
         data: {
-          labels: ["below 10","11-20","21-30","31-40","41-50","61-70","71-80","above 81"],
+          labels: ["11-20","21-30","31-40","41-50","61-70","71-80","above 81","below 10"],
           datasets: [
             {
               label: 'Active Cases',
