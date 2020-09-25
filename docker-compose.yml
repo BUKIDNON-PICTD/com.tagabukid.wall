@@ -1,0 +1,10 @@
+version: '2'
+services:
+  luwas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    image: luwas:1.011
+    ports:
+      - 7800:80
