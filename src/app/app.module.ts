@@ -10,7 +10,15 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { IonicStorageModule } from '@ionic/storage';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import {NgxQRCodeModule} from 'ngx-qrcode2';
+// import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
+const config: SocketIoConfig = {
+  url: 'http://10.50.27.81:9000',
+  options: { options: { autoConnect: false } }
+};
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -18,13 +26,19 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    IonicStorageModule.forRoot({
+      driverOrder: [ "sqlite","indexeddb", "websql"]
+    }),
+    SocketIoModule.forRoot(config),
+    // NgxQRCodeModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    // BarcodeScanner
   ],
   bootstrap: [AppComponent]
 })

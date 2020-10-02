@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Socket } from 'ngx-socket-io';
+import { SettingsService } from './services/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -38,24 +40,52 @@ export class AppComponent implements OnInit {
     //   url: 'advisories',
     //   icon: 'warning'
     // },
-    // {
-    //   title: 'Cases',
-    //   url: 'cases',
-    //   icon: 'people'
-    // }
+    {
+      title: 'Cases',
+      url: 'cases',
+      icon: 'people'
+    },
+    {
+      title: 'QR Scan',
+      url: 'scanqr',
+      icon: 'barcode'
+    }
   ];
-  public agencies = ['PGB', 'PNP', 'PHO', 'PICTD'];
+  public agencies = ['PGB', 'PHO', 'MHO', 'PICTD'];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private socket: Socket,
+    private settingsService: SettingsService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      
+      this.socket.ioSocket.io.uri = 'http://10.50.27.81:9000'
+      this.socket.connect();
+      this.socket.on("connect", () => {
+        console.log("connection established");
+        this.settingsService.getItems().then( items => {
+          console.log(items);
+          this.socket.emit('clientcheckin', items);
+        });
+      });
+      this.socket.on("disconnect", () => {
+        console.log("you have been disconnected");
+      });
+      this.socket.on("reconnect", () => {
+        console.log("you have been reconnected");
+      });
+      this.socket.on("reconnect_error", () => {
+        console.log("attempt to reconnect has failed");
+      });
+
+
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

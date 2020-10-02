@@ -76,7 +76,7 @@ export class MuncitymapComponent implements OnInit {
     });
     var muncitystylefill = new Style({
       fill: new Fill({
-        color: 'rgba(255, 0, 0)'
+        color: 'rgba(255, 0, 0, 0.40)'
       }),
       stroke: new Stroke({
         color: "#319FD3",
@@ -110,7 +110,7 @@ export class MuncitymapComponent implements OnInit {
 
     //draw map
     this.map = new Map({
-      layers: [this.muncityvector],
+      layers: [this.basemap, this.muncityvector],
       target: "mapmuncity",
       view: new View({
         zoom: 15,

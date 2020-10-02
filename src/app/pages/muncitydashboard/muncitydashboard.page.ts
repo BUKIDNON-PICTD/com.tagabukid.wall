@@ -234,7 +234,7 @@ export class MuncitydashboardPage implements OnInit {
       this.barChartCaseByAgeGroup = new Chart(this.barChartCanvasCaseByAgeGroup.nativeElement, {
         type: "horizontalBar",
         data: {
-          labels: ["11-20","21-30","31-40","41-50","61-70","71-80","above 81","below 10"],
+          labels:  items.map(a => a.properties['agerange']),
           datasets: [
             {
               label: 'Active Cases',
@@ -313,7 +313,7 @@ export class MuncitydashboardPage implements OnInit {
 
     this.coviddatasvc.getCovidDataAgeGroupByMunicipality(this.selectedMunicipality).then(items => {
       let data3 = {
-        labels: ["11-20","21-30","31-40","41-50","61-70","71-80","above 81","below 10"],
+        labels:  items.map(a => a.properties['agerange']),
         datasets: [
           {
             label: 'Active Cases',

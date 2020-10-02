@@ -1,102 +1,54 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Cases</ion-title>
+    <ion-title>Covid Cases</ion-title>
   </ion-toolbar>
+  <!-- <ion-toolbar>
+    <nav class="navbar navbar-expand navbar-primary navbar-dark">
+      <ion-searchbar [(ngModel)]="queryText" (ionChange)="loadCases(null)" placeholder="Search"></ion-searchbar>
+    </nav>
+  </ion-toolbar> -->
 </ion-header>
 
-<ion-content>
-  <div class="card">
-    <div class="card-header border-transparent">
-      <h3 class="card-title">Latest Orders</h3>
 
-      <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-          <i class="fas fa-minus"></i>
-        </button>
-        <button type="button" class="btn btn-tool" data-card-widget="remove">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body p-0">
-      <div class="table-responsive">
-        <table class="table m-0">
-          <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Item</th>
-            <th>Status</th>
-            <th>Popularity</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-            <td>Call of Duty IV</td>
-            <td><span class="badge badge-success">Shipped</span></td>
-            <td>
-              <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-            <td>Samsung Smart TV</td>
-            <td><span class="badge badge-warning">Pending</span></td>
-            <td>
-              <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-            <td>iPhone 6 Plus</td>
-            <td><span class="badge badge-danger">Delivered</span></td>
-            <td>
-              <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-            <td>Samsung Smart TV</td>
-            <td><span class="badge badge-info">Processing</span></td>
-            <td>
-              <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-            <td>Samsung Smart TV</td>
-            <td><span class="badge badge-warning">Pending</span></td>
-            <td>
-              <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-            <td>iPhone 6 Plus</td>
-            <td><span class="badge badge-danger">Delivered</span></td>
-            <td>
-              <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-            <td>Call of Duty IV</td>
-            <td><span class="badge badge-success">Shipped</span></td>
-            <td>
-              <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- /.table-responsive -->
-    </div>
-    <!-- /.card-body -->
-    <div class="card-footer clearfix">
-      <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
-      <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
-    </div>
-    <!-- /.card-footer -->
-  </div>
+<ion-content>
+  <ion-list #farmerList>
+    <ion-item-sliding *ngFor="let item of cases" #slidingItem>
+      <ion-item>
+        <ion-label>
+          <h3>{{item.properties['person_gender'] =='M' ? 'MALE':'FEMALE' }} | Age - {{ item.properties['person_age']}}</h3>
+          <h3 *ngIf="item.properties['classification'] == 'CONFIRMED'" class="bg-danger">{{'ACTIVE' }}</h3>
+          <h3 *ngIf="item.properties['classification'] == 'RECOVERED'" class="bg-success">{{item.properties['classification'] }}</h3>
+          <h3 *ngIf="item.properties['classification'] == 'CLEARED'" class="bg-lime">{{item.properties['classification'] }}</h3>
+          <h3 *ngIf="item.properties['classification'] == 'DECEASED'" class="bg-secondary">{{item.properties['classification'] }}</h3>
+          <h3 *ngIf="item.properties['classification'] == 'SUSPECT'" class="bg-warning">{{item.properties['classification'] }}</h3>
+          <h3 *ngIf="item.properties['classification'] == 'PROBABLE'" class="bg-indigo">{{item.properties['classification'] }}</h3>
+          <p>
+            {{item.properties['address_muncity']}} - {{item.properties['address_barangay']}} |
+            CIVL STATUSs : {{item.properties['person_civilstatus']}} |
+            OCCUPATION : {{item.properties['person_occupation']}} |
+            WORKPLACE : {{item.properties['person_workplaceaddress']}} |
+            <!-- {{item.properties['hasfever'] == 'Y' || item.properties['hasfever'] == 'Y' || item.properties['hascolds'] == 'Y' || item.properties['hasdiarrhea'] == 'Y' || item.properties['hasdiffbreath'] == 'Y' ? "SYMPTOMATIC" : "ASYMPTOMATIC"  }} -->
+          </p>
+        </ion-label>
+        <!-- <ion-thumbnail slot="end" *ngIf="item?.fphoto">
+          <img [src]="item.fphoto"/>
+        </ion-thumbnail> -->
+      </ion-item>
+      <!-- <ion-item-options>
+          <a class="btn btn-app btn-danger btn-sm" (click)="presentAlertConfirm(item,deleteFarmer)">
+            <i class="fas fa-trash-alt"></i>
+            Delete
+          </a>
+      </ion-item-options> -->
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list-header [hidden]="cases.length > 0">
+    No Case Found
+  </ion-list-header>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadCases($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
 </ion-content>

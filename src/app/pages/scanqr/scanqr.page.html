@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>QR SCAN PROTOTYPE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+   <!-- Fallback for iOS PWA -->
+  <input #fileinput type="file" accept="image/*;capture=camera" hidden (change)="handleFile($event.target.files)">
+ 
+  <!-- Trigger the file input -->
+  <ion-button expand="full" (click)="captureImage()">
+    <ion-icon slot="start" name="camera"></ion-icon>
+    Capture Image
+  </ion-button>
+ 
+  <ion-button expand="full" (click)="startScan()">
+    <ion-icon slot="start" name="qr-scanner"></ion-icon>
+    Start scan
+  </ion-button>
+ 
+  <ion-button expand="full" (click)="reset()" color="warning" *ngIf="scanResult">
+    <ion-icon slot="start" name="refresh"></ion-icon>
+    Reset
+  </ion-button>
+ 
+  <!-- Shows our camera stream -->
+  <video #video [hidden]="!scanActive" width="100%"></video>
+ 
+  <!-- Used to render the camera stream images -->
+  <canvas #canvas hidden></canvas>
+ 
+  <!-- Stop our scanner preview if active -->
+  <ion-button expand="full" (click)="stopScan()" color="danger" *ngIf="scanActive">
+    <ion-icon slot="start" name="close"></ion-icon>
+    Stop scan
+  </ion-button>
+ 
+  <ion-card *ngIf="scanResult">
+    <ion-card-header>
+      <ion-card-title>QR Code</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ scanResult }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-toolbar>
+    <ion-title>Location Settings</ion-title>
+  </ion-toolbar>
+  <form [formGroup]="settingForm" (ngSubmit)="saveItem()">
+    <div class="card-body">
+      <div class="form-group">
+        <ion-item>
+          <ion-label position="floating">Location Name</ion-label>
+          <ion-input autocapitalize inputmode="text" formControlName="locationname"></ion-input>
+        </ion-item>
+        <div *ngFor="let validation of validation_messages.locationname">
+          <ng-container
+            *ngIf="settingForm.get('locationname')?.hasError(validation.type) && (settingForm.get('locationname')?.dirty || settingForm.get('locationname')?.touched)">
+            <small class="error-message">{{ validation.message }}</small>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <ion-button expand="full" type="submit" [disabled]="!settingForm.valid">Save</ion-button>
+    </div>
+  </form>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Settings</h3>
+
+        <div class="card-tools">
+          <div class="input-group input-group-sm" style="width: 300px;">
+            <ion-searchbar [(ngModel)]="queryText" (ionChange)="loadItems()" placeholder="Search"></ion-searchbar>
+          </div>
+        </div>
+      </div>
+      <div class="card-body table-responsive p-0">
+        <ion-list>
+          <ion-item-sliding *ngFor="let item of items" #slidingItem>
+            <ion-item>
+              <ion-label>
+                <h3>{{item.locationname}}</h3>
+              </ion-label>
+            </ion-item>
+            <ion-item-options>
+              <a class="btn btn-app btn-danger btn-sm" (click)="itemSelected(item)">
+                <i class="fas fa-edit"></i>
+                Edit
+              </a>
+              <a class="btn btn-app btn-danger btn-sm" (click)="deleteItem(item)">
+                <i class="fas fa-trash-alt"></i>
+                Delete
+              </a>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+        <ion-list-header [hidden]="items.length > 0">
+          No Items Found
+        </ion-list-header>
+      </div>
+    </div>
+  </div>
+</ion-content>

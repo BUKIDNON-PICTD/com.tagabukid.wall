@@ -1,0 +1,39 @@
+
+<ion-content class="ion-padding">
+  <ion-toolbar color="primary">
+    <nav class="navbar navbar-expand navbar-primary navbar-dark">
+      <ion-title>Covid Cases</ion-title>
+    </nav>
+  </ion-toolbar>
+  <ion-list >
+    <ion-item-sliding *ngFor="let case of cases" #slidingItem>
+      <ion-item>
+        <ion-label *ngIf="case.properties['id']">
+          <h3>{{case.properties['person_gender'] }}  Age - {{ case.properties['person_age']}}</h3>
+          <h3 *ngIf="case.properties['classification'] == 'CONFIRMED'" class="bg-danger">{{case.properties['classification']+'/ACTIVE' }}</h3>
+          <h3 *ngIf="case.properties['classification'] == 'RECOVERED'" class="bg-success">{{case.properties['classification'] }}</h3>
+          <h3 *ngIf="case.properties['classification'] == 'CLEARED'" class="bg-lime">{{case.properties['classification'] }}</h3>
+          <h3 *ngIf="case.properties['classification'] == 'DECEASED'" class="bg-secondary">{{case.properties['classification'] }}</h3>
+          <h3 *ngIf="case.properties['classification'] == 'SUSPECT'" class="bg-warning">{{case.properties['classification'] }}</h3>
+          <h3 *ngIf="case.properties['classification'] == 'PROBABLE'" class="bg-indigo">{{case.properties['classification'] }}</h3>
+          <p>
+            {{case.properties['address_muncity']}} - {{case.properties['address_barangay']}}
+            Civil Status : {{case.properties['person_civilstatus']}} 
+            Occupation : {{case.properties['person_occupation']}} 
+            Workplace : {{case.properties['person_workplaceaddress']}} 
+            <!-- {{case.properties['hasfever'] == 'Y' || case.properties['hasfever'] == 'Y' || case.properties['hascolds'] == 'Y' || case.properties['hasdiarrhea'] == 'Y' || case.properties['hasdiffbreath'] == 'Y' ? "SYMPTOMATIC" : "ASYMPTOMATIC"  }} -->
+          </p>
+        </ion-label>
+        <!-- <app-olmappreview *ngIf='case' slot="end" [location]='case'>
+        </app-olmappreview> -->
+        <!-- <ion-label *ngIf='!case?.location?.geolocation?.type' slot="end">No Map Available</ion-label> -->
+      </ion-item>
+      <!-- <ion-item-options>
+        <a class="btn btn-app btn-danger btn-sm" (click)="presentAlertConfirm(item,deleteFarmCommodity)">
+          <i class="fas fa-trash-alt"></i>
+          Delete
+        </a>
+      </ion-item-options> -->
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
