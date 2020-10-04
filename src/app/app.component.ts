@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(() => {
       
-      this.socket.ioSocket.io.uri = 'https://panganud.bukidnon.gov.ph'
+      this.socket.ioSocket.io.uri = 'https://localhost:443'
       this.socket.connect();
       this.socket.on("connect", () => {
         console.log("connection established");
