@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TrackingPageRoutingModule } from './tracking-routing.module';
+import { QrloglistPageRoutingModule } from './qrloglist-routing.module';
 
-import { TrackingPage } from './tracking.page';
+import { QrloglistPage } from './qrloglist.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TrackingPageRoutingModule
+    QrloglistPageRoutingModule
   ],
-  declarations: [TrackingPage]
+  declarations: [QrloglistPage]
 })
-export class TrackingPageModule {}
+export class QrloglistPageModule {}

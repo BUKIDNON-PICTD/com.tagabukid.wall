@@ -1,3 +1,5 @@
+import { OfflinemanagerService } from './services/offlinemanager.service';
+import { ConnectionStatus, NetworkService } from './services/network.service';
 import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -59,16 +61,25 @@ export class AppComponent implements OnInit {
       title: 'QR Scan',
       url: 'scanqr',
       icon: 'barcode'
+    },
+    {
+      title: 'QR Log List',
+      url: 'qrloglist',
+      icon: 'list'
     }
   ];
   public agencies = ['PGB', 'PHO', 'MHO', 'PICTD'];
+  syncserverstatus: boolean;
+ 
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private socket: Socket,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private networkService: NetworkService,
+    private offlineManager: OfflinemanagerService
   ) {
     this.initializeApp();
   }
@@ -95,7 +106,28 @@ export class AppComponent implements OnInit {
         console.log("attempt to reconnect has failed");
       });
 
-
+      this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
+        if (status === ConnectionStatus.Online) {
+          console.log(status);
+          // this.offlineManager.checkForEvents().subscribe();
+            // if (this.networkService.isSyncServerOnline()) {
+            //   this.syncserverstatus = true;
+            // } else {
+            //   this.syncserverstatus = false;
+            // }
+          // this.networkService.onSyncServerStatusChange().subscribe( (syncserverstatus: ConnectionStatus) => {
+          //   console.log(syncserverstatus);
+          //   if (syncserverstatus === ConnectionStatus.Online) {
+          //     this.syncserverstatus = true;
+          //     // this.offlineManager.checkForEvents().subscribe();
+          //     // this.showToast("Sync Server is Online");
+          //   } else {
+          //     this.syncserverstatus = false;
+          //     // this.showToast("Sync Server is Offline");
+          //   }
+          // });
+        }
+      });
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

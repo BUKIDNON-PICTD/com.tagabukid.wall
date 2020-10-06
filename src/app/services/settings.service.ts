@@ -41,17 +41,7 @@ export class SettingsService {
         return null;
       }
 
-      return items.find(i => i.objid === item.objid);
-    });
-  }
-
-  getItemByName(name): Promise<any> {
-    return this.storage.get("settings").then(items => {
-      if (!items || items.length === 0) {
-        return null;
-      }
-
-      return items.find(i => i.name === name);
+      return items.find(i => i.locationid === item.locationid);
     });
   }
 

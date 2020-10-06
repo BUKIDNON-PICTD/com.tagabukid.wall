@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { Network } from '@ionic-native/network/ngx';
 // import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 const config: SocketIoConfig = {
@@ -37,6 +38,7 @@ const config: SocketIoConfig = {
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
+    Network,
     // BarcodeScanner
   ],
   bootstrap: [AppComponent]

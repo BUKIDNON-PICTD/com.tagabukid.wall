@@ -1,3 +1,4 @@
+import { QrlogService } from './../../services/qrlog.service';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NumberValueAccessor, Validators } from '@angular/forms';
@@ -5,6 +6,7 @@ import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
 import { SettingsService } from 'src/app/services/settings.service';
 import jsQR from 'jsqr';
+
 // import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 @Component({
@@ -38,6 +40,8 @@ export class ScanqrPage implements OnInit {
   validation_messages: any;
   itemselected: any;
   public haslocationsetting: boolean;
+  locationid: any;
+  locationsetting: any;
 
   constructor(
     private settingsService: SettingsService,
@@ -46,9 +50,8 @@ export class ScanqrPage implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     private socket: Socket,
-    // private barcodeScanner: BarcodeScanner
+    private qrlogservice : QrlogService,
   ) {
-    
     const isInStandaloneMode = () =>
       'standalone' in window.navigator && window.navigator['standalone'];
     if (this.plt.is('ios') && isInStandaloneMode()) {
@@ -77,6 +80,8 @@ export class ScanqrPage implements OnInit {
         }
       ]
     };
+
+  
   }
 
   // scanCode() {
@@ -178,9 +183,35 @@ export class ScanqrPage implements OnInit {
    
       if (code) {
         this.scanActive = false;
-        this.scanResult = code.data;
-        this.socket.emit('message', {profile: this.scanResult, timestamp: new Date()});
-        // this.showQrToast();
+        this.scanResult = JSON.parse(code.data);
+        var bdate = new Date(this.scanResult[4]);
+        this.scanResult[4] = this.calculate_age(bdate);
+        
+        let log = {
+          objid: this.create_UUID(),
+          data: this.scanResult,
+          rawdata: JSON.stringify(this.scanResult),
+          txndatetime: new Date().toISOString().slice(0, 19).replace('T', ' '),
+          locationid : this.locationsetting.locationid,
+          deviceid : this.locationsetting.objid,
+          lastname : this.scanResult[1],
+          firstname: this.scanResult[2],
+          middlename: this.scanResult[3],
+          birthdate: bdate.toLocaleString(),
+          gender: this.scanResult[5],
+          civilstatus: this.scanResult[6],
+          mobileno: this.scanResult[7],
+          address_province_code : this.scanResult[8],
+          address_province_lguname : this.scanResult[9],
+          address_municipality_code : this.scanResult[10],
+          address_municipality_lguname : this.scanResult[11],
+          address_barangay_code : this.scanResult[12],
+          address_barangay_lguname : this.scanResult[13],
+          address_street : this.scanResult[14],
+        }
+        this.qrlogservice.addItem(log).then(item => {
+          //do nothing
+        });
       } else {
         if (this.scanActive) {
           requestAnimationFrame(this.scan.bind(this));
@@ -190,6 +221,19 @@ export class ScanqrPage implements OnInit {
       requestAnimationFrame(this.scan.bind(this));
     }
   }
+
+ twoDigits(d) {
+    if(0 <= d && d < 10) return "0" + d.toString();
+    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+    return d.toString();
+  }
+
+ calculate_age(dob) { 
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms); 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
 
   captureImage() {
     this.fileinput.nativeElement.click();
@@ -223,6 +267,11 @@ export class ScanqrPage implements OnInit {
   ngOnInit() {
     this.plt.ready().then(() => {
       this.loadItems();
+      this.settingsService.getItems().then(items => {
+        if (items) {
+          this.locationsetting = items[0];
+        }
+      });
     });
   }
 
@@ -238,6 +287,7 @@ export class ScanqrPage implements OnInit {
         this.haslocationsetting = true;
         items.forEach(item => {
           this.filterItem(item, queryWords);
+          this.locationid = item.locationid
         });
         items = items.filter(i => i.hide === false);
         const sorteditems = items.sort((a, b) =>

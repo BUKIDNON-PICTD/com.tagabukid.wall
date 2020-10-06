@@ -74,4 +74,5 @@ export class QrcodeService {
       return this.storage.set("personprofile", toKeep);
     });
   }
+
 }

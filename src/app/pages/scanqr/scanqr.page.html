@@ -11,10 +11,10 @@
   <input #fileinput type="file" accept="image/*;capture=camera" hidden (change)="handleFile($event.target.files)">
 
   <!-- Trigger the file input -->
-  <ion-button expand="full" (click)="captureImage()">
+  <!-- <ion-button expand="full" (click)="captureImage()">
     <ion-icon slot="start" name="camera"></ion-icon>
     Capture Image
-  </ion-button>
+  </ion-button> -->
 
   <ion-button expand="full" (click)="startScan()">
     <ion-icon slot="start" name="barcode"></ion-icon>
@@ -40,10 +40,14 @@
 
   <ion-card *ngIf="scanResult">
     <ion-card-header>
-      <ion-card-title>QR Code</ion-card-title>
+      <ion-card-title>QR Code Data</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      {{ scanResult}} 
+      <strong>NAME:</strong>   {{scanResult[1]}}, {{scanResult[2]}} {{scanResult[3]}} <br>
+      <strong>GENDER:</strong> {{scanResult[5]}} <br>
+      <strong>AGE:</strong>    {{scanResult[4]}} <br>
+      <strong>MOBILE NO:</strong>    {{scanResult[7]}} <br>
+      <strong>ADDRESS:</strong>    {{scanResult[14]}}, {{scanResult[13]}}, {{scanResult[11]}}, {{scanResult[9]}} <br>
     </ion-card-content>
   </ion-card>
   </div>

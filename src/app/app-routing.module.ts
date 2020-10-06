@@ -44,10 +44,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/scanqr/scanqr.module').then( m => m.ScanqrPageModule)
   },
   {
-    path: 'tracking',
-    loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
-  },
-  {
     path: 'qrprofilelist',
     loadChildren: () => import('./pages/qrprofilelist/qrprofilelist.module').then( m => m.QrprofilelistPageModule)
   },
@@ -62,6 +58,10 @@ const routes: Routes = [
   {
     path: 'qrprofiledetail',
     loadChildren: () => import('./pages/qrprofiledetail/qrprofiledetail.module').then( m => m.QrprofiledetailPageModule)
+  },
+  {
+    path: 'qrloglist',
+    loadChildren: () => import('./pages/qrloglist/qrloglist.module').then( m => m.QrloglistPageModule)
   }
 ];
 

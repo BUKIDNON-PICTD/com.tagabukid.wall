@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>QR Code Logs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list #farmerList>
+    <ion-item-sliding *ngFor="let item of items" #slidingItem>
+      <ion-item>
+        <ion-label>
+          <h3>{{item.timestamp}}</h3>
+          <p>
+            <strong>NAME:</strong>   {{item.data[1]}}, {{item.data[2]}} {{item.data[3]}} <br>
+            <strong>GENDER:</strong> {{item.data[5]}} <br>
+            <strong>AGE:</strong>    {{item.data[4]}} <br>
+            <strong>MOBILE NO:</strong>    {{item.data[7]}} <br>
+            <strong>ADDRESS:</strong>    {{item.data[14]}}, {{item.data[13]}}, {{item.data[11]}}, {{item.data[9]}} <br>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list-header [hidden]="items.length > 0">
+    No Case Found
+  </ion-list-header>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadLogs($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+</ion-content>
