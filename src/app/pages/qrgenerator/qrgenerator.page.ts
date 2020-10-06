@@ -9,15 +9,13 @@ import { LoadingController, Platform, ToastController } from '@ionic/angular';
   styleUrls: ['./qrgenerator.page.scss'],
 })
 export class QrgeneratorPage implements OnInit {
+  qrData = 'TEST';
+  elementType: 'url' | 'canvas' | 'img' = 'canvas';
+  value = 'Techiediaries';
 
   constructor(
-    private formBuilder: FormBuilder,
-    private toastController: ToastController,
-    private router: Router,
-    private route: ActivatedRoute,
-    private storage: Storage,
-    private platform: Platform,
-    private loadingController: LoadingController
+    private toastcontroller: ToastController,
+    
   ) { }
 
   ngOnInit() {

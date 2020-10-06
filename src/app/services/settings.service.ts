@@ -74,21 +74,7 @@ export class SettingsService {
     });
   }
 
-  deleteItem(id: string): Promise<any> {
-    return this.storage.get("settings").then(items => {
-      if (!items || items.length === 0) {
-        return null;
-      }
-
-      let toKeep: any[] = [];
-
-      for (let i of items) {
-        if (i.objid !== id) {
-          toKeep.push(i);
-        }
-      }
-      this.settings.next(toKeep);
-      return this.storage.set("settings", toKeep);
-    });
+  deleteItem(){
+    this.storage.remove("settings");
   }
 }

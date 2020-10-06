@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { QrgeneratorPageRoutingModule } from './qrgenerator-routing.module';
 
 import { QrgeneratorPage } from './qrgenerator.page';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    QrgeneratorPageRoutingModule
+    QrgeneratorPageRoutingModule,
+    NgxQRCodeModule
   ],
   declarations: [QrgeneratorPage]
 })

@@ -46,6 +46,22 @@ const routes: Routes = [
   {
     path: 'tracking',
     loadChildren: () => import('./pages/tracking/tracking.module').then( m => m.TrackingPageModule)
+  },
+  {
+    path: 'qrprofilelist',
+    loadChildren: () => import('./pages/qrprofilelist/qrprofilelist.module').then( m => m.QrprofilelistPageModule)
+  },
+  {
+    path: 'qrprofile',
+    loadChildren: () => import('./pages/qrprofile/qrprofile.module').then( m => m.QrprofilePageModule)
+  },
+  {
+    path: 'qrprofile/:objid',
+    loadChildren: () => import('./pages/qrprofile/qrprofile.module').then( m => m.QrprofilePageModule)
+  },
+  {
+    path: 'qrprofiledetail',
+    loadChildren: () => import('./pages/qrprofiledetail/qrprofiledetail.module').then( m => m.QrprofiledetailPageModule)
   }
 ];
 

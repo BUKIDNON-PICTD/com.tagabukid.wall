@@ -37,6 +37,7 @@ export class ScanqrPage implements OnInit {
   settingForm: FormGroup;
   validation_messages: any;
   itemselected: any;
+  public haslocationsetting: boolean;
 
   constructor(
     private settingsService: SettingsService,
@@ -58,7 +59,7 @@ export class ScanqrPage implements OnInit {
 
     this.settingForm = this.formBuilder.group({
       objid : [''],
-      locationname: [
+      locationid: [
         "",
         Validators.compose([
           Validators.maxLength(100),
@@ -68,11 +69,11 @@ export class ScanqrPage implements OnInit {
     });
 
     this.validation_messages = {
-      locationname: [
-        { type: "required", message: "Location Name is required." },
+      locationid: [
+        { type: "required", message: "Location ID is required." },
         {
           type: "maxlength",
-          message: "Location Name cannot be more than 100 characters long."
+          message: "Location ID cannot be more than 100 characters long."
         }
       ]
     };
@@ -231,14 +232,16 @@ export class ScanqrPage implements OnInit {
 
     this.settingsService.getItems().then(items => {
       if (!items){
+        this.haslocationsetting = false;
         this.items = [];
       } else {
+        this.haslocationsetting = true;
         items.forEach(item => {
           this.filterItem(item, queryWords);
         });
         items = items.filter(i => i.hide === false);
         const sorteditems = items.sort((a, b) =>
-          a.locationname > b.locationname ? 1 : -1
+          a.locationid > b.locationid ? 1 : -1
         );
         this.items = sorteditems;
       }
@@ -251,7 +254,7 @@ export class ScanqrPage implements OnInit {
     if (queryWords.length) {
       // of any query word is in the session name than it passes the query test
       queryWords.forEach((queryWord: string) => {
-        if (item.locationname.toLowerCase().indexOf(queryWord) > -1) {
+        if (item.locationid.toLowerCase().indexOf(queryWord) > -1) {
           matchesQueryText = true;
         }
       });
@@ -294,12 +297,11 @@ export class ScanqrPage implements OnInit {
     });
   }
 
-  deleteItem(item) {
-    this.settingsService.deleteItem(item.objid).then(item => {
-      this.settingForm.reset();
-      this.loadItems();
-      this.showToast("setting deleted");
-    });
+  deleteItem() {
+    this.settingsService.deleteItem();
+    this.settingForm.reset();
+    this.loadItems();
+    this.showToast("setting deleted");
   }
 
   async showToast(msg){

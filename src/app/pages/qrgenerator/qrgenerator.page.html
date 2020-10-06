@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>qrgenerator</ion-title>
+    <ion-title>Generate QR Code</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ngx-qrcode 
+    [elementType]="elementType" 
+    [value]="value"
+    cssClass="aclass"
+    errorCorrectionLevel="L">
+  </ngx-qrcode>
 </ion-content>

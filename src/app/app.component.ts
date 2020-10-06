@@ -46,6 +46,16 @@ export class AppComponent implements OnInit {
       icon: 'people'
     },
     {
+      title: 'Create QR Profile',
+      url: 'qrprofile',
+      icon: 'person-add'
+    },
+    {
+      title: 'QR Profile List',
+      url: 'qrprofilelist',
+      icon: 'list'
+    },
+    {
       title: 'QR Scan',
       url: 'scanqr',
       icon: 'barcode'
