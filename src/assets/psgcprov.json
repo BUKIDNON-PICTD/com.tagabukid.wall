@@ -1,0 +1,814 @@
+{
+  "RECORDS": [
+    {
+      "code": "012800000",
+      "lguname": "ILOCOS NORTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "593081",
+      "f8": ""
+    },
+    {
+      "code": "012900000",
+      "lguname": "ILOCOS SUR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "689668",
+      "f8": ""
+    },
+    {
+      "code": "013300000",
+      "lguname": "LA UNION",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "786653",
+      "f8": ""
+    },
+    {
+      "code": "015500000",
+      "lguname": "PANGASINAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "2956726",
+      "f8": ""
+    },
+    {
+      "code": "020900000",
+      "lguname": "BATANES",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "5th",
+      "urbanrural": "",
+      "population": "17246",
+      "f8": ""
+    },
+    {
+      "code": "021500000",
+      "lguname": "CAGAYAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1199320",
+      "f8": ""
+    },
+    {
+      "code": "023100000",
+      "lguname": "ISABELA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1593566",
+      "f8": ""
+    },
+    {
+      "code": "025000000",
+      "lguname": "NUEVA VIZCAYA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "452287",
+      "f8": ""
+    },
+    {
+      "code": "025700000",
+      "lguname": "QUIRINO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "188991",
+      "f8": ""
+    },
+    {
+      "code": "030800000",
+      "lguname": "BATAAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "760650",
+      "f8": ""
+    },
+    {
+      "code": "031400000",
+      "lguname": "BULACAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "3292071",
+      "f8": ""
+    },
+    {
+      "code": "034900000",
+      "lguname": "NUEVA ECIJA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "2151461",
+      "f8": ""
+    },
+    {
+      "code": "035400000",
+      "lguname": "PAMPANGA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding CITY OF ANGELES) 2,198,110",
+      "f8": ""
+    },
+    {
+      "code": "036900000",
+      "lguname": "TARLAC",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1366027",
+      "f8": ""
+    },
+    {
+      "code": "037100000",
+      "lguname": "ZAMBALES",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "(excluding CITY OF OLONGAPO) 590,848",
+      "f8": ""
+    },
+    {
+      "code": "037700000",
+      "lguname": "AURORA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "214336",
+      "f8": ""
+    },
+    {
+      "code": "041000000",
+      "lguname": "BATANGAS",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "2694335",
+      "f8": ""
+    },
+    {
+      "code": "042100000",
+      "lguname": "CAVITE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "3678301",
+      "f8": ""
+    },
+    {
+      "code": "043400000",
+      "lguname": "LAGUNA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "3035081",
+      "f8": ""
+    },
+    {
+      "code": "045600000",
+      "lguname": "QUEZON",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding CITY OF LUCENA) 1,856,582",
+      "f8": ""
+    },
+    {
+      "code": "045800000",
+      "lguname": "RIZAL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "2884227",
+      "f8": ""
+    },
+    {
+      "code": "174000000",
+      "lguname": "MARINDUQUE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "4th",
+      "urbanrural": "",
+      "population": "234521",
+      "f8": ""
+    },
+    {
+      "code": "175100000",
+      "lguname": "OCCIDENTAL MINDORO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "487414",
+      "f8": ""
+    },
+    {
+      "code": "175200000",
+      "lguname": "ORIENTAL MINDORO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "844059",
+      "f8": ""
+    },
+    {
+      "code": "175300000",
+      "lguname": "PALAWAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding CITY OF PUERTO PRINCESA) 849,469",
+      "f8": ""
+    },
+    {
+      "code": "175900000",
+      "lguname": "ROMBLON",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "292781",
+      "f8": ""
+    },
+    {
+      "code": "050500000",
+      "lguname": "ALBAY",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1314826",
+      "f8": ""
+    },
+    {
+      "code": "051600000",
+      "lguname": "CAMARINES NORTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "583313",
+      "f8": ""
+    },
+    {
+      "code": "051700000",
+      "lguname": "CAMARINES SUR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1952544",
+      "f8": ""
+    },
+    {
+      "code": "052000000",
+      "lguname": "CATANDUANES",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "260964",
+      "f8": ""
+    },
+    {
+      "code": "054100000",
+      "lguname": "MASBATE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "892393",
+      "f8": ""
+    },
+    {
+      "code": "056200000",
+      "lguname": "SORSOGON",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "792949",
+      "f8": ""
+    },
+    {
+      "code": "060400000",
+      "lguname": "AKLAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "574823",
+      "f8": ""
+    },
+    {
+      "code": "060600000",
+      "lguname": "ANTIQUE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "582012",
+      "f8": ""
+    },
+    {
+      "code": "061900000",
+      "lguname": "CAPIZ",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "761384",
+      "f8": ""
+    },
+    {
+      "code": "063000000",
+      "lguname": "ILOILO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding ILOILO CITY) 1,936,423",
+      "f8": ""
+    },
+    {
+      "code": "064500000",
+      "lguname": "NEGROS OCCIDENTAL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding CITY OF BACOLOD)  2,497,261",
+      "f8": ""
+    },
+    {
+      "code": "067900000",
+      "lguname": "GUIMARAS",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "4th",
+      "urbanrural": "",
+      "population": "174613",
+      "f8": ""
+    },
+    {
+      "code": "071200000",
+      "lguname": "BOHOL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1313560",
+      "f8": ""
+    },
+    {
+      "code": "072200000",
+      "lguname": "CEBU",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding the cities of CEBU, LAPU-LAPU, AND MANDAUE) 2,938,982 ",
+      "f8": ""
+    },
+    {
+      "code": "074600000",
+      "lguname": "NEGROS ORIENTAL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1354995",
+      "f8": ""
+    },
+    {
+      "code": "076100000",
+      "lguname": "SIQUIJOR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "5th",
+      "urbanrural": "",
+      "population": "95984",
+      "f8": ""
+    },
+    {
+      "code": "082600000",
+      "lguname": "EASTERN SAMAR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "467160",
+      "f8": ""
+    },
+    {
+      "code": "083700000",
+      "lguname": "LEYTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding CITY OF TACLOBAN) 1,724,679",
+      "f8": ""
+    },
+    {
+      "code": "084800000",
+      "lguname": "NORTHERN SAMAR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "632379",
+      "f8": ""
+    },
+    {
+      "code": "086000000",
+      "lguname": "SAMAR (WESTERN SAMAR)",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "780481",
+      "f8": ""
+    },
+    {
+      "code": "086400000",
+      "lguname": "SOUTHERN LEYTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "421750",
+      "f8": ""
+    },
+    {
+      "code": "087800000",
+      "lguname": "BILIRAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "4th",
+      "urbanrural": "",
+      "population": "171612",
+      "f8": ""
+    },
+    {
+      "code": "097200000",
+      "lguname": "ZAMBOANGA DEL NORTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1011393",
+      "f8": ""
+    },
+    {
+      "code": "097300000",
+      "lguname": "ZAMBOANGA DEL SUR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding  CITY OF ZAMBOANGA) 1,010,674",
+      "f8": ""
+    },
+    {
+      "code": "098300000",
+      "lguname": "ZAMBOANGA SIBUGAY",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "633129",
+      "f8": ""
+    },
+    {
+      "code": "101300000",
+      "lguname": "BUKIDNON",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1415226",
+      "f8": ""
+    },
+    {
+      "code": "101800000",
+      "lguname": "CAMIGUIN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "5th",
+      "urbanrural": "",
+      "population": "88478",
+      "f8": ""
+    },
+    {
+      "code": "103500000",
+      "lguname": "LANAO DEL NORTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "(excluding CITY OF ILIGAN) 676,395",
+      "f8": ""
+    },
+    {
+      "code": "104200000",
+      "lguname": "MISAMIS OCCIDENTAL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "602126",
+      "f8": ""
+    },
+    {
+      "code": "104300000",
+      "lguname": "MISAMIS ORIENTAL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding CITY OF CAGAYAN DE ORO) 888,509 ",
+      "f8": ""
+    },
+    {
+      "code": "112300000",
+      "lguname": "DAVAO DEL NORTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1016332",
+      "f8": ""
+    },
+    {
+      "code": "112400000",
+      "lguname": "DAVAO DEL SUR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "632588",
+      "f8": ""
+    },
+    {
+      "code": "112500000",
+      "lguname": "DAVAO ORIENTAL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "558958",
+      "f8": ""
+    },
+    {
+      "code": "118200000",
+      "lguname": "DAVAO DE ORO (COMPOSTELA VALLEY)",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "736107",
+      "f8": ""
+    },
+    {
+      "code": "118600000",
+      "lguname": "DAVAO OCCIDENTAL",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "4th",
+      "urbanrural": "",
+      "population": "316342",
+      "f8": ""
+    },
+    {
+      "code": "124700000",
+      "lguname": "COTABATO (NORTH COTABATO)",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1379747",
+      "f8": ""
+    },
+    {
+      "code": "126300000",
+      "lguname": "SOUTH COTABATO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding CITY OF GENERAL SANTOS) 915,289",
+      "f8": ""
+    },
+    {
+      "code": "126500000",
+      "lguname": "SULTAN KUDARAT",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "812095",
+      "f8": ""
+    },
+    {
+      "code": "128000000",
+      "lguname": "SARANGANI",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "544261",
+      "f8": ""
+    },
+    {
+      "code": "140100000",
+      "lguname": "ABRA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "241160",
+      "f8": ""
+    },
+    {
+      "code": "141100000",
+      "lguname": "BENGUET",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "(excluding BAGUIO CITY) 444,224",
+      "f8": ""
+    },
+    {
+      "code": "142700000",
+      "lguname": "IFUGAO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "202802",
+      "f8": ""
+    },
+    {
+      "code": "143200000",
+      "lguname": "KALINGA",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "212680",
+      "f8": ""
+    },
+    {
+      "code": "144400000",
+      "lguname": "MOUNTAIN PROVINCE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "4th",
+      "urbanrural": "",
+      "population": "154590",
+      "f8": ""
+    },
+    {
+      "code": "148100000",
+      "lguname": "APAYAO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "119184",
+      "f8": ""
+    },
+    {
+      "code": "150700000",
+      "lguname": "BASILAN",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "(excluding CITY OF ISABELA) 346,579",
+      "f8": ""
+    },
+    {
+      "code": "153600000",
+      "lguname": "LANAO DEL SUR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "1045429",
+      "f8": ""
+    },
+    {
+      "code": "153800000",
+      "lguname": "MAGUINDANAO",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "(excluding COTOBATO CITY) 1,173,933",
+      "f8": ""
+    },
+    {
+      "code": "156600000",
+      "lguname": "SULU",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "824731",
+      "f8": ""
+    },
+    {
+      "code": "157000000",
+      "lguname": "TAWI-TAWI",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "390715",
+      "f8": ""
+    },
+    {
+      "code": "160200000",
+      "lguname": "AGUSAN DEL NORTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "3rd",
+      "urbanrural": "",
+      "population": "(excluding CITY OF BUTUAN) 354,503",
+      "f8": ""
+    },
+    {
+      "code": "160300000",
+      "lguname": "AGUSAN DEL SUR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "700653",
+      "f8": ""
+    },
+    {
+      "code": "166700000",
+      "lguname": "SURIGAO DEL NORTE",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "2nd",
+      "urbanrural": "",
+      "population": "485088",
+      "f8": ""
+    },
+    {
+      "code": "166800000",
+      "lguname": "SURIGAO DEL SUR",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "1st",
+      "urbanrural": "",
+      "population": "592250",
+      "f8": ""
+    },
+    {
+      "code": "168500000",
+      "lguname": "DINAGAT ISLANDS",
+      "level": "Prov",
+      "class": "",
+      "incomeclass": "4th",
+      "urbanrural": "",
+      "population": "127152",
+      "f8": ""
+    }
+  ]
+}
