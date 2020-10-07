@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="welcome-card" *ngFor="let d of data" (click)="gotoMap(d);">
+  <ion-card class="welcome-card" *ngFor="let d of data" >
     <!-- <ion-img src="/assets/banner.jpg"></ion-img> -->
     <iframe [src]="d.url | safe" frameborder="0"></iframe>
     <ion-card-header>

@@ -13,7 +13,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { Network } from '@ionic-native/network/ngx';
-// import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from 'src/environments/environment.prod';
 
 const config: SocketIoConfig = {
   url: 'https://panganud.bukidnon.gov.ph',
@@ -29,6 +30,9 @@ const config: SocketIoConfig = {
     AppRoutingModule,
     IonicStorageModule.forRoot({
       driverOrder: [ "sqlite","indexeddb", "websql"]
+    }),
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production
     }),
     SocketIoModule.forRoot(config),
     // NgxQRCodeModule

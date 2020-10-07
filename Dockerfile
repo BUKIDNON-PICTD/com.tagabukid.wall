@@ -16,12 +16,12 @@ ADD typings ./typings
 # ADD .firebaserc ./
 ADD angular.json ./
 ADD browserslist ./
-# ADD config.xml ./
+ADD config.xml ./
 # ADD firebase.json ./
 # ADD generate-h2-push.js ./
 ADD ionic.config.json ./
 # ADD LICENSE ./
-# ADD ngsw-config.json ./
+ADD ngsw-config.json ./
 ADD package.json ./
 ADD tsconfig.app.json ./
 ADD tsconfig.json ./
@@ -35,7 +35,7 @@ RUN npm install -g cordova @ionic/cli
 # Install dependencies
 RUN npm install
 
-RUN npm audit fix --force
+RUN npm audit fix 
 
 #run application
 # CMD ["ionic", "cordova", "build", "browser", "--prod"]
@@ -47,7 +47,7 @@ RUN npm uninstall protractor
 RUN npm install protractor
 RUN npm audit fix
 # RUN ionic cordova build browser --prod --no-interactive --confirm
-RUN ionic build
+RUN ionic build --prod --no-interactive --confirm
 
 
 FROM nginx
