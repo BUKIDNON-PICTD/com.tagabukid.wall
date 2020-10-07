@@ -45,7 +45,7 @@ RUN cordova telemetry on
 # RUN ionic cordova platform add browser --no-interactive --confirm
 RUN npm uninstall protractor
 RUN npm install protractor
-RUN npm audit fix
+RUN npm audit fix --force
 # RUN ionic cordova build browser --prod --no-interactive --confirm
 RUN ionic build --prod --no-interactive --confirm
 
