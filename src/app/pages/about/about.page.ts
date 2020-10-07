@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AppVersion } from '@ionic-native/app-version/ngx';
 
 
 @Component({
@@ -9,7 +8,7 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 })
 export class AboutPage implements OnInit {
 
-  constructor(private appVersion: AppVersion) { }
+  constructor() { }
 
   ngOnInit() {
    

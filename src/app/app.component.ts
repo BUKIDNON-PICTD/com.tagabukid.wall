@@ -8,7 +8,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Socket } from "ngx-socket-io";
 import { SettingsService } from "./services/settings.service";
-
+declare var require: any;
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html",
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
   ];
   public agencies = ["PGB", "PHO", "MHO", "PICTD"];
   syncserverstatus: boolean;
-
+  public appVersion: string = require('../../package.json').version;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -91,6 +91,8 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
+    
+    // console.log(this.appVersion);
     this.platform.ready().then(() => {
       this.socket.ioSocket.io.uri = "https://panganud.bukidnon.gov.ph";
       this.socket.connect();

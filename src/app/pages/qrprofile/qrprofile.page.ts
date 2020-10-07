@@ -42,6 +42,7 @@ export class QrprofilePage implements OnInit {
   defaultHref: any;
   person: any;
   allowcreate: boolean;
+  loading: HTMLIonLoadingElement = null;
   constructor(
     private qrcodesvc : QrcodeService,
     private formBuilder: FormBuilder,
@@ -151,14 +152,14 @@ export class QrprofilePage implements OnInit {
         "",
         Validators.compose([
           Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
+          // Validators.pattern("[a-zA-Z ]*")
         ])
       ],
       tin: [
         "",
         Validators.compose([
           Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
+          // Validators.pattern("[a-zA-Z ]*")
         ])
       ]
     });
@@ -534,24 +535,42 @@ export class QrprofilePage implements OnInit {
     }
   }
 
-  onProvinceChange() {
+  async onProvinceChange() {
     let province = this.personAddressForm.get("province").value;
-    this.getMunicipalities().subscribe(result => {
-      this.municipalities = result['RECORDS'].filter(o => o.parentid === province.code);
-      this.municipalities = this.municipalities.sort((a, b) =>
+    await this.getMunicipalities().subscribe(async result => {
+      this.loading = await this.loadingController.create({});
+      await this.loading.present();
+      this.municipalities = await result['RECORDS'].filter(o => o.parentid === province.code);
+      if (this.municipalities) {
+        if (this.loading) {
+          await this.loading.dismiss();
+          this.loading = null;
+        }
+      }
+      this.municipalities = await this.municipalities.sort((a, b) =>
         a.lguname > b.lguname ? 1 : -1
       );
     });
+    
   }
 
-  onMunicipalityChange() {
+  async onMunicipalityChange() {
     let municipality = this.personAddressForm.get("municipality").value;
-    this.getBarangays().subscribe(result => {
-      this.barangays = result['RECORDS'].filter(o => o.parentid === municipality.code);
-      this.barangays = this.barangays.sort((a, b) =>
+    await this.getBarangays().subscribe(async result => {
+      this.loading = await this.loadingController.create({});
+      await this.loading.present();
+      this.barangays = await result['RECORDS'].filter(o => o.parentid === municipality.code);
+      if (this.barangays) {
+        if (this.loading) {
+          await this.loading.dismiss();
+          this.loading = null;
+        }
+      }
+      this.barangays = await this.barangays.sort((a, b) =>
         a.lguname > b.lguname ? 1 : -1
       );
     });
+    
   }
 
   async showToast(msg) {
