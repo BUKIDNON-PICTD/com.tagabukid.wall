@@ -1,3 +1,4 @@
+import { ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap,map , catchError } from 'rxjs/operators';
@@ -10,7 +11,8 @@ export class CoviddataService {
 
   constructor(
     private http: HttpClient,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { }
 
  
@@ -30,7 +32,12 @@ export class CoviddataService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();
@@ -52,7 +59,12 @@ export class CoviddataService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();
@@ -74,7 +86,12 @@ export class CoviddataService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();
@@ -97,7 +114,12 @@ export class CoviddataService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();
@@ -120,7 +142,12 @@ export class CoviddataService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();
@@ -143,7 +170,12 @@ export class CoviddataService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();
@@ -165,7 +197,12 @@ export class CoviddataService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();

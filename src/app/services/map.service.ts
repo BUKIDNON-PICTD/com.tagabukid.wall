@@ -29,7 +29,12 @@ export class MapService {
         return res;
       }),
       catchError((e) => {
-        this.showAlert(e.error.msg);
+        let toast = this.toastController.create({
+          message: `Unable to download data from the server.`,
+          duration: 3000,
+          position: "bottom",
+        });
+        toast.then((toast) => toast.present());
         throw new Error(e);
       })
     ).toPromise();
