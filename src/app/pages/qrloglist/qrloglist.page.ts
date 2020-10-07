@@ -36,8 +36,8 @@ export class QrloglistPage implements OnInit {
             this.items = [];
           } else {
             items = items.map(i => {
-              let ts = new Date(i.timestamp);
-              return {...i, timestamp: ts.toDateString() + '-' + ts.toLocaleTimeString()};
+              let ts = new Date(i.txndatetime);
+              return {...i, txndatetime: ts.toDateString() + '-' + ts.toLocaleTimeString()};
             });
             this.pagenumber += 1;
             const sorteditems = items.sort((a, b) =>
@@ -63,8 +63,8 @@ export class QrloglistPage implements OnInit {
           this.items = [];
         } else {
           items = items.map(i => {
-            let ts = new Date(i.timestamp);
-            return {...i, timestamp: ts.toDateString() + '-' + ts.toLocaleTimeString()};
+            let ts = new Date(i.txndatetime);
+            return {...i, txndatetime: ts.toDateString() + '-' + ts.toLocaleTimeString()};
           });
           const sorteditems = items.sort((a, b) =>
             a.timestamp < b.timestamp ? 1 : -1

@@ -87,47 +87,50 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(() => {
       
-      this.socket.ioSocket.io.uri = 'https://localhost:443'
+      this.socket.ioSocket.io.uri = 'https://panganud.bukidnon.gov.ph'
       this.socket.connect();
       this.socket.on("connect", () => {
-        console.log("connection established");
+        this.syncserverstatus = true;
+        this.offlineManager.syncQRLogs();
         this.settingsService.getItems().then( items => {
-          console.log(items);
           this.socket.emit('clientcheckin', items);
         });
       });
       this.socket.on("disconnect", () => {
+        this.syncserverstatus = false;
         console.log("you have been disconnected");
       });
       this.socket.on("reconnect", () => {
+        this.syncserverstatus = true;
         console.log("you have been reconnected");
       });
       this.socket.on("reconnect_error", () => {
+        this.syncserverstatus = false;
         console.log("attempt to reconnect has failed");
       });
 
-      this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
-        if (status === ConnectionStatus.Online) {
-          console.log(status);
-          // this.offlineManager.checkForEvents().subscribe();
-            // if (this.networkService.isSyncServerOnline()) {
-            //   this.syncserverstatus = true;
-            // } else {
-            //   this.syncserverstatus = false;
-            // }
-          // this.networkService.onSyncServerStatusChange().subscribe( (syncserverstatus: ConnectionStatus) => {
-          //   console.log(syncserverstatus);
-          //   if (syncserverstatus === ConnectionStatus.Online) {
-          //     this.syncserverstatus = true;
-          //     // this.offlineManager.checkForEvents().subscribe();
-          //     // this.showToast("Sync Server is Online");
-          //   } else {
-          //     this.syncserverstatus = false;
-          //     // this.showToast("Sync Server is Offline");
-          //   }
-          // });
-        }
-      });
+      // this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
+      //   if (status === ConnectionStatus.Online) {
+      //     console.log(status);
+      //     // this.offlineManager.checkForEvents().subscribe();
+      //       // if (this.networkService.isSyncServerOnline()) {
+      //       //   this.syncserverstatus = true;
+      //       // } else {
+      //       //   this.syncserverstatus = false;
+      //       // }
+      //     // this.networkService.onSyncServerStatusChange().subscribe( (syncserverstatus: ConnectionStatus) => {
+      //     //   console.log(syncserverstatus);
+      //     //   if (syncserverstatus === ConnectionStatus.Online) {
+      //     //     this.syncserverstatus = true;
+      //     //     // this.offlineManager.checkForEvents().subscribe();
+      //     //     // this.showToast("Sync Server is Online");
+      //     //   } else {
+      //     //     this.syncserverstatus = false;
+      //     //     // this.showToast("Sync Server is Offline");
+      //     //   }
+      //     // });
+      //   }
+      // });
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

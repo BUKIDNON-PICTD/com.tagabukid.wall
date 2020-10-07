@@ -3,7 +3,8 @@
     <ion-menu contentId="main-content" type="overlay" >
       <ion-content>
         <ion-list id="menu-list">
-          <ion-title >Bukidnon</ion-title>
+          <ion-title *ngIf="!syncserverstatus">Bukidnon (OFFLINE)</ion-title>
+          <ion-title *ngIf="syncserverstatus">Bukidnon (ONLINE)</ion-title>
           <!-- <ion-note></ion-note> -->
           <ion-note>Please be advised that the information displayed in this dashboard are still in process. Live data will be available soon.</ion-note>
 

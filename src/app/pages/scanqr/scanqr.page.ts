@@ -1,12 +1,11 @@
 import { QrlogService } from './../../services/qrlog.service';
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NumberValueAccessor, Validators } from '@angular/forms';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
 import { SettingsService } from 'src/app/services/settings.service';
 import jsQR from 'jsqr';
-
+import * as moment from 'moment';
 // import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 @Component({
@@ -83,27 +82,6 @@ export class ScanqrPage implements OnInit {
 
   
   }
-
-  // scanCode() {
-  //   const options: BarcodeScannerOptions = {
-  //     preferFrontCamera: false,
-  //     showFlipCameraButton: true,
-  //     showTorchButton: true,
-  //     torchOn: false,
-  //     prompt: 'Place a barcode inside the scan area',
-  //     resultDisplayDuration: 500,
-  //     formats: 'QR_CODE',
-  //     orientation: 'portrait',
-  //   };
-
-  //   this.barcodeScanner.scan(options).then(barcodeData => {
-  //     console.log('Barcode data', barcodeData);
-  //     this.scanResult = barcodeData;
-
-  //   }).catch(err => {
-  //     console.log('Error', err);
-  //   });
-  // }
 
   ngAfterViewInit() {
     this.canvasElement = this.canvas.nativeElement;
@@ -191,7 +169,7 @@ export class ScanqrPage implements OnInit {
           objid: this.create_UUID(),
           data: this.scanResult,
           rawdata: JSON.stringify(this.scanResult),
-          txndatetime: new Date().toISOString().slice(0, 19).replace('T', ' '),
+          txndatetime: moment().format('YYYY-MM-DD  HH:mm:ss.000'),
           locationid : this.locationsetting.locationid,
           deviceid : this.locationsetting.objid,
           lastname : this.scanResult[1],

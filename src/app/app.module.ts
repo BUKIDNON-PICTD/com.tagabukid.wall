@@ -16,7 +16,7 @@ import { Network } from '@ionic-native/network/ngx';
 // import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 const config: SocketIoConfig = {
-  url: 'https://localhost:443',
+  url: 'https://panganud.bukidnon.gov.ph',
   options: { options: { autoConnect: false } }
 };
 @NgModule({

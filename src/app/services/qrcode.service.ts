@@ -7,7 +7,6 @@ import { Storage } from "@ionic/storage";
 })
 export class QrcodeService {
   constructor(private storage: Storage) {}
-  settings = new BehaviorSubject<any[]>(null);
 
   addItem(item: any): Promise<any> {
     return this.storage.get("personprofile").then(items => {
@@ -17,7 +16,6 @@ export class QrcodeService {
       } else {
         this.storage.set("personprofile", [item]);
       }
-      this.settings.next(items);
       return item;
     });
   }
@@ -51,8 +49,6 @@ export class QrcodeService {
           newItems.push(i);
         }
       }
-      console.log(newItems);
-      this.settings.next(newItems);
       return this.storage.set("personprofile", newItems);
     });
   }
@@ -70,7 +66,6 @@ export class QrcodeService {
           toKeep.push(i);
         }
       }
-      this.settings.next(toKeep);
       return this.storage.set("personprofile", toKeep);
     });
   }

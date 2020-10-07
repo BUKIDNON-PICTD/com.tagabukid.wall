@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, IonSlides, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Storage } from "@ionic/storage";
+
 @Component({
   selector: 'app-qrprofile',
   templateUrl: './qrprofile.page.html',
@@ -50,7 +50,6 @@ export class QrprofilePage implements OnInit {
     private route: ActivatedRoute,
     private httpClient: HttpClient,
     private actionSheetController: ActionSheetController,
-    private storage: Storage,
     private platform: Platform,
     private loadingController: LoadingController,
     private ref: ChangeDetectorRef,
