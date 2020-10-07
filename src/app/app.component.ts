@@ -1,30 +1,31 @@
-import { OfflinemanagerService } from './services/offlinemanager.service';
-import { ConnectionStatus, NetworkService } from './services/network.service';
-import { Component, OnInit } from '@angular/core';
+import { ToastController } from "@ionic/angular";
+import { OfflinemanagerService } from "./services/offlinemanager.service";
+import { ConnectionStatus, NetworkService } from "./services/network.service";
+import { Component, OnInit } from "@angular/core";
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Socket } from 'ngx-socket-io';
-import { SettingsService } from './services/settings.service';
+import { Platform } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { Socket } from "ngx-socket-io";
+import { SettingsService } from "./services/settings.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  selector: "app-root",
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Dashboard',
-      url: 'dashboard',
-      icon: 'bar-chart'
+      title: "Dashboard",
+      url: "dashboard",
+      icon: "bar-chart",
     },
     {
-      title: 'Municipality View',
-      url: 'muncitydashboard',
-      icon: 'bar-chart'
+      title: "Municipality View",
+      url: "muncitydashboard",
+      icon: "bar-chart",
     },
     // ,
     // {
@@ -33,9 +34,9 @@ export class AppComponent implements OnInit {
     //   icon: 'map'
     // },
     {
-      title: 'Covid Map',
-      url: 'maps',
-      icon: 'map'
+      title: "Covid Map",
+      url: "maps",
+      icon: "map",
     },
     // {
     //   title: 'Advisories',
@@ -43,34 +44,33 @@ export class AppComponent implements OnInit {
     //   icon: 'warning'
     // },
     {
-      title: 'Cases',
-      url: 'cases',
-      icon: 'people'
+      title: "Cases",
+      url: "cases",
+      icon: "people",
     },
     {
-      title: 'Create QR Profile',
-      url: 'qrprofile',
-      icon: 'person-add'
+      title: "Create QR Profile",
+      url: "qrprofile",
+      icon: "person-add",
     },
     {
-      title: 'QR Profile List',
-      url: 'qrprofilelist',
-      icon: 'list'
+      title: "QR Profile List",
+      url: "qrprofilelist",
+      icon: "list",
     },
     {
-      title: 'QR Scan',
-      url: 'scanqr',
-      icon: 'barcode'
+      title: "QR Scan",
+      url: "scanqr",
+      icon: "barcode",
     },
     {
-      title: 'QR Log List',
-      url: 'qrloglist',
-      icon: 'list'
-    }
+      title: "QR Log List",
+      url: "qrloglist",
+      icon: "list",
+    },
   ];
-  public agencies = ['PGB', 'PHO', 'MHO', 'PICTD'];
+  public agencies = ["PGB", "PHO", "MHO", "PICTD"];
   syncserverstatus: boolean;
- 
 
   constructor(
     private platform: Platform,
@@ -79,21 +79,21 @@ export class AppComponent implements OnInit {
     private socket: Socket,
     private settingsService: SettingsService,
     private networkService: NetworkService,
-    private offlineManager: OfflinemanagerService
+    private offlineManager: OfflinemanagerService,
+    private toastController: ToastController
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      
-      this.socket.ioSocket.io.uri = 'https://panganud.bukidnon.gov.ph'
+      this.socket.ioSocket.io.uri = "https://panganud.bukidnon.gov.ph";
       this.socket.connect();
       this.socket.on("connect", () => {
         this.syncserverstatus = true;
         this.offlineManager.syncQRLogs();
-        this.settingsService.getItems().then( items => {
-          this.socket.emit('clientcheckin', items);
+        this.settingsService.getItems().then((items) => {
+          this.socket.emit("clientcheckin", items);
         });
       });
       this.socket.on("disconnect", () => {
@@ -109,6 +109,17 @@ export class AppComponent implements OnInit {
         console.log("attempt to reconnect has failed");
       });
 
+      window["isUpdateAvailable"].then((isAvailable) => {
+        if (isAvailable) {
+          let toast = this.toastController.create({
+            message:
+              "New Update available! Reload the webapp to see the latest juicy changes.",
+            duration: 3000,
+            position: "bottom",
+          });
+          toast.then((toast) => toast.present());
+        }
+      });
       // this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
       //   if (status === ConnectionStatus.Online) {
       //     console.log(status);
@@ -137,9 +148,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
+    const path = window.location.pathname.split("folder/")[1];
     if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+      this.selectedIndex = this.appPages.findIndex(
+        (page) => page.title.toLowerCase() === path.toLowerCase()
+      );
     }
   }
 }
