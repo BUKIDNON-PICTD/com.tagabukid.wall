@@ -10,7 +10,7 @@ self.toolbox.options.cache = {
 	name: 'pgb.covid.wall-cache'
 };
 
-const CACHE_VERSION = 2;
+const CACHE_VERSION = 3;
 
 // dynamically cache any other local assets
 self.toolbox.router.get('/(.*)', self.toolbox.cacheFirst, {
