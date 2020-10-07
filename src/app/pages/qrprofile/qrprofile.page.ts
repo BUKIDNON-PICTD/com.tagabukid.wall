@@ -436,8 +436,10 @@ export class QrprofilePage implements OnInit {
     this.matches = [];
     this.allowcreate = false;
     this.qrcodesvc.getItems().then(items => {
-      if (items.length <= 9){
-        this.allowcreate = true;
+      if (items){
+        if (items.length <= 9){
+          this.allowcreate = true;
+        }
       }
     });
   }
