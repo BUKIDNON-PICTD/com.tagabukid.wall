@@ -62,6 +62,10 @@ const routes: Routes = [
   {
     path: 'qrloglist',
     loadChildren: () => import('./pages/qrloglist/qrloglist.module').then( m => m.QrloglistPageModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
   }
 ];
 

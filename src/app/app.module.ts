@@ -15,6 +15,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { Network } from '@ionic-native/network/ngx';
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from 'src/environments/environment.prod';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 const config: SocketIoConfig = {
   url: 'https://panganud.bukidnon.gov.ph',
@@ -43,6 +44,7 @@ const config: SocketIoConfig = {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     Network,
+    AppVersion
     // BarcodeScanner
   ],
   bootstrap: [AppComponent]

@@ -68,6 +68,11 @@ export class AppComponent implements OnInit {
       url: "qrloglist",
       icon: "list",
     },
+    {
+      title: "About",
+      url: "about",
+      icon: "information-circle",
+    },
   ];
   public agencies = ["PGB", "PHO", "MHO", "PICTD"];
   syncserverstatus: boolean;
