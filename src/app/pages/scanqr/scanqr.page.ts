@@ -160,36 +160,46 @@ export class ScanqrPage implements OnInit {
       });
    
       if (code) {
-        this.scanActive = false;
-        this.scanResult = JSON.parse(code.data);
-        var bdate = new Date(this.scanResult[4]);
-        this.scanResult[4] = this.calculate_age(bdate);
-        
-        let log = {
-          objid: this.create_UUID(),
-          data: this.scanResult,
-          rawdata: JSON.stringify(this.scanResult),
-          txndatetime: moment().format('YYYY-MM-DD  HH:mm:ss.000'),
-          locationid : this.locationsetting.locationid,
-          deviceid : this.locationsetting.objid,
-          lastname : this.scanResult[1],
-          firstname: this.scanResult[2],
-          middlename: this.scanResult[3],
-          birthdate: bdate.toLocaleString(),
-          gender: this.scanResult[5],
-          civilstatus: this.scanResult[6],
-          mobileno: this.scanResult[7],
-          address_province_code : this.scanResult[8],
-          address_province_lguname : this.scanResult[9],
-          address_municipality_code : this.scanResult[10],
-          address_municipality_lguname : this.scanResult[11],
-          address_barangay_code : this.scanResult[12],
-          address_barangay_lguname : this.scanResult[13],
-          address_street : this.scanResult[14],
+        try{
+          this.scanActive = false;
+          this.scanResult = JSON.parse(code.data);
+          var bdate = new Date(this.scanResult[4]);
+          this.scanResult[4] = this.calculate_age(bdate);
+          
+          let log = {
+            objid: this.create_UUID(),
+            data: this.scanResult,
+            rawdata: JSON.stringify(this.scanResult),
+            txndatetime: moment().format('YYYY-MM-DD  HH:mm:ss.000'),
+            locationid : this.locationsetting.locationid,
+            deviceid : this.locationsetting.objid,
+            personobjid : this.scanResult[0],
+            lastname : this.scanResult[1],
+            firstname: this.scanResult[2],
+            middlename: this.scanResult[3],
+            birthdate: bdate.toLocaleString(),
+            gender: this.scanResult[5],
+            civilstatus: this.scanResult[6],
+            mobileno: this.scanResult[7],
+            address_province_code : this.scanResult[8],
+            address_province_lguname : this.scanResult[9],
+            address_municipality_code : this.scanResult[10],
+            address_municipality_lguname : this.scanResult[11],
+            address_barangay_code : this.scanResult[12],
+            address_barangay_lguname : this.scanResult[13],
+            address_street : this.scanResult[14],
+          }
+          this.qrlogservice.addItem(log).then(item => {
+            //do nothing
+          });
+        } catch (e) {
+          let toast = this.toastController.create({
+            message: `Invalid QR Code.`,
+            duration: 3000,
+            position: "bottom",
+          });
+          toast.then((toast) => toast.present());
         }
-        this.qrlogservice.addItem(log).then(item => {
-          //do nothing
-        });
       } else {
         if (this.scanActive) {
           requestAnimationFrame(this.scan.bind(this));
