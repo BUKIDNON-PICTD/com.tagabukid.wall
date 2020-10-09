@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "panganud-3a512": {
+      "hosting": {
+        "app": [
+          "panganud-3a512"
+        ]
+      }
+    }
+  }
+}
