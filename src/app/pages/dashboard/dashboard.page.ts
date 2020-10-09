@@ -112,11 +112,11 @@ export class DashboardPage implements OnInit {
     setTimeout((_) => this.createbarcharts(), 2000);
     setTimeout((_) => this.createprovincestackbarchart(), 2000);
 
-    setInterval(data => {
-      this.currentdatetime = new Date().toLocaleString();
-      this.updatebarcharts();
-      this.updateprovincestackbarchart();
-    }, 20000);
+    // setInterval(data => {
+    //   this.currentdatetime = new Date().toLocaleString();
+    //   this.updatebarcharts();
+    //   this.updateprovincestackbarchart();
+    // }, 20000);
   }
 
   createbarcharts(){
