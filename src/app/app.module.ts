@@ -14,7 +14,9 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { Network } from '@ionic-native/network/ngx';
 import { ServiceWorkerModule } from "@angular/service-worker";
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire/firebase.app.module';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 const config: SocketIoConfig = {
   url: 'https://panganud.bukidnon.gov.ph',
@@ -31,9 +33,11 @@ const config: SocketIoConfig = {
     IonicStorageModule.forRoot({
       driverOrder: [ "sqlite","indexeddb", "websql"]
     }),
-    ServiceWorkerModule.register("ngsw-worker.js", {
+    ServiceWorkerModule.register("combined-sw.js", {
       enabled: environment.production
     }),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireMessagingModule,
     SocketIoModule.forRoot(config),
     // NgxQRCodeModule
   ],
