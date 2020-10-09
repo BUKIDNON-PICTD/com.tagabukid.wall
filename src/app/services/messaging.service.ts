@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { AngularFireMessaging } from "@angular/fire/messaging";
-import { tap } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -8,12 +9,16 @@ import { tap } from "rxjs/operators";
 export class MessagingService {
   token: null;
 
-  constructor(private afMessaging: AngularFireMessaging) {}
+  constructor(private afMessaging: AngularFireMessaging,private http: HttpClient,) {}
 
   requestPermission() {
     return this.afMessaging.requestToken.pipe(
       tap((token) => {
-        console.log("Store token to server: ", token);
+        // console.log("Store token to server: ", token);
+        let newtoken = {
+          push_access_token : token
+        }
+        this.addItem(newtoken)
       })
     );
   }
@@ -27,5 +32,21 @@ export class MessagingService {
       this.afMessaging.deleteToken(this.token);
       this.token = null;
     }
+  }
+
+  apiurl = "https://panganud.bukidnon.gov.ph";
+
+  async addItem(item: any): Promise<any> {
+    return await this.http
+      .post(`${this.apiurl}/api/covid19subscriber/subscribe`, item)
+      .pipe(
+        tap((res) => {
+          return res;
+        }),
+        catchError((e) => {
+          throw new Error(e);
+        })
+      )
+      .toPromise();
   }
 }

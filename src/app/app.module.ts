@@ -15,8 +15,9 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { Network } from '@ionic-native/network/ngx';
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from 'src/environments/environment';
-import { AngularFireModule } from '@angular/fire/firebase.app.module';
+
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireModule } from '@angular/fire';
 
 const config: SocketIoConfig = {
   url: 'https://panganud.bukidnon.gov.ph',

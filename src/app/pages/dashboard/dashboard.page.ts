@@ -68,7 +68,6 @@ export class DashboardPage implements OnInit {
     private toastCtrl: ToastController
   ) { 
     this.listenForMessages();
-    this.requestPermission();
   }
 
   listenForMessages() {
