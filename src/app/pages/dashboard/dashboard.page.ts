@@ -51,13 +51,6 @@ export class DashboardPage implements OnInit {
   private barChartCaseByAgeGroup: Chart;
   @ViewChild("barChartCaseSummary") barChartCaseSummary: ElementRef;
   private barChart: Chart;
-  // public barChartOptions: ChartOptions;
-  // public barChartLabels: Label[];
-  // public barChartType: ChartType = 'bar';
-  // public barChartLegend = true;
-  // public barChartPlugins = [pluginDataLabels];
-
-  // public barChartData: ChartDataSets[];
 
   public chartloaded: boolean;
 
