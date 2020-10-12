@@ -36,10 +36,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/mapportal/mapportal.module').then( m => m.MapportalPageModule)
   },
   {
-    path: 'qrgenerator',
-    loadChildren: () => import('./pages/qrgenerator/qrgenerator.module').then( m => m.QrgeneratorPageModule)
-  },
-  {
     path: 'scanqr',
     loadChildren: () => import('./pages/scanqr/scanqr.module').then( m => m.ScanqrPageModule)
   },
