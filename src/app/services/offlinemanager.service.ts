@@ -36,7 +36,6 @@ export class OfflinemanagerService {
         items.forEach( item => {
           this.qrlogsvc.addItem(item);
         });
-        
       }
     });
   }
