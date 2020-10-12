@@ -5,6 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
-    image: luwas:2.2.3
+    image: luwas:2.2.4
     ports:
       - 7800:80
