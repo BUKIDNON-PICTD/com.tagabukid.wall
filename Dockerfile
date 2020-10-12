@@ -13,11 +13,11 @@ ADD e2e ./e2e
 ADD src ./src
 ADD typings ./typings
 # ADD .editorconfig ./
-# ADD .firebaserc ./
+ADD .firebaserc ./
 ADD angular.json ./
 ADD browserslist ./
 # ADD config.xml ./
-# ADD firebase.json ./
+ADD firebase.json ./
 # ADD generate-h2-push.js ./
 ADD ionic.config.json ./
 # ADD LICENSE ./
@@ -43,9 +43,9 @@ RUN cordova telemetry on
 # RUN ionic cordova plugin add cordova-plugin-network-information --confirm
 # RUN ionic cordova plugin add cordova-plugin-camera --confirm
 # RUN ionic cordova platform add browser --no-interactive --confirm
-RUN npm uninstall protractor
-RUN npm install protractor
-RUN npm audit fix
+# RUN npm uninstall protractor
+# RUN npm install protractor
+# RUN npm audit fix
 # RUN ionic cordova build browser --prod --no-interactive --confirm
 RUN ionic build --prod --no-interactive --confirm
 

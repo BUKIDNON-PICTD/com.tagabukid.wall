@@ -25,5 +25,11 @@
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
-
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('combined-sw.js')
+      .then(() => console.log('service worker installed'))
+      .catch(err => console.error('Error', err));
+  }
+</script>
 </html>
