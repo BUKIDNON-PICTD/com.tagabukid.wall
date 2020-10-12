@@ -96,8 +96,6 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
-    
-    // console.log(this.appVersion);
     this.platform.ready().then(() => {
       this.socket.ioSocket.io.uri = `${environment.panganud}`;
       this.socket.connect();
@@ -121,17 +119,6 @@ export class AppComponent implements OnInit {
         console.log("attempt to reconnect has failed");
       });
 
-      // window["isUpdateAvailable"].then((isAvailable) => {
-      //   if (isAvailable) {
-      //     let toast = this.toastController.create({
-      //       message:
-      //         "New Update available! Reload the webapp to see the latest juicy changes.",
-      //       duration: 3000,
-      //       position: "bottom",
-      //     });
-      //     toast.then((toast) => toast.present());
-      //   }
-      // });
       // this.networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
       //   if (status === ConnectionStatus.Online) {
       //     console.log(status);
