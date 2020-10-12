@@ -9,7 +9,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Socket } from "ngx-socket-io";
 import { SettingsService } from "./services/settings.service";
-import { A2hsService } from './services/a2hs.service';
+import { SwUpdate } from '@angular/service-worker';
 declare var require: any;
 @Component({
   selector: "app-root",
@@ -88,6 +88,7 @@ export class AppComponent implements OnInit {
     private networkService: NetworkService,
     private offlineManager: OfflinemanagerService,
     private toastController: ToastController,
+    private swUpdate: SwUpdate
     
   ) {
     this.initializeApp();
@@ -165,5 +166,22 @@ export class AppComponent implements OnInit {
         (page) => page.title.toLowerCase() === path.toLowerCase()
       );
     }
+
+    this.swUpdate.available.subscribe(async res => {
+      const toast = await this.toastController.create({
+        message: 'Update available!',
+        position: 'bottom',
+        buttons: [{ role: 'cancel', text: 'Reload' }]
+      });
+      await toast.present();
+      toast
+        .onDidDismiss()
+        .then(() => this.swUpdate.activateUpdate())
+        .then(() => window.location.reload());
+    });
+    this.swUpdate.checkForUpdate();
+    setInterval(() => {
+      this.swUpdate.checkForUpdate();
+    } , 15 * 60 * 1000);
   }
 }
