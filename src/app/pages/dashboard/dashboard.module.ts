@@ -9,6 +9,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { ChartsModule } from 'ng2-charts';
+import { A2hsModule } from 'src/app/modules/a2hs/a2hs.module';
 
 @NgModule({
   imports: [
@@ -17,8 +18,11 @@ import { ChartsModule } from 'ng2-charts';
     IonicModule,
     DashboardPageRoutingModule,
     ChartsModule,
-    BarchartModule
+    BarchartModule,
+    A2hsModule
   ],
-  declarations: [DashboardPage]
+  declarations: [
+    DashboardPage
+  ]
 })
 export class DashboardPageModule {}

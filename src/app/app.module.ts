@@ -22,6 +22,7 @@ import { A2hsComponent } from './a2hs/a2hs.component';
 import { A2hsBrowserPromptComponent } from './a2hs-browser-prompt/a2hs-browser-prompt.component';
 import { A2hsSafariHow2 } from './a2hs-ios-safari-how2/a2hs-ios-safari-how2';
 import { A2hsService } from './services/a2hs.service';
+import { A2hsModule } from './modules/a2hs/a2hs.module';
 
 const config: SocketIoConfig = {
   url: `${environment.panganud}`,
@@ -29,10 +30,8 @@ const config: SocketIoConfig = {
 };
 @NgModule({
   declarations: [
-    AppComponent,
-    A2hsComponent,
-    A2hsBrowserPromptComponent,
-    A2hsSafariHow2],
+    AppComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -48,6 +47,7 @@ const config: SocketIoConfig = {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireMessagingModule,
     SocketIoModule.forRoot(config),
+    A2hsModule
     // NgxQRCodeModule
   ],
   providers: [
