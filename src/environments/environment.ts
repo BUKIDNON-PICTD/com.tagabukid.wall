@@ -12,7 +12,9 @@ export const environment = {
     storageBucket: "panganud-3a512.appspot.com",
     messagingSenderId: "804070504344",
     appId: "1:804070504344:web:12b59e6d24316a679f5ded"
-  }
+  },
+  geoserver :  "http://172.16.2.48:8600", 
+  panganud :  "http://172.16.2.48:7500" 
 };
 
 /*

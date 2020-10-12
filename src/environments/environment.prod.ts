@@ -8,5 +8,7 @@ export const environment = {
     storageBucket: "panganud-3a512.appspot.com",
     messagingSenderId: "804070504344",
     appId: "1:804070504344:web:12b59e6d24316a679f5ded"
-  }
+  },
+  geoserver :  "https://geoserver.bukidnon.gov.ph", 
+  panganud :  "https://panganud.bukidnon.gov.ph" 
 };

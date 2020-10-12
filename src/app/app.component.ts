@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { ToastController } from "@ionic/angular";
 import { OfflinemanagerService } from "./services/offlinemanager.service";
 import { ConnectionStatus, NetworkService } from "./services/network.service";
@@ -94,7 +95,7 @@ export class AppComponent implements OnInit {
     
     // console.log(this.appVersion);
     this.platform.ready().then(() => {
-      this.socket.ioSocket.io.uri = "https://panganud.bukidnon.gov.ph";
+      this.socket.ioSocket.io.uri = `${environment.panganud}`;
       this.socket.connect();
       this.socket.on("connect", () => {
         this.syncserverstatus = true;

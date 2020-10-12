@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { AngularFireMessaging } from "@angular/fire/messaging";
@@ -34,11 +35,9 @@ export class MessagingService {
     }
   }
 
-  apiurl = "https://panganud.bukidnon.gov.ph";
-
   async addItem(item: any): Promise<any> {
     return await this.http
-      .post(`${this.apiurl}/api/covid19subscriber/subscribe`, item)
+      .post(`${environment.panganud}/api/covid19subscriber/subscribe`, item)
       .pipe(
         tap((res) => {
           return res;

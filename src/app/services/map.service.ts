@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { ToastController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -21,7 +22,7 @@ export class MapService {
       "Content-Type":  "application/json",
     });
 
-    let apiurl = `https://geoserver.bukidnon.gov.ph/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3AMunicipalBdry&maxFeatures=50&outputFormat=application%2Fjson`
+    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3AMunicipalBdry&maxFeatures=50&outputFormat=application%2Fjson`
     return this.http.get<any>(apiurl, {
       headers: headers,
       withCredentials: true

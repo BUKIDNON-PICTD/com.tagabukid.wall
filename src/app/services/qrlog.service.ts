@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { SettingsService } from "src/app/services/settings.service";
 import { QrofflinelogService } from "./qrofflinelog.service";
 import { OfflinemanagerService } from "./offlinemanager.service";
@@ -16,7 +17,7 @@ export class QrlogService {
     private toastController: ToastController,
     private settingservice: SettingsService
   ) {}
-  apiurl = "https://panganud.bukidnon.gov.ph";
+  
 
   async addItem(item: any): Promise<any> {
     await this.settingservice.getItems().then((items) => {
@@ -24,7 +25,7 @@ export class QrlogService {
       item.deviceid = items[0].objid;
     });
     return await this.http
-      .post(`${this.apiurl}/api/qrlogs/`, item)
+      .post(`${environment.panganud}/api/qrlogs/`, item)
       .pipe(
         tap((res) => {
           let toast = this.toastController.create({

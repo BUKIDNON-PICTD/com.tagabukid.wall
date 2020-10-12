@@ -20,7 +20,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
 
 const config: SocketIoConfig = {
-  url: 'https://panganud.bukidnon.gov.ph',
+  url: `${environment.panganud}`,
   options: { options: { autoConnect: false } }
 };
 @NgModule({
