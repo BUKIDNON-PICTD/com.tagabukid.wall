@@ -18,13 +18,21 @@ import { environment } from 'src/environments/environment';
 
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
+import { A2hsComponent } from './a2hs/a2hs.component';
+import { A2hsBrowserPromptComponent } from './a2hs-browser-prompt/a2hs-browser-prompt.component';
+import { A2hsSafariHow2 } from './a2hs-ios-safari-how2/a2hs-ios-safari-how2';
+import { A2hsService } from './services/a2hs.service';
 
 const config: SocketIoConfig = {
   url: `${environment.panganud}`,
   options: { options: { autoConnect: false } }
 };
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    A2hsComponent,
+    A2hsBrowserPromptComponent,
+    A2hsSafariHow2],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -47,7 +55,8 @@ const config: SocketIoConfig = {
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
-    Network
+    Network,
+    A2hsService
     // BarcodeScanner
   ],
   bootstrap: [AppComponent]
