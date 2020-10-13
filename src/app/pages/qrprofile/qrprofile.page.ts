@@ -16,15 +16,12 @@ export class QrprofilePage implements OnInit {
   protected personProfileSlider: IonSlides;
 
   public personInformationForm: FormGroup;
-  public personInformationDetailForm: FormGroup;
-  public personContactInformationForm: FormGroup;
-  public personAddressForm: FormGroup;
 
   // public submitAttempt: boolean = false;
   public isend: boolean = false;
   public isbeginning: boolean = false;
   public validation_messages: any;
-
+  
   provinces: any[];
   municipalities: any[];
   barangays: any[];
@@ -32,6 +29,7 @@ export class QrprofilePage implements OnInit {
   farmer: any;
   mode: string;
   allowsave: boolean = true;
+  ispolicyagree: boolean;
   viewEntered: boolean = false;
   isspouse: boolean = false;
   isSubmitted: boolean = false;
@@ -80,13 +78,6 @@ export class QrprofilePage implements OnInit {
           Validators.required
         ])
       ],
-      maidenname: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
       nameextension: [
         "",
         Validators.compose([
@@ -94,31 +85,8 @@ export class QrprofilePage implements OnInit {
           Validators.pattern("[a-zA-Z ]*")
         ])
       ],
-      prenametitle: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
-      postnametitle: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
       birthdate: ["", Validators.compose([Validators.required])],
-      gender: ["", Validators.compose([Validators.required])]
-    });
-    this.personInformationDetailForm = this.formBuilder.group({
-      birthplace: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
+      gender: ["", Validators.compose([Validators.required])],
       civilstatus: [
         "",
         Validators.compose([
@@ -126,52 +94,7 @@ export class QrprofilePage implements OnInit {
           Validators.pattern("[a-zA-Z ]*"),
           Validators.required
         ])
-      ],
-      profession: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
-      citizenship: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
-      religion: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
-      sss: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          // Validators.pattern("[a-zA-Z ]*")
-        ])
-      ],
-      tin: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          // Validators.pattern("[a-zA-Z ]*")
-        ])
-      ]
-    });
-    this.personContactInformationForm = this.formBuilder.group({
-      mobileno: [
-        "",
-        Validators.compose([
-          Validators.pattern("^[0-9]*$"),
-          Validators.maxLength(11),
-          Validators.required
-        ])
-      ],
+      ], 
       phoneno: [
         "",
         Validators.compose([
@@ -179,14 +102,6 @@ export class QrprofilePage implements OnInit {
           Validators.maxLength(11)
         ])
       ],
-      email: [
-        "",
-        Validators.compose([
-          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")
-        ])
-      ]
-    });
-    this.personAddressForm = this.formBuilder.group({
       province: this.formBuilder.group({
         lguname: [""],
         code: ["", Validators.compose([Validators.required])]
@@ -201,7 +116,7 @@ export class QrprofilePage implements OnInit {
       }),
       street: ["", Validators.compose([Validators.required, Validators.maxLength(100)])]
     });
-
+   
     this.validation_messages = {
       lastname: [
         { type: "required", message: "Last Name is required." },
@@ -456,14 +371,6 @@ export class QrprofilePage implements OnInit {
           // this.verifyfarmername();
         }
         this.nextslide();
-      } else if (this.matches.length > 0 && index === 1) {
-        this.nextslide();
-      } else if (this.personInformationDetailForm.valid && index === 1 + (this.matches.length > 0 ? 1 : 0)) {
-        this.nextslide();
-      } else if (this.personContactInformationForm.valid && index === 2 + (this.matches.length > 0 ? 1 : 0)) {
-        this.nextslide();
-      } else if (this.personAddressForm.valid && index === 3 + (this.matches.length > 0 ? 1 : 0)) {
-        this.nextslide();
       } else {
         this.showToast("Form validation error.");
       }
@@ -498,79 +405,54 @@ export class QrprofilePage implements OnInit {
     });
   }
 
-  // verifyfarmername() {
-  //   this.farmerService
-  //     .verifyfarmername(this.personInformationForm.value)
-  //     .then(matches => {
-  //       if (matches) {
-  //         this.matches = matches;
-  //         if (this.matches[0]?.match === 100) {
-  //           this.isend = true;
-  //           this.allowsave = false;
-  //         }
-  //       }
-  //     });
-  // }
-
-
   save() {
-    if (
-      this.personInformationForm.valid &&
-      this.personAddressForm.valid &&
-      this.personInformationDetailForm.valid &&
-      this.personContactInformationForm.valid
-    ) {
-      this.personInformationForm.patchValue(
-        this.personInformationDetailForm.value
-      );
-      this.personInformationForm.patchValue(
-        this.personContactInformationForm.value
-      );
-      this.personInformationForm.patchValue({
-        address: this.personAddressForm.value
-      });
+    if (this.personInformationForm.valid) {
       this.saveprofile();
     } else {
       this.showToast("Form validation error.");
     }
   }
-
-  async onProvinceChange() {
-    let province = this.personAddressForm.get("province").value;
-    await this.getMunicipalities().subscribe(async result => {
-      this.loading = await this.loadingController.create({});
-      await this.loading.present();
-      this.municipalities = await result['RECORDS'].filter(o => o.parentid === province.code);
-      if (this.municipalities) {
-        if (this.loading) {
-          await this.loading.dismiss();
-          this.loading = null;
+  updatePolicyAgree() {
+    console.log(this.ispolicyagree);
+  }
+  async onProvinceChange($event) {
+    let province = this.personInformationForm.get("province").value;
+    if (province.code){
+      await this.getMunicipalities().subscribe(async result => {
+        this.loading = await this.loadingController.create({});
+        await this.loading.present();
+        this.municipalities = await result['RECORDS'].filter(o => o.parentid === province.code);
+        if (this.municipalities) {
+          if (this.loading) {
+            await this.loading.dismiss();
+            this.loading = null;
+          }
         }
-      }
-      this.municipalities = await this.municipalities.sort((a, b) =>
-        a.lguname > b.lguname ? 1 : -1
-      );
-    });
-    
+        this.municipalities = await this.municipalities.sort((a, b) =>
+          a.lguname > b.lguname ? 1 : -1
+        );
+      });
+    }
   }
 
   async onMunicipalityChange() {
-    let municipality = this.personAddressForm.get("municipality").value;
-    await this.getBarangays().subscribe(async result => {
-      this.loading = await this.loadingController.create({});
-      await this.loading.present();
-      this.barangays = await result['RECORDS'].filter(o => o.parentid === municipality.code);
-      if (this.barangays) {
-        if (this.loading) {
-          await this.loading.dismiss();
-          this.loading = null;
+    let municipality = this.personInformationForm.get("municipality").value;
+    if (municipality.code){
+      await this.getBarangays().subscribe(async result => {
+        this.loading = await this.loadingController.create({});
+        await this.loading.present();
+        this.barangays = await result['RECORDS'].filter(o => o.parentid === municipality.code);
+        if (this.barangays) {
+          if (this.loading) {
+            await this.loading.dismiss();
+            this.loading = null;
+          }
         }
-      }
-      this.barangays = await this.barangays.sort((a, b) =>
-        a.lguname > b.lguname ? 1 : -1
-      );
-    });
-    
+        this.barangays = await this.barangays.sort((a, b) =>
+          a.lguname > b.lguname ? 1 : -1
+        );
+      });
+    }
   }
 
   async showToast(msg) {
@@ -593,14 +475,12 @@ export class QrprofilePage implements OnInit {
       await this.qrcodesvc.getItem(objid).then(async item => {
         console.log(JSON.stringify(item));
         await this.personInformationForm.patchValue(item);
-        await this.personInformationDetailForm.patchValue(item);
-        await this.personContactInformationForm.patchValue(item);
         await this.getMunicipalities().subscribe(result => {
           this.municipalities = result['RECORDS'].filter(o => o.parentid === item.address.province.code);
           this.municipalities = this.municipalities.sort((a, b) =>
             a.lguname > b.lguname ? 1 : -1
           );
-          this.personAddressForm.patchValue({
+          this.personInformationForm.patchValue({
             municipality: { code: item.address.municipality.code}
           });
         });
@@ -609,12 +489,12 @@ export class QrprofilePage implements OnInit {
           this.barangays = this.barangays.sort((a, b) =>
             a.lguname > b.lguname ? 1 : -1
           );
-          this.personAddressForm.patchValue({
+          this.personInformationForm.patchValue({
             barangay: { code: item.address.barangay.code}
           });
         });
 
-        await this.personAddressForm.patchValue(item.address);
+        await this.personInformationForm.patchValue(item.address);
         
         this.person = item;
       });
@@ -626,11 +506,12 @@ export class QrprofilePage implements OnInit {
     try {
       let profiletoadd = {
         ...this.personInformationForm.value,
-        ...this.personInformationDetailForm.value,
-        ...this.personContactInformationForm.value
       };
       profiletoadd.objid = this.person ? this.person.objid : this.create_UUID();
-      profiletoadd.address = this.personAddressForm.value;
+      if (profiletoadd.nameextension || profiletoadd.nameextension !== ''){
+        profiletoadd.lastname = profiletoadd.lastname + ' ' + profiletoadd.nameextension
+      }
+      profiletoadd.address = this.personInformationForm.value;
       profiletoadd.address.barangay.lguname = this.barangays.find(
         o => o.code === profiletoadd.address.barangay.code
       ).lguname;
