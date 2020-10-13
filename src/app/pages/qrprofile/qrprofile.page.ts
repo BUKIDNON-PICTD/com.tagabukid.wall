@@ -415,7 +415,8 @@ export class QrprofilePage implements OnInit {
   updatePolicyAgree() {
     console.log(this.ispolicyagree);
   }
-  async onProvinceChange($event) {
+  
+  async onProvinceChange() {
     let province = this.personInformationForm.get("province").value;
     if (province.code){
       await this.getMunicipalities().subscribe(async result => {
