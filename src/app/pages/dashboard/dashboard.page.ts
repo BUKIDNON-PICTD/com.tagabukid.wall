@@ -50,8 +50,10 @@ export class DashboardPage implements OnInit {
   private barChartCaseByMunicipality: Chart;
   private barChartCaseByGender: Chart;
   private barChartCaseByAgeGroup: Chart;
-  @ViewChild("barChartCaseSummary") barChartCaseSummary: ElementRef;
-  private barChart: Chart;
+  @ViewChild("barChartCanvasCaseSummary") barChartCanvasCaseSummary: ElementRef;
+  @ViewChild("barChartCanvasCaseSummary7DayAverage") barChartCanvasCaseSummary7DayAverage: ElementRef;
+  private barChartCaseSummary: Chart;
+  private barChartCaseSummary7DayAverage: Chart;
 
   public chartloaded: boolean;
 
@@ -459,7 +461,7 @@ export class DashboardPage implements OnInit {
 
   createprovincestackbarchart(){
       this.coviddatasvc.getCovidProvinceDashboard().then(items => {
-      this.barChart = new Chart(this.barChartCaseSummary.nativeElement, {
+      this.barChartCaseSummary = new Chart(this.barChartCanvasCaseSummary.nativeElement, {
         type: "bar",
         data: {
           labels: items.map(a => a.properties['selected_date']),
@@ -521,13 +523,13 @@ export class DashboardPage implements OnInit {
           },
         }
       });
-      this.barChart.update();
+      this.barChartCaseSummary.update();
     });
   }
 
   updateprovincestackbarchart(){
-    this.barChart.data.datasets.length = 0;
-    this.barChart.update();
+    this.barChartCaseSummary.data.datasets.length = 0;
+    this.barChartCaseSummary.update();
     this.coviddatasvc.getCovidProvinceDashboard().then(async items => {
       // console.log(items);
       let data = {
@@ -556,8 +558,8 @@ export class DashboardPage implements OnInit {
           }
         ]
       };
-      this.barChart.data = data;
-      this.barChart.update();
+      this.barChartCaseSummary.data = data;
+      this.barChartCaseSummary.update();
     });
   }
 

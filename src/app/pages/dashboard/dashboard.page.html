@@ -135,7 +135,7 @@
     <!-- /.row -->
     <!-- Main row -->
     <div class="row">
-      <div class="col-lg-12">
+      <!-- <div class="col-lg-12">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
           <div class="card-header">
             <ion-title class="card-title" color="primary">
@@ -170,6 +170,21 @@
             </div>
           </div>
         </div>
+       </div> -->
+       <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Cases by Municipality
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:400px">
+              <canvas #barChartCanvasSummaryByMunicipality></canvas>
+          </div>
+          </div>
+        </div>
        </div>
        <div class="col-lg-12">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
@@ -181,8 +196,53 @@
           </div>
           <div class="card-body">
             <div style="height:350px">
-              <canvas #barChartCaseSummary></canvas>
+              <canvas #barChartCanvasCaseSummary></canvas>
             </div>
+          </div>
+        </div>
+       </div>
+       <!-- <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Case Summary 7 Day Average
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:350px">
+              <canvas #barChartCanvasCaseSummary7DayAverage></canvas>
+            </div>
+          </div>
+        </div>
+       </div> -->
+       <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Confirmed Cases by Gender
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:400px">
+              <canvas #barChartCanvasSummaryActiveCaseByGender></canvas>
+          </div>
+          </div>
+        </div>
+       </div>
+       <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Case by Age Group
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:400px">
+              <canvas #barChartCanvasCaseByAgeGroup></canvas>
+          </div>
           </div>
         </div>
        </div>
