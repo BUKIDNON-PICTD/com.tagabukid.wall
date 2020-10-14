@@ -209,6 +209,8 @@ export class CoviddataService {
     ).toPromise();
   }
 
+  
+
   showAlert(msg) {
     let alert = this.alertController.create({
       message: msg,
