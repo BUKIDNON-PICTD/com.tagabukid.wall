@@ -81,8 +81,7 @@ export class AppComponent implements OnInit {
   syncserverstatus: boolean;
   public appVersion: string = require('../../package.json').version;
 
-  private notificationsettings: boolean;
-  private isloadedfromserver: boolean;
+  public notificationsettings: boolean;
 
   constructor(
     private platform: Platform,
@@ -110,10 +109,8 @@ export class AppComponent implements OnInit {
         this.messagingService.checkSubscriptionStatus({push_access_token : x}).then(result => {
           if(result.status === 'ACTIVE'){
             this.notificationsettings = true;
-            this.isloadedfromserver = true;
           }else {
             this.notificationsettings = false;
-            this.isloadedfromserver = false;
           }
         });
       });
