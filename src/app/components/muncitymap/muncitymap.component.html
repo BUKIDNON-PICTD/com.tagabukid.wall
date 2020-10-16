@@ -10,4 +10,5 @@
     </nav>
 </ion-toolbar>
 <div id="covidcasemap" class="map" ></div>
-<ion-img src="{{imagesource}}" style="width:100px;"></ion-img>
+<ion-img [src]="imagesource" style="width:100px;" *ngIf="imagesource"></ion-img>
+<br>

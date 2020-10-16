@@ -260,7 +260,6 @@ export class MuncitymapComponent implements OnInit {
   udpateLegend(resolution) {
     var graphicUrl = this.covidcasessource.getLegendUrl(resolution);
     this.imagesource = graphicUrl;
-    console.log(this.imagesource);
   }
 
   // closepopup() {
