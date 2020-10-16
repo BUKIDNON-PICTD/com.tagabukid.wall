@@ -8,22 +8,18 @@ import { catchError, tap } from "rxjs/operators";
   providedIn: "root",
 })
 export class MessagingService {
-  token: null;
+  token: any;
 
-  constructor(private afMessaging: AngularFireMessaging,private http: HttpClient,) {}
+  constructor(private afMessaging: AngularFireMessaging, private http: HttpClient) {}
 
   requestPermission() {
     return this.afMessaging.requestToken.pipe(
       tap((token) => {
-        // console.log("Store token to server: ", token);
-        let newtoken = {
-          push_access_token : token
-        }
-        this.addItem(newtoken)
+        this.token = token;
       })
     );
   }
-
+ 
   getMessages() {
     return this.afMessaging.messages;
   }
@@ -31,13 +27,42 @@ export class MessagingService {
   deleteToken() {
     if (this.token) {
       this.afMessaging.deleteToken(this.token);
+      this.unsubscribe({push_access_token : this.token});
       this.token = null;
     }
   }
 
-  async addItem(item: any): Promise<any> {
+  async subscribe(item: any): Promise<any> {
     return await this.http
       .post(`${environment.panganud}/api/covid19subscriber/subscribe`, item)
+      .pipe(
+        tap((res) => {
+          return res;
+        }),
+        catchError((e) => {
+          throw new Error(e);
+        })
+      )
+      .toPromise();
+  }
+
+  async unsubscribe(item: any): Promise<any> {
+    return await this.http
+      .post(`${environment.panganud}/api/covid19subscriber/unsubscribe`, item)
+      .pipe(
+        tap((res) => {
+          return res;
+        }),
+        catchError((e) => {
+          throw new Error(e);
+        })
+      )
+      .toPromise();
+  }
+
+  checkSubscriptionStatus(item: any): Promise<any> {
+    return this.http
+      .post(`${environment.panganud}/api/covid19subscriber/checksubscriptionstatus`, item)
       .pipe(
         tap((res) => {
           return res;

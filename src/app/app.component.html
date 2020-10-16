@@ -17,7 +17,7 @@
           
           <ion-list-header>Version: {{appVersion}}</ion-list-header>
         </ion-list>
-
+        
         <ion-list id="labels-list">
           <ion-list-header>Agencies</ion-list-header>
 
@@ -33,6 +33,14 @@
             </ion-label>
             <ion-toggle [(ngModel)]="dark"></ion-toggle>
           </ion-item> -->
+        </ion-list>
+        <ion-list id="labels-list">
+          <ion-list-header *ngIf="syncserverstatus">Settings</ion-list-header>
+          <ion-list-header *ngIf="!syncserverstatus">Settings (settings are only available online)</ion-list-header>
+          <ion-item lines="none" [disabled]="!syncserverstatus">
+            <ion-label>Notification</ion-label>
+            <ion-toggle color="primary" [(ngModel)]="notificationsettings" (ionChange)="updateNotificationSetting()"></ion-toggle>
+          </ion-item>
         </ion-list>
       </ion-content>
     </ion-menu>

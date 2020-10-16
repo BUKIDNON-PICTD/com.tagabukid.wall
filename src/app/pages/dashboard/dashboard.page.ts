@@ -59,12 +59,9 @@ export class DashboardPage implements OnInit {
 
   constructor(
     private coviddatasvc: CoviddataService,
-    private messagingService: MessagingService,
-    private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
     public a2hs: A2hsService
   ) { 
-    this.listenForMessages();
+    
     // A2HS - START
     a2hs.checkUserAgent();
     a2hs.trackStandalone();
@@ -88,47 +85,7 @@ export class DashboardPage implements OnInit {
     // A2HS - END
   }
 
-  listenForMessages() {
-    this.messagingService.getMessages().subscribe(async (msg: any) => {
-      const alert = await this.alertCtrl.create({
-        header: msg.notification.title,
-        subHeader: msg.notification.body,
-        message: msg.data.info,
-        buttons: ['OK'],
-      });
-      await alert.present();
-    });
-  }
- 
-  requestPermission() {
-    this.messagingService.requestPermission().subscribe(
-      async token => {
-        const toast = await this.toastCtrl.create({
-          message: 'Got your token',
-          duration: 2000
-        });
-        toast.present();
-      },
-      async (err) => {
-        const alert = await this.alertCtrl.create({
-          header: 'Error',
-          message: err,
-          buttons: ['OK'],
-        });
- 
-        await alert.present();
-      }
-    );
-  }
- 
-  async deleteToken() {
-    this.messagingService.deleteToken();
-    const toast = await this.toastCtrl.create({
-      message: 'Token removed',
-      duration: 2000
-    });
-    toast.present();
-  }
+
 
   ngOnInit() {
     this.chartloaded = false;

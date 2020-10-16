@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment';
-import { ToastController } from "@ionic/angular";
+import { AlertController, ToastController } from "@ionic/angular";
 import { OfflinemanagerService } from "./services/offlinemanager.service";
 import { ConnectionStatus, NetworkService } from "./services/network.service";
 import { Component, OnInit } from "@angular/core";
@@ -10,6 +10,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Socket } from "ngx-socket-io";
 import { SettingsService } from "./services/settings.service";
 import { SwUpdate } from '@angular/service-worker';
+import { MessagingService } from './services/messaging.service';
 declare var require: any;
 @Component({
   selector: "app-root",
@@ -79,6 +80,10 @@ export class AppComponent implements OnInit {
   public agencies = ["PGB", "PHO", "MHO", "PICTD"];
   syncserverstatus: boolean;
   public appVersion: string = require('../../package.json').version;
+
+  private notificationsettings: boolean;
+  private isloadedfromserver: boolean;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -88,7 +93,10 @@ export class AppComponent implements OnInit {
     private networkService: NetworkService,
     private offlineManager: OfflinemanagerService,
     private toastController: ToastController,
-    private swUpdate: SwUpdate
+    private swUpdate: SwUpdate,
+    private messagingService: MessagingService,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     
   ) {
     this.initializeApp();
@@ -97,6 +105,19 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
+
+      this.messagingService.requestPermission().subscribe(x => {
+        this.messagingService.checkSubscriptionStatus({push_access_token : x}).then(result => {
+          if(result.status === 'ACTIVE'){
+            this.notificationsettings = true;
+            this.isloadedfromserver = true;
+          }else {
+            this.notificationsettings = false;
+            this.isloadedfromserver = false;
+          }
+        });
+      });
+      this.listenForMessages();
       this.socket.ioSocket.io.uri = `${environment.panganud}`;
       this.socket.connect();
       this.socket.on("connect", () => {
@@ -170,5 +191,56 @@ export class AppComponent implements OnInit {
     setInterval(() => {
       this.swUpdate.checkForUpdate();
     } , 15 * 60 * 1000);
+  }
+
+  listenForMessages() {
+    this.messagingService.getMessages().subscribe(async (msg: any) => {
+      const alert = await this.alertCtrl.create({
+        header: msg.notification.title,
+        subHeader: msg.notification.body,
+        message: msg.data.info,
+        buttons: ['OK'],
+      });
+      await alert.present();
+    });
+  }
+
+  updateNotificationSetting() {
+    if (this.notificationsettings){
+      this.requestPermission();
+    } else {
+      this.deleteToken();
+    }
+  }
+
+  requestPermission() {
+    this.messagingService.requestPermission().subscribe(
+      async token => {
+        // const toast = await this.toastCtrl.create({
+        //   message: 'Got your token',
+        //   duration: 2000
+        // });
+        // toast.present();
+        this.messagingService.subscribe({push_access_token : token});
+      },
+      async (err) => {
+        const alert = await this.alertCtrl.create({
+          header: 'Error',
+          message: err,
+          buttons: ['OK'],
+        });
+ 
+        await alert.present();
+      }
+    );
+  }
+ 
+  async deleteToken() {
+    this.messagingService.deleteToken();
+    // const toast = await this.toastCtrl.create({
+    //   message: 'Token removed',
+    //   duration: 2000
+    // });
+    // toast.present();
   }
 }
