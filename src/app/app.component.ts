@@ -105,8 +105,8 @@ export class AppComponent implements OnInit {
   initializeApp() {
     this.platform.ready().then(() => {
 
-      this.messagingService.requestPermission().subscribe(x => {
-        this.messagingService.checkSubscriptionStatus({push_access_token : x}).then(result => {
+      this.messagingService.requestPermission().subscribe( async token => {
+        await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
           if(result.status === 'ACTIVE'){
             this.notificationsettings = true;
           }else {
@@ -218,7 +218,7 @@ export class AppComponent implements OnInit {
         //   duration: 2000
         // });
         // toast.present();
-        this.messagingService.subscribe({push_access_token : token});
+        await this.messagingService.subscribe({push_access_token : token});
       },
       async (err) => {
         const alert = await this.alertCtrl.create({
