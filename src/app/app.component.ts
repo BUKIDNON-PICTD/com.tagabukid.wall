@@ -98,24 +98,22 @@ export class AppComponent implements OnInit {
     private toastCtrl: ToastController,
     
   ) {
+    this.messagingService.requestPermission().subscribe( async token => {
+      console.log(token);
+      // await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
+      //   if (result.status === 'ACTIVE'){
+      //     this.notificationsettings = true;
+      //   }else {
+      //     this.notificationsettings = false;
+      //   }
+      // });
+    });
+    this.listenForMessages();
     this.initializeApp();
-    
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-
-      this.messagingService.requestPermission().subscribe( async token => {
-        console.log(token);
-        // await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
-        //   if (result.status === 'ACTIVE'){
-        //     this.notificationsettings = true;
-        //   }else {
-        //     this.notificationsettings = false;
-        //   }
-        // });
-      });
-      this.listenForMessages();
       this.socket.ioSocket.io.uri = `${environment.panganud}`;
       this.socket.connect();
       this.socket.on("connect", () => {
@@ -196,7 +194,6 @@ export class AppComponent implements OnInit {
       const alert = await this.alertCtrl.create({
         header: msg.notification.title,
         subHeader: msg.notification.body,
-        message: msg.data.info,
         buttons: ['OK'],
       });
       await alert.present();
