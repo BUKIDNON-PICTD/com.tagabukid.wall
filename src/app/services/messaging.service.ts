@@ -19,7 +19,7 @@ export class MessagingService {
       })
     );
   }
- 
+  
   getMessages() {
     return this.afMessaging.messages;
   }

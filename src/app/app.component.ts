@@ -99,17 +99,17 @@ export class AppComponent implements OnInit {
     
   ) {
     this.messagingService.requestPermission().subscribe( async token => {
-      console.log(token);
-      // await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
-      //   if (result.status === 'ACTIVE'){
-      //     this.notificationsettings = true;
-      //   }else {
-      //     this.notificationsettings = false;
-      //   }
-      // });
+      await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
+        if (result.status === 'ACTIVE'){
+          this.notificationsettings = true;
+        }else {
+          this.notificationsettings = false;
+        }
+      });
     });
-    this.listenForMessages();
+    
     this.initializeApp();
+    this.listenForMessages();
   }
 
   initializeApp() {
@@ -194,6 +194,7 @@ export class AppComponent implements OnInit {
       const alert = await this.alertCtrl.create({
         header: msg.notification.title,
         subHeader: msg.notification.body,
+        message: msg.data.info,
         buttons: ['OK'],
       });
       await alert.present();
