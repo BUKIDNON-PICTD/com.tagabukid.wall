@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
     });
     
     this.initializeApp();
-    this.listenForMessages();
+    
   }
 
   initializeApp() {
@@ -187,10 +187,12 @@ export class AppComponent implements OnInit {
     setInterval(() => {
       this.swUpdate.checkForUpdate();
     } , 15 * 60 * 1000);
+    this.listenForMessages();
   }
 
   listenForMessages() {
     this.messagingService.getMessages().subscribe(async (msg: any) => {
+      console.log(msg);
       const alert = await this.alertCtrl.create({
         header: msg.notification.title,
         subHeader: msg.notification.body,
