@@ -106,13 +106,14 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
 
       this.messagingService.requestPermission().subscribe( async token => {
-        await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
-          if(result.status === 'ACTIVE'){
-            this.notificationsettings = true;
-          }else {
-            this.notificationsettings = false;
-          }
-        });
+        console.log(token);
+        // await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
+        //   if (result.status === 'ACTIVE'){
+        //     this.notificationsettings = true;
+        //   }else {
+        //     this.notificationsettings = false;
+        //   }
+        // });
       });
       this.listenForMessages();
       this.socket.ioSocket.io.uri = `${environment.panganud}`;
