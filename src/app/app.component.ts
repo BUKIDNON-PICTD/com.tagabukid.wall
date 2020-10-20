@@ -103,7 +103,7 @@ export class AppComponent implements OnInit {
     private pushService: PushnotificationService
     
   ) {
-    const VAPID_PUBLIC = 'f1tJhg9dN_R-NpmrCQADAo:APA91bEGWJdTOtdsgCQoTVEZb5o61seCNnQ5spgUH3bY0YHAvR0A-rlgpOqllWMvfW5y_2qhhEaNnyRcAGtO7MlQkrWdRtCcH5QpTb5jXIK8ujSLTypF4VztYWxtTn8L73NZCNiZM1FW';
+    // const VAPID_PUBLIC = 'f1tJhg9dN_R-NpmrCQADAo:APA91bEGWJdTOtdsgCQoTVEZb5o61seCNnQ5spgUH3bY0YHAvR0A-rlgpOqllWMvfW5y_2qhhEaNnyRcAGtO7MlQkrWdRtCcH5QpTb5jXIK8ujSLTypF4VztYWxtTn8L73NZCNiZM1FW';
     // this.messagingService.requestPermission().subscribe( async token => {
     //   await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
     //     if (result.status === 'ACTIVE'){
@@ -113,16 +113,16 @@ export class AppComponent implements OnInit {
     //     }
     //   });
     // });
-    if (swPush.isEnabled) {
-      swPush.requestSubscription({
-          serverPublicKey: VAPID_PUBLIC,
-        })
-        .then(subscription => {
-          console.log(subscription);
-          pushService.sendSubscriptionToTheServer(subscription).subscribe();
-        })
-        .catch(console.error);
-    }
+    // if (swPush.isEnabled) {
+    //   swPush.requestSubscription({
+    //       serverPublicKey: VAPID_PUBLIC,
+    //     })
+    //     .then(subscription => {
+    //       console.log(subscription);
+    //       pushService.sendSubscriptionToTheServer(subscription).subscribe();
+    //     })
+    //     .catch(console.error);
+    // }
     this.initializeApp();
     
   }
