@@ -114,12 +114,12 @@ export class AppComponent implements OnInit {
     //   });
     // });
     if (swPush.isEnabled) {
-      swPush
-        .requestSubscription({
+      swPush.requestSubscription({
           serverPublicKey: VAPID_PUBLIC,
         })
         .then(subscription => {
-          pushService.sendSubscriptionToTheServer(subscription).subscribe()
+          console.log(subscription);
+          pushService.sendSubscriptionToTheServer(subscription).subscribe();
         })
         .catch(console.error);
     }
