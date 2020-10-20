@@ -1,3 +1,4 @@
+import { PushnotificationService } from './services/pushnotification.service';
 import { environment } from 'src/environments/environment';
 import { AlertController, ToastController } from "@ionic/angular";
 import { OfflinemanagerService } from "./services/offlinemanager.service";
@@ -9,8 +10,9 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Socket } from "ngx-socket-io";
 import { SettingsService } from "./services/settings.service";
-import { SwUpdate } from '@angular/service-worker';
+import { SwPush, SwUpdate } from '@angular/service-worker';
 import { MessagingService } from './services/messaging.service';
+
 declare var require: any;
 @Component({
   selector: "app-root",
@@ -82,6 +84,7 @@ export class AppComponent implements OnInit {
   public appVersion: string = require('../../package.json').version;
 
   public notificationsettings: boolean;
+  
 
   constructor(
     private platform: Platform,
@@ -96,18 +99,30 @@ export class AppComponent implements OnInit {
     private messagingService: MessagingService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
+    private swPush: SwPush,
+    private pushService: PushnotificationService
     
   ) {
-    this.messagingService.requestPermission().subscribe( async token => {
-      await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
-        if (result.status === 'ACTIVE'){
-          this.notificationsettings = true;
-        }else {
-          this.notificationsettings = false;
-        }
-      });
-    });
-    
+    const VAPID_PUBLIC = 'f1tJhg9dN_R-NpmrCQADAo:APA91bEGWJdTOtdsgCQoTVEZb5o61seCNnQ5spgUH3bY0YHAvR0A-rlgpOqllWMvfW5y_2qhhEaNnyRcAGtO7MlQkrWdRtCcH5QpTb5jXIK8ujSLTypF4VztYWxtTn8L73NZCNiZM1FW';
+    // this.messagingService.requestPermission().subscribe( async token => {
+    //   await this.messagingService.checkSubscriptionStatus({push_access_token : token}).then(result => {
+    //     if (result.status === 'ACTIVE'){
+    //       this.notificationsettings = true;
+    //     }else {
+    //       this.notificationsettings = false;
+    //     }
+    //   });
+    // });
+    if (swPush.isEnabled) {
+      swPush
+        .requestSubscription({
+          serverPublicKey: VAPID_PUBLIC,
+        })
+        .then(subscription => {
+          pushService.sendSubscriptionToTheServer(subscription).subscribe()
+        })
+        .catch(console.error);
+    }
     this.initializeApp();
     
   }

@@ -21,6 +21,7 @@ import { AngularFireModule } from '@angular/fire';
 import { A2hsService } from './services/a2hs.service';
 import { A2hsModule } from './modules/a2hs/a2hs.module';
 import { FormsModule } from '@angular/forms';
+import { PushnotificationService } from './services/pushnotification.service';
 
 const config: SocketIoConfig = {
   url: `${environment.panganud}`,
@@ -54,7 +55,8 @@ const config: SocketIoConfig = {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     Network,
-    A2hsService
+    A2hsService,
+    PushnotificationService
     // BarcodeScanner
   ],
   bootstrap: [AppComponent]

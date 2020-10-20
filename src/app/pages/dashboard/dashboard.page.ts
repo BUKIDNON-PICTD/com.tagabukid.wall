@@ -7,7 +7,7 @@ import { ElementRef } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { Chart } from "chart.js";
 import { MessagingService } from 'src/app/services/messaging.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController, Platform } from '@ionic/angular';
 import { A2hsService } from 'src/app/services/a2hs.service';
 
 
@@ -59,9 +59,10 @@ export class DashboardPage implements OnInit {
 
   constructor(
     private coviddatasvc: CoviddataService,
-    public a2hs: A2hsService
+    public a2hs: A2hsService,
+    public plt : Platform
   ) { 
-    
+   
     // A2HS - START
     a2hs.checkUserAgent();
     a2hs.trackStandalone();

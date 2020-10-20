@@ -40,6 +40,7 @@ export class QrprofilePage implements OnInit {
   defaultHref: any;
   person: any;
   allowcreate: boolean;
+  allowexceed: boolean;
   loading: HTMLIonLoadingElement = null;
   constructor(
     private qrcodesvc : QrcodeService,
@@ -53,6 +54,32 @@ export class QrprofilePage implements OnInit {
     private loadingController: LoadingController,
     private ref: ChangeDetectorRef,
   ) {
+    this.allowcreate = false;
+    this.allowexceed = false;
+   
+
+    this.platform.ready().then(source => {
+      this.qrcodesvc.getItems().then(items => {
+        if (this.platform.is("android")) {
+          this.allowexceed = false;
+        } else if (this.platform.is("ios")) {
+          this.allowexceed = false;
+        } else {
+          this.allowexceed = true;
+        }
+
+        if (!items){
+          this.allowcreate = true;
+        } else {
+          if (items.length <= 9 || this.allowexceed){
+            this.allowcreate = true;
+          }
+        }
+      });
+
+   
+    });
+
     this.personInformationForm = this.formBuilder.group({
       lastname: [
         "",
@@ -350,16 +377,7 @@ export class QrprofilePage implements OnInit {
   ngOnInit() {
     this.mode = "create";
     this.matches = [];
-    this.allowcreate = false;
-    this.qrcodesvc.getItems().then(items => {
-      if (!items){
-        this.allowcreate = true;
-      } else {
-        if (items.length <= 9){
-          this.allowcreate = true;
-        }
-      }
-    });
+   
   }
 
   next() {
