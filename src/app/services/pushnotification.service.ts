@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment';
 export class PushnotificationService {
 
   constructor(private http: HttpClient) { }
-  
+
   public sendSubscriptionToTheServer(subscription: PushSubscription) {
-    return this.http.post(`${environment.panganud}/api/covid19subscriber/subscribe`, subscription);
+    return this.http.post(`${environment.panganud}/api/covid19subscriber/subscribe2`, subscription);
   }
 }
