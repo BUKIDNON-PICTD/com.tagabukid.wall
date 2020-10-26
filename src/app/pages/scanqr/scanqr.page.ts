@@ -6,7 +6,8 @@ import { Socket } from 'ngx-socket-io';
 import { SettingsService } from 'src/app/services/settings.service';
 import jsQR from 'jsqr';
 import * as moment from 'moment';
-// import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { environment } from 'src/environments/environment';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-scanqr',
@@ -165,7 +166,9 @@ export class ScanqrPage implements OnInit {
           this.scanResult = JSON.parse(code.data);
           var bdate = new Date(this.scanResult[4]);
           this.scanResult[4] = this.calculate_age(bdate);
-          
+         
+          this.scanResult[7] = CryptoJS.AES.decrypt(this.scanResult[7].trim(), environment.key.trim()).toString(CryptoJS.enc.Utf8);
+      
           let log = {
             objid: this.create_UUID(),
             data: this.scanResult,
@@ -194,11 +197,39 @@ export class ScanqrPage implements OnInit {
           });
         } catch (e) {
           let toast = this.toastController.create({
-            message: `Invalid QR Code.`,
+            message: `Invalid QR Code. Saving raw data to server.`,
             duration: 3000,
             position: "bottom",
           });
           toast.then((toast) => toast.present());
+        
+          let log = {
+            objid: this.create_UUID(),
+            data: "-",
+            rawdata: code.data,
+            txndatetime: moment().format('YYYY-MM-DD  HH:mm:ss.000'),
+            locationid : this.locationsetting.locationid,
+            deviceid : this.locationsetting.objid,
+            personobjid : "-",
+            lastname : "-",
+            firstname: "-",
+            middlename: "-",
+            birthdate: new Date().toLocaleString(),
+            gender: "-",
+            civilstatus: "-",
+            mobileno: "-",
+            address_province_code : "-",
+            address_province_lguname : "-",
+            address_municipality_code : "-",
+            address_municipality_lguname : "-",
+            address_barangay_code : "-",
+            address_barangay_lguname : "-",
+            address_street : "-",
+          }
+
+          this.qrlogservice.addItem(log).then(item => {
+            //do nothing
+          });
         }
       } else {
         if (this.scanActive) {

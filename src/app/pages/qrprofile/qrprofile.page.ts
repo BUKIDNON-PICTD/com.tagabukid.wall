@@ -122,11 +122,12 @@ export class QrprofilePage implements OnInit {
           Validators.required
         ])
       ], 
-      phoneno: [
+      mobileno: [
         "",
         Validators.compose([
           Validators.pattern("^[0-9]*$"),
-          Validators.maxLength(11)
+          Validators.maxLength(11),
+          Validators.required
         ])
       ],
       province: this.formBuilder.group({

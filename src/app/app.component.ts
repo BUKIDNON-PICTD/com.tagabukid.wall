@@ -43,11 +43,11 @@ export class AppComponent implements OnInit {
       url: "maps",
       icon: "map",
     },
-    // {
-    //   title: '#CovidSaBukid',
-    //   url: 'advisories',
-    //   icon: 'warning'
-    // },
+    {
+      title: 'Advisories',
+      url: 'advisories',
+      icon: 'warning'
+    },
     {
       title: "Cases",
       url: "cases",

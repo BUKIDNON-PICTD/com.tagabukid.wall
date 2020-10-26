@@ -1,8 +1,10 @@
+import { environment } from 'src/environments/environment';
 import { QrcodeService } from './../../services/qrcode.service';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
-
+import * as CryptoJS from 'crypto-js';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-qrprofilelist',
@@ -44,6 +46,9 @@ export class QrprofilelistPage implements OnInit {
         
         this.items = sorteditems.map(x =>
          {
+          //  console.log(x.mobileno);
+           x.xmobileno = CryptoJS.AES.encrypt(x.mobileno.trim(), environment.key.trim()).toString();
+           x.birthdate = moment(x.birthdate).format('YYYY-MM-DD');
            return {...x, qrdata: [
                   x.objid,
                   x.lastname,
@@ -52,7 +57,7 @@ export class QrprofilelistPage implements OnInit {
                   x.birthdate,
                   x.gender,
                   x.civilstatus,
-                  x.mobileno,
+                  x.xmobileno,
                   // x.address,
                   x.address.province.code,
                   x.address.province.lguname,
@@ -60,7 +65,8 @@ export class QrprofilelistPage implements OnInit {
                   x.address.municipality.lguname,
                   x.address.barangay.code,
                   x.address.barangay.lguname,
-                  x.address.street
+                  x.address.street,
+                  "LGU_BUKIDNON_PICTD"
               ]
           //   [{
           //   // objid: x.objid,
@@ -81,7 +87,7 @@ export class QrprofilelistPage implements OnInit {
          });
          // public value = '{"lastname":"AGUILAR","firstname":"LIANNE","middlename":"MADERA","maidenname":"","nameextension":"","prenametitle":"","postnametitle":"","birthdate":"2020-10-05T13:33:53.348+08:00","gender":"F","birthplace":"","civilstatus":"MARRIED","profession":"","citizenship":"","religion":"","sss":"","tin":"","mobileno":"09061637300","phoneno":"","email":"","objid":"41c62d2d-ed1a-48d7-9870-b4bbe7dac414","address":{"province":{"lguname":"BUKIDNON","code":"101300000"},"municipality":{"lguname":"CITY OF MALAYBALAY (CAPITAL)","code":"101312000"},"barangay":{"lguname":"SUMPONG","code":"101312065"},"street":"STA. CRUZ ST., PUROK 3","text":"STA. CRUZ ST., PUROK 3  SUMPONG, CITY OF MALAYBALAY (CAPITAL) BUKIDNON"}}';
       }
-      console.log(this.items);
+      // console.log(this.items);
     });
   }
 

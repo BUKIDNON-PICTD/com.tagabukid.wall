@@ -1,3 +1,4 @@
+import { Platform } from '@ionic/angular';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,23 +6,21 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   templateUrl: './advisories.page.html',
   styleUrls: ['./advisories.page.scss'],
 })
-export class AdvisoriesPage {
+export class AdvisoriesPage implements OnInit {
+  isbrowser: boolean;
 
-  constructor() { }
+  constructor(private platform: Platform) { }
 
-  // ngAfterViewInit() {
-  //   !function(d,s,id){
-  //       var js: any,
-  //           fjs=d.getElementsByTagName(s)[0],
-  //           p='https';
-  //       if(!d.getElementById(id)){
-  //           js=d.createElement(s);
-  //           js.id=id;
-  //           js.src=p+"://platform.twitter.com/widgets.js";
-  //           fjs.parentNode.insertBefore(js,fjs);
-  //       }
-  //   }
-  //   (document,"script","twitter-wjs");
-  // }
+  ngOnInit() {
+    this.platform.ready().then(source => {
+      if (this.platform.is("android")) {
+        this.isbrowser = false;
+      } else if (this.platform.is("ios")) {
+        this.isbrowser = false;
+      } else {
+        this.isbrowser = true;
+      }
+    });
+  }
 
 }
