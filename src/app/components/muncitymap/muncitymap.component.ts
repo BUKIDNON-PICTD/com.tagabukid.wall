@@ -92,7 +92,18 @@ export class MuncitymapComponent implements OnInit {
         width: 1,
       }),
     });
+
+    var muncitystylefillgreen = new Style({
+      fill: new Fill({
+        color: "rgba(0, 255, 0, 0.40)",
+      }),
+      stroke: new Stroke({
+        color: "#fcf403",
+        width: 1,
+      }),
+    });
     var muncitystyle = [muncitystylefill, muncitylabelStyle];
+    var muncitystylegreen = [muncitystylefillgreen, muncitylabelStyle];
 
     var muncitylabelStyle2 = new Style({
       text: new Text({
@@ -232,6 +243,10 @@ export class MuncitymapComponent implements OnInit {
           .setText(
             feature.get("mun_city") + " - " + feature.get("totalactive")
           );
+
+        if(feature.get("totalactive") === 0){
+          return muncitystylegreen;
+        }  
         return muncitystyle;
       });
     });
