@@ -199,6 +199,24 @@
       </form>
     </ion-slide>
     <ion-slide>
+      <div>
+        <ion-toolbar color="primary">
+          <nav class="navbar navbar-expand navbar-primary navbar-dark">
+            <ion-title>Profile Photo</ion-title>
+            <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
+              <ion-icon slot="start" name="camera"></ion-icon>
+              Capture Photo
+            </ion-button>
+          </nav>
+        </ion-toolbar>
+        <ion-list>
+          <ion-item>
+            <img [src]="photo" />
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-slide>
+    <ion-slide>
       <ion-card>
         <ion-card-header>
           <ion-card-title>Privacy Policy</ion-card-title>

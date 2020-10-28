@@ -12,13 +12,14 @@ import { Socket } from "ngx-socket-io";
 import { SettingsService } from "./services/settings.service";
 import { SwPush, SwUpdate } from '@angular/service-worker';
 import { MessagingService } from './services/messaging.service';
+import { version } from '../../package.json';
 
-declare var require: any;
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html",
-  styleUrls: ["app.component.scss"],
+  styleUrls: ["app.component.scss"]
 })
+
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
@@ -86,7 +87,8 @@ export class AppComponent implements OnInit {
   ];
   public agencies = ["PGB", "PHO", "MHO", "PICTD"];
   syncserverstatus: boolean;
-  public appVersion: string = require('../../package.json').version;
+  
+  public appVersion: string = version;
 
   public notificationsettings: boolean;
   
