@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, IonSlides, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { Plugins, CameraResultType, Capacitor, FilesystemDirectory, CameraPhoto, CameraSource } from '@capacitor/core';
+
+const { Camera, Filesystem, Storage } = Plugins;
 
 @Component({
   selector: 'app-qrprofile',
@@ -51,8 +54,7 @@ export class QrprofilePage implements OnInit {
     private httpClient: HttpClient,
     private actionSheetController: ActionSheetController,
     private platform: Platform,
-    private loadingController: LoadingController,
-    private ref: ChangeDetectorRef,
+    private loadingController: LoadingController
   ) {
     this.allowcreate = false;
     this.allowexceed = false;
@@ -390,6 +392,8 @@ export class QrprofilePage implements OnInit {
           // this.verifyfarmername();
         }
         this.nextslide();
+      } else if (index === 1) {
+          this.nextslide();
       } else {
         this.showToast("Form validation error.");
       }
@@ -493,7 +497,7 @@ export class QrprofilePage implements OnInit {
     if (objid) {
       this.mode = "edit";
       await this.qrcodesvc.getItem(objid).then(async item => {
-        console.log(JSON.stringify(item));
+        // console.log(JSON.stringify(item));
         await this.personInformationForm.patchValue(item);
         await this.getMunicipalities().subscribe(result => {
           this.municipalities = result['RECORDS'].filter(o => o.parentid === item.address.province.code);
@@ -517,6 +521,7 @@ export class QrprofilePage implements OnInit {
         await this.personInformationForm.patchValue(item.address);
         
         this.person = item;
+        this.photo = item.photo;
       });
     }
   }
@@ -544,7 +549,7 @@ export class QrprofilePage implements OnInit {
         o => o.code === profiletoadd.address.province.code
       ).lguname;
 
-      console.log(profiletoadd);
+      // console.log(profiletoadd);
 
       profiletoadd.address.text =
       (profiletoadd.address.street
@@ -563,6 +568,7 @@ export class QrprofilePage implements OnInit {
         o => o.code === profiletoadd.address.province.code
       ).lguname;
       
+      profiletoadd.photo = this.photo
 
       if (this.mode === "create"){
         
@@ -598,6 +604,20 @@ export class QrprofilePage implements OnInit {
       return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
     });
     return uuid;
+  }
+
+  async selectImage() {
+    try {
+      const profilePicture = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Camera,
+      });
+      this.photo = "data:image/jpg;base64," + profilePicture.base64String;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

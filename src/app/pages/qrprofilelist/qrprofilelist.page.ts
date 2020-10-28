@@ -100,12 +100,14 @@ export class QrprofilelistPage implements OnInit {
   }
 
   printQR(item){
-    console.log(item.objid);
+    // console.log(item.objid);
       var innerContents = document.getElementById(item.objid).innerHTML;
       var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
       popupWinindow.document.open();
-      popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()"><div style="border-style:solid; border-width:0.5px; padding:1px; position:absolute; width:276px;"><div style="float:left; width:250px;"><center><img src="./assets/pgblogo.png" width="50px"/><p style="margin:0px; font-size:8px;"><u>'+ item.firstname + ' '+ item.middlename + ' <strong>' + item.lastname +  (item.nameextension ? ' ' + item.nameextension : '') + '</strong></u></p><p style="margin:0px; font-size:8px;">'+ item.address.text  +'</p></center><center>' + innerContents + '</center></div></div></html>');
+      popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()"><div style="border-style:solid; border-width:0.5px; padding:1px; position:absolute; width:500px;"><div style="float:left; width:250px;"><center>' + innerContents + '</center></div><div style="float:left; width:250px;"><center><img src="./assets/pgblogo.png" width="50px"/><p style="margin:0px; font-size:8px;"><u>'+ item.firstname + ' '+ item.middlename + ' <strong>' + item.lastname +  (item.nameextension ? ' ' + item.nameextension : '') + '</strong></u></p><p style="margin:0px; font-size:8px;">' + item.address.text  + '</p></center><div style="margin:auto; padding:10px 0px;"><center><img src="' + item.photo + '" width="200px"/></center></div></div></div></html>');
       popupWinindow.document.close();
+
+      
   }
   async showToast(msg){
     const toast = await this.toastController.create({

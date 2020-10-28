@@ -1,9 +1,7 @@
 {
   "name": "com.tagabukid.wall",
   "integrations": {
-    "capacitor": {
-      "enabled": false
-    },
+    "capacitor": {},
     "cordova": {}
   },
   "type": "angular"

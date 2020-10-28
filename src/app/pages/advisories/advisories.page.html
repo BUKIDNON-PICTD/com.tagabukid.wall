@@ -1,10 +1,21 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Advisories</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<iframe *ngIf="isbrowser" class="resp-iframe" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flgubukidnon%2F&tabs=timeline&width=1024&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=562129067844961" width="1024" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-<iframe *ngIf="!isbrowser" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flgubukidnon%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=562129067844961" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+  <div class="centeritem">
+    <iframe *ngIf="isbrowser" class="resp-iframe"
+      src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flgubukidnon%2F&tabs=timeline&width=1024&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=562129067844961"
+      width="1024" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+      allowTransparency="true" allow="encrypted-media"></iframe>
+    <iframe *ngIf="!isbrowser"
+      src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flgubukidnon%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=562129067844961"
+      width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+      allowTransparency="true" allow="encrypted-media"></iframe>
+  </div>
 </ion-content>

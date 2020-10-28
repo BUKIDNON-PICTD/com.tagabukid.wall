@@ -58,6 +58,26 @@
     <ion-toolbar>
       <ion-title>Location Settings</ion-title>
     </ion-toolbar>
+    
+    <ion-button expand="full" (click)="startScanLocation()">
+      <ion-icon slot="start" name="barcodeLocation"></ion-icon>
+      Scan Location
+    </ion-button>
+
+    <ion-button expand="full" (click)="resetScanLocation()" color="warning" *ngIf="scanResultLocation">
+      <ion-icon slot="start" name="refreshLocation"></ion-icon>
+      Reset
+    </ion-button>
+  
+    <video #videoLocation [hidden]="!scanActiveLocation" width="100%"></video>
+  
+    <canvas #canvasLocation hidden></canvas>
+  
+    <ion-button expand="full" (click)="stopScanLocation()" color="danger" *ngIf="scanActiveLocation">
+      <ion-icon slot="start" name="closeLocation"></ion-icon>
+      Stop scan
+    </ion-button>
+
     <form [formGroup]="settingForm" (ngSubmit)="saveItem()">
       <div class="card-body">
         <div class="form-group">
@@ -78,7 +98,7 @@
       </div>
     </form>
 
-    <div class="col-12">
+    <!-- <div class="col-12">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Settings</h3>
@@ -114,7 +134,7 @@
           </ion-list-header>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <div *ngIf="haslocationsetting" class="settings">
     <ion-button expand="full" (click)="deleteItem()">

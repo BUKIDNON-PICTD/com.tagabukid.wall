@@ -19,17 +19,22 @@ export class ScanqrPage implements OnInit {
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
   @ViewChild('fileinput', { static: false }) fileinput: ElementRef;
 
+  @ViewChild('videoLocation', { static: false }) videoLocation: ElementRef;
+  @ViewChild('canvasLocation', { static: false }) canvasLocation: ElementRef;
+
   canvasElement: any;
   videoElement: any;
   canvasContext: any;
   scanActive = false;
   scanResult = null;
+
+  canvasElementLocation: any;
+  videoElementLocation: any;
+  canvasContextLocation: any;
+  scanActiveLocation = false;
+  scanResultLocation = null;
+
   loading: HTMLIonLoadingElement = null;
-
-  // scanResult = null;
-  // scannedCode = null;
-
- 
   
   ios: boolean;
   public items: any[] = [];
@@ -42,6 +47,7 @@ export class ScanqrPage implements OnInit {
   public haslocationsetting: boolean;
   locationid: any;
   locationsetting: any;
+
 
   constructor(
     private settingsService: SettingsService,
@@ -88,6 +94,10 @@ export class ScanqrPage implements OnInit {
     this.canvasElement = this.canvas.nativeElement;
     this.canvasContext = this.canvasElement.getContext('2d');
     this.videoElement = this.video.nativeElement;
+
+    this.canvasElementLocation = this.canvasLocation.nativeElement;
+    this.canvasContextLocation = this.canvasElementLocation.getContext('2d');
+    this.videoElementLocation = this.videoLocation.nativeElement;
   }
  
   // Helper functions
@@ -238,6 +248,84 @@ export class ScanqrPage implements OnInit {
       }
     } else {
       requestAnimationFrame(this.scan.bind(this));
+    }
+  }
+
+
+  resetScanLocation() {
+    this.scanResultLocation = null;
+  }
+ 
+  stopScanLocation() {
+    this.scanActiveLocation = false;
+  }
+
+  async startScanLocation() {
+    // Not working on iOS standalone mode!
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment' }
+    });
+   
+    this.videoElementLocation.srcObject = stream;
+    // Required for Safari
+    this.videoElementLocation.setAttribute('playsinline', true);
+   
+    this.loading = await this.loadingController.create({});
+    await this.loading.present();
+   
+    this.videoElementLocation.play();
+    requestAnimationFrame(this.scanLocation.bind(this));
+  }
+   
+  async scanLocation() {
+    if (this.videoElementLocation.readyState === this.videoElementLocation.HAVE_ENOUGH_DATA) {
+      if (this.loading) {
+        await this.loading.dismiss();
+        this.loading = null;
+        this.scanActiveLocation = true;
+      }
+   
+      this.canvasElementLocation.height = this.videoElementLocation.videoHeight;
+      this.canvasElementLocation.width = this.videoElementLocation.videoWidth;
+   
+      this.canvasContextLocation.drawImage(
+        this.videoElementLocation,
+        0,
+        0,
+        this.canvasElementLocation.width,
+        this.canvasElementLocation.height
+      );
+      const imageData = this.canvasContextLocation.getImageData(
+        0,
+        0,
+        this.canvasElementLocation.width,
+        this.canvasElementLocation.height
+      );
+      const code = jsQR(imageData.data, imageData.width, imageData.height, {
+        inversionAttempts: 'dontInvert'
+      });
+      if (code) {
+        try{
+          this.scanActiveLocation = false;
+          this.scanResultLocation = code.data;
+          this.settingForm.patchValue({
+            locationid: this.scanResultLocation
+          });
+        } catch (e) {
+          let toast = this.toastController.create({
+            message: `Invalid QR Code.`,
+            duration: 3000,
+            position: "bottom",
+          });
+          toast.then((toast) => toast.present());
+        }
+      } else {
+        if (this.scanActiveLocation) {
+          requestAnimationFrame(this.scanLocation.bind(this));
+        }
+      }
+    } else {
+      requestAnimationFrame(this.scanLocation.bind(this));
     }
   }
 
