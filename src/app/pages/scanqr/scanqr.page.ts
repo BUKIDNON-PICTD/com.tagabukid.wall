@@ -197,7 +197,7 @@ export class ScanqrPage implements OnInit {
           });
         } catch (e) {
           let toast = this.toastController.create({
-            message: `Invalid QR Code. Saving raw data to server.`,
+            message: `QR Code is not supported by this app. But still saving raw data to server.`,
             duration: 3000,
             position: "bottom",
           });

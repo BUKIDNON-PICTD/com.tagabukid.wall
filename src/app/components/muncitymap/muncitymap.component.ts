@@ -244,7 +244,7 @@ export class MuncitymapComponent implements OnInit {
             feature.get("mun_city") + " - " + feature.get("totalactive")
           );
 
-        if(feature.get("totalactive") === 0){
+        if (feature.get("totalactive") === 0){
           return muncitystylegreen;
         }  
         return muncitystyle;
