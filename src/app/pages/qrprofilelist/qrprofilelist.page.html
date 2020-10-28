@@ -13,11 +13,15 @@
       <div class="card-body table-responsive p-0">
         <ion-list>
           <ion-item-sliding *ngFor="let item of items" #slidingItem>
-            <ion-item (click)="printQR(item)">
+            <ion-item (click)="printQR(item)" class="centeritem breakword">
               <ion-label>
-               
-                  <h3>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</h3>
-                  <h3>{{item.address.text}}</h3>
+                  <div class="breakword">
+                    <h3>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</h3>
+                  </div>
+                  <div >
+                    <h3>{{item.address.text}}</h3>
+                  </div>
+                  <img [src]="item.photo" width="256px"/>
                 <div id="{{item.objid}}">
                   <ngx-qrcode 
                     [elementType]="elementType" 
@@ -27,7 +31,6 @@
                   </ngx-qrcode>
                 </div>
               </ion-label>
-             
             </ion-item>
             <ion-item-options>
               <a class="btn btn-app btn-danger btn-sm" routerLink="/qrprofile/{{item.objid}}">

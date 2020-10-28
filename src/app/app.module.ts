@@ -22,6 +22,13 @@ import { A2hsService } from './services/a2hs.service';
 import { FormsModule } from '@angular/forms';
 import { PushnotificationService } from './services/pushnotification.service';
 
+
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
+
+
 const config: SocketIoConfig = {
   url: `${environment.panganud}`,
   options: { options: { autoConnect: false } }
@@ -56,8 +63,26 @@ const config: SocketIoConfig = {
     Network,
     A2hsService,
     PushnotificationService
+    // Camera,
+    // File,
+    // WebView,
+    // FilePath,
+    // Base64,
     // BarcodeScanner
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+declare var require: any;
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch(err => console.log(err));
+
+// Call the element loader after the platform has been bootstrapped
+defineCustomElements(window);
