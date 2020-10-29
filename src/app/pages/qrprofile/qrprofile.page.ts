@@ -611,10 +611,10 @@ export class QrprofilePage implements OnInit {
       const profilePicture = await Camera.getPhoto({
         quality: 90,
         allowEditing: true,
-        resultType: CameraResultType.Base64,
+        resultType: CameraResultType.DataUrl,
         source: CameraSource.Camera,
       });
-      this.photo = "data:image/jpg;base64," + profilePicture.base64String;
+      this.photo = profilePicture.dataUrl;
     } catch (error) {
       console.error(error);
     }
