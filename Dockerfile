@@ -16,7 +16,7 @@ ADD typings ./typings
 ADD .firebaserc ./
 ADD angular.json ./
 ADD browserslist ./
-# ADD config.xml ./
+ADD config.xml ./
 ADD firebase.json ./
 # ADD generate-h2-push.js ./
 ADD ionic.config.json ./
