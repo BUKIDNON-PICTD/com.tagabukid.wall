@@ -11,7 +11,6 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Socket } from "ngx-socket-io";
 import { SettingsService } from "./services/settings.service";
 import { SwPush, SwUpdate } from '@angular/service-worker';
-import { MessagingService } from './services/messaging.service';
 import { version } from '../../package.json';
 
 @Component({
@@ -103,7 +102,6 @@ export class AppComponent implements OnInit {
     private offlineManager: OfflinemanagerService,
     private toastController: ToastController,
     private swUpdate: SwUpdate,
-    private messagingService: MessagingService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private swPush: SwPush,
@@ -208,58 +206,58 @@ export class AppComponent implements OnInit {
     setInterval(() => {
       this.swUpdate.checkForUpdate();
     } , 15 * 60 * 1000);
-    this.listenForMessages();
+    // this.listenForMessages();
   }
 
-  listenForMessages() {
-    this.messagingService.getMessages().subscribe(async (msg: any) => {
-      console.log(msg);
-      const alert = await this.alertCtrl.create({
-        header: msg.notification.title,
-        subHeader: msg.notification.body,
-        message: msg.data.info,
-        buttons: ['OK'],
-      });
-      await alert.present();
-    });
-  }
+  // listenForMessages() {
+  //   this.messagingService.getMessages().subscribe(async (msg: any) => {
+  //     console.log(msg);
+  //     const alert = await this.alertCtrl.create({
+  //       header: msg.notification.title,
+  //       subHeader: msg.notification.body,
+  //       message: msg.data.info,
+  //       buttons: ['OK'],
+  //     });
+  //     await alert.present();
+  //   });
+  // }
 
-  updateNotificationSetting() {
-    if (this.notificationsettings){
-      this.requestPermission();
-    } else {
-      this.deleteToken();
-    }
-  }
+  // updateNotificationSetting() {
+  //   if (this.notificationsettings){
+  //     this.requestPermission();
+  //   } else {
+  //     this.deleteToken();
+  //   }
+  // }
 
-  requestPermission() {
-    this.messagingService.requestPermission().subscribe(
-      async token => {
-        // const toast = await this.toastCtrl.create({
-        //   message: 'Got your token',
-        //   duration: 2000
-        // });
-        // toast.present();
-        await this.messagingService.subscribe({push_access_token : token});
-      },
-      async (err) => {
-        const alert = await this.alertCtrl.create({
-          header: 'Error',
-          message: err,
-          buttons: ['OK'],
-        });
+  // requestPermission() {
+  //   this.messagingService.requestPermission().subscribe(
+  //     async token => {
+  //       // const toast = await this.toastCtrl.create({
+  //       //   message: 'Got your token',
+  //       //   duration: 2000
+  //       // });
+  //       // toast.present();
+  //       await this.messagingService.subscribe({push_access_token : token});
+  //     },
+  //     async (err) => {
+  //       const alert = await this.alertCtrl.create({
+  //         header: 'Error',
+  //         message: err,
+  //         buttons: ['OK'],
+  //       });
  
-        await alert.present();
-      }
-    );
-  }
+  //       await alert.present();
+  //     }
+  //   );
+  // }
  
-  async deleteToken() {
-    this.messagingService.deleteToken();
-    // const toast = await this.toastCtrl.create({
-    //   message: 'Token removed',
-    //   duration: 2000
-    // });
-    // toast.present();
-  }
+  // async deleteToken() {
+  //   this.messagingService.deleteToken();
+  //   // const toast = await this.toastCtrl.create({
+  //   //   message: 'Token removed',
+  //   //   duration: 2000
+  //   // });
+  //   // toast.present();
+  // }
 }

@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { Chart } from "chart.js";
-import { MessagingService } from 'src/app/services/messaging.service';
 import { AlertController, ToastController, Platform, MenuController } from '@ionic/angular';
 import { A2hsService } from 'src/app/services/a2hs.service';
 

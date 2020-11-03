@@ -16,8 +16,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from 'src/environments/environment';
 
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
-import { AngularFireModule } from '@angular/fire';
+
 import { A2hsService } from './services/a2hs.service';
 import { FormsModule } from '@angular/forms';
 import { PushnotificationService } from './services/pushnotification.service';
@@ -49,8 +48,6 @@ const config: SocketIoConfig = {
     ServiceWorkerModule.register("combined-sw.js", {
       enabled: environment.production
     }),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireMessagingModule,
     SocketIoModule.forRoot(config),
     FormsModule
     // NgxQRCodeModule
