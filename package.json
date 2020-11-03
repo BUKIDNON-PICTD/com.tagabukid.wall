@@ -99,5 +99,8 @@
     "platforms": [
       "browser"
     ]
+  },
+  "browser": {
+    "crypto": false
   }
 }
