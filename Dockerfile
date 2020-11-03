@@ -17,6 +17,7 @@ ADD .firebaserc ./
 ADD angular.json ./
 ADD browserslist ./
 ADD config.xml ./
+ADD capacitor.config.json ./
 ADD firebase.json ./
 # ADD generate-h2-push.js ./
 ADD ionic.config.json ./
