@@ -1,3 +1,4 @@
+import { MuncitymapModule } from './../../modules/muncitymap/muncitymap.module';
 import { MuncovidpreviewModule } from './../../modules/muncovidpreview/muncovidpreview.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,7 +22,8 @@ import { A2hsModule } from 'src/app/modules/a2hs/a2hs.module';
     ChartsModule,
     BarchartModule,
     A2hsModule,
-    MuncovidpreviewModule
+    MuncovidpreviewModule,
+    MuncitymapModule
   ],
   declarations: [DashboardonlyPage]
 })

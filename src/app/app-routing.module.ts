@@ -75,8 +75,6 @@ const routes: Routes = [
     path: 'dashboardonly',
     loadChildren: () => import('./pages/dashboardonly/dashboardonly.module').then( m => m.DashboardonlyPageModule)
   }
-
-
 ];
 
 @NgModule({

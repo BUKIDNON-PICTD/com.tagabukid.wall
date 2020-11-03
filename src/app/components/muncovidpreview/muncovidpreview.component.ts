@@ -1,7 +1,9 @@
 import { MapService } from "./../../services/map.service";
 import {
   Component,
-  OnInit
+  ElementRef,
+  OnInit,
+  Renderer2
 } from "@angular/core";
 import Map from "ol/Map";
 import View from "ol/View";
@@ -19,7 +21,7 @@ import { CoviddataService } from 'src/app/services/coviddata.service';
   styleUrls: ['./muncovidpreview.component.scss'],
 })
 export class MuncovidpreviewComponent implements OnInit {
-  map: Map;
+  mapx: Map;
   raster: TileLayer;
   source: VectorSource;
   vector: VectorLayer;
@@ -27,12 +29,43 @@ export class MuncovidpreviewComponent implements OnInit {
   muncityvector: VectorLayer;
   projection: Projection;
   basemap: TileLayer;
+  maploaded: boolean;
+
+  divmapid: any;
+
   constructor(
     private mapservice: MapService,
-    private coviddatasvc: CoviddataService
-  ) {}
+    private coviddatasvc: CoviddataService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {
+   
+  }
+
+  ngAfterViewInit() {
+    setTimeout(_ => this.initMap(), 2000);
+  }
+  
+  create_UUID() {
+    var dt = new Date().getTime();
+    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
+      c
+    ) {
+      var r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+    });
+    return uuid;
+  }
 
   ngOnInit() {
+    let divmap = this.renderer.createElement('div');
+    this.renderer.addClass(divmap, 'map');
+    this.divmapid = "TEST" + this.create_UUID();
+    this.renderer.setAttribute(divmap, 'id', this.divmapid);
+    this.renderer.appendChild(this.el.nativeElement, divmap);
+
+
     var muncitylabelStyle = new Style({
       text: new Text({
         font: "18px Calibri,sans-serif",
@@ -88,7 +121,7 @@ export class MuncovidpreviewComponent implements OnInit {
     });
 
     
-    //add barangay boundaries
+    // add barangay boundaries
     this.mapservice.getMunicipalBrdy().then(async (feature) => {
       await this.coviddatasvc.getCovidDataByMunicipality().then((items) => {
         items
@@ -121,31 +154,31 @@ export class MuncovidpreviewComponent implements OnInit {
         }
         return muncitystyle;
       });
-      console.log("TEST");
-      await this.initMap();
+      
     });
-
-    // setTimeout((_) => , 10000);
   }
 
   initMap() {
-    
-
     //draw map
-    this.map = new Map({
+    
+    this.mapx = new Map({
       layers: [this.basemap, this.muncityvector],
-      target: "munmappreview",
+      target: this.divmapid,
       view: new View({
         zoom: 15,
         maxZoom: 20,
       }),
     });
 
-
     var zoomslider = new ZoomSlider();
-    this.map.addControl(zoomslider);
-    this.map.getView().fit([13784343.025655, 814368.207926, 14048821.648763, 978738.393527]);
+    this.mapx.addControl(zoomslider);
+    this.mapx.getView().fit([13784343.025655, 814368.207926, 14048821.648763, 978738.393527]);
 
+    
+    // if (this.map){
+      // console.log(this.map);
+    // this.maploaded = true;
+    // }
 
   }
 }
