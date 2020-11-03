@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { OlmappreviewComponent } from './olmappreview.component';
+import { DashboardonlyPage } from './dashboardonly.page';
 
-describe('OlmappreviewComponent', () => {
-  let component: OlmappreviewComponent;
-  let fixture: ComponentFixture<OlmappreviewComponent>;
+describe('DashboardonlyPage', () => {
+  let component: DashboardonlyPage;
+  let fixture: ComponentFixture<DashboardonlyPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OlmappreviewComponent ],
+      declarations: [ DashboardonlyPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(OlmappreviewComponent);
+    fixture = TestBed.createComponent(DashboardonlyPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

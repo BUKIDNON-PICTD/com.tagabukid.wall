@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { OlmapComponent } from './olmap.component';
+import { MuncovidpreviewComponent } from './muncovidpreview.component';
 
-describe('OlmapComponent', () => {
-  let component: OlmapComponent;
-  let fixture: ComponentFixture<OlmapComponent>;
+describe('MuncovidpreviewComponent', () => {
+  let component: MuncovidpreviewComponent;
+  let fixture: ComponentFixture<MuncovidpreviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OlmapComponent ],
+      declarations: [ MuncovidpreviewComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(OlmapComponent);
+    fixture = TestBed.createComponent(MuncovidpreviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -70,7 +70,12 @@ const routes: Routes = [
   {
     path: 'reportlist',
     loadChildren: () => import('./reports/reportlist/reportlist.module').then( m => m.ReportlistPageModule)
+  },
+  {
+    path: 'dashboardonly',
+    loadChildren: () => import('./pages/dashboardonly/dashboardonly.module').then( m => m.DashboardonlyPageModule)
   }
+
 
 ];
 

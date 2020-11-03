@@ -1,6 +1,4 @@
 import { MuncitymapModule } from './../../modules/muncitymap/muncitymap.module';
-import { OlmapModule } from './../../modules/olmap/olmap.module';
-import { OlmapComponent } from './../../components/olmap/olmap.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,8 +15,7 @@ import { MapsPage } from './maps.page';
     FormsModule,
     IonicModule,
     MapsPageRoutingModule,
-    MuncitymapModule
-
+    MuncitymapModule,
   ],
   declarations: [MapsPage]
 })

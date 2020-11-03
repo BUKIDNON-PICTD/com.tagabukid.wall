@@ -1,0 +1,267 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title >Data as of {{currentdatetime}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="container-fluid">
+    <app-a2hs-prompt></app-a2hs-prompt>
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>{{totalactive}}</h3>
+            <p>Active Cases</p>
+            <label>{{totalactivetoday}} New Confirmed Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer"></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{totalrecovered}}</h3>
+            <p>Recovered</p>
+            <label>{{totalrecoveredtoday}} New Recovered Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-checkmark"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-secondary">
+          <div class="inner">
+            <h3>{{totaldeceased}}</h3>
+            <p>Deceased</p>
+            <label>{{totaldeceasedtoday}} Deceased Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-close"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{totalconfirmed}}</h3>
+            <p>Total Confirmed</p>
+            <label>&nbsp;</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-information"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-indigo">
+          <div class="inner">
+            <h3>{{totalprobable}}</h3>
+            <p>Probable Cases</p>
+            <label>{{totalprobabletoday}} New Probable Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-alert"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer"></a> -->
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>{{totalsuspect}}</h3>
+            <p>Suspect Cases</p>
+            <label>{{totalsuspecttoday}} New Suspect Cases Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-help"></i>
+          </div>
+          <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-purple">
+          <div class="inner">
+            <h3>{{totalquarantined}}</h3>
+            <p>Ongoing Quarantined</p>
+            <label>&nbsp;</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-locked"></i>
+          </div>
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-lime">
+          <div class="inner">
+            <h3>{{totalcompleted}}</h3>
+            <p>Completed</p>
+            <label>{{totalcompletedtoday}} New Cleared Today</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-unlocked"></i>
+          </div>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+      <!-- <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+          <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-pie-graph"></i>
+              Data Vizualization
+            </ion-title>
+            <div class="card-tools">
+              <ul class="nav nav-pills ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#casebymunicipality" data-toggle="tab">Cases by Municipality</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#casebygender" data-toggle="tab">Confirmed Cases by Gender</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#casebyagegroup" data-toggle="tab">Case by Age Group</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="tab-content p-0">
+              <div class="chart tab-pane active" id="casebymunicipality" style="height:400px">
+                  <canvas #barChartCanvasSummaryByMunicipality></canvas>
+              </div>
+              <div class="chart tab-pane" id="casebygender" style="height:400px">
+                <canvas #barChartCanvasSummaryActiveCaseByGender></canvas>
+              </div>
+              <div class="chart tab-pane" id="casebyagegroup" style="height:400px">
+                <canvas #barChartCanvasCaseByAgeGroup></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+       </div> -->
+       <div class="col-lg-8">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Cases by Municipality
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:400px">
+              <canvas #barChartCanvasSummaryByMunicipality></canvas>
+            </div>
+          </div>
+        </div>
+       </div>
+       <div class="col-lg-4">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              CASE MAP
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:400px">
+              <app-muncovidpreview></app-muncovidpreview>
+            </div>
+          </div>
+        </div>
+       </div>
+       <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Case Summary
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:350px">
+              <canvas #barChartCanvasCaseSummary></canvas>
+            </div>
+          </div>
+        </div>
+       </div>
+       <!-- <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Case Summary 7 Day Average
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:350px">
+              <canvas #barChartCanvasCaseSummary7DayAverage></canvas>
+            </div>
+          </div>
+        </div>
+       </div> -->
+       <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Confirmed Cases by Gender
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:400px">
+              <canvas #barChartCanvasSummaryActiveCaseByGender></canvas>
+          </div>
+          </div>
+        </div>
+       </div>
+       <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              Case by Age Group
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div style="height:400px">
+              <canvas #barChartCanvasCaseByAgeGroup></canvas>
+          </div>
+          </div>
+        </div>
+       </div>
+    </div>
+  </div>
+
+</ion-content>
