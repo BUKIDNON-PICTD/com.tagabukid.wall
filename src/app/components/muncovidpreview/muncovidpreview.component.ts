@@ -21,7 +21,7 @@ import { CoviddataService } from 'src/app/services/coviddata.service';
   styleUrls: ['./muncovidpreview.component.scss'],
 })
 export class MuncovidpreviewComponent implements OnInit {
-  mapx: Map;
+  map: Map;
   raster: TileLayer;
   source: VectorSource;
   vector: VectorLayer;
@@ -39,13 +39,13 @@ export class MuncovidpreviewComponent implements OnInit {
     private renderer: Renderer2,
     private el: ElementRef
   ) {
-   
+
   }
 
   ngAfterViewInit() {
     setTimeout(_ => this.initMap(), 2000);
   }
-  
+
   create_UUID() {
     var dt = new Date().getTime();
     var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
@@ -120,10 +120,9 @@ export class MuncovidpreviewComponent implements OnInit {
       source: this.muncitysource,
     });
 
-    
     // add barangay boundaries
     this.mapservice.getMunicipalBrdy().then(async (feature) => {
-      await this.coviddatasvc.getCovidDataByMunicipality().then((items) => {
+      await this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then((items) => {
         items
           .map((a) => a.properties["address_muncity"])
           .forEach((muncity) => {
@@ -154,14 +153,12 @@ export class MuncovidpreviewComponent implements OnInit {
         }
         return muncitystyle;
       });
-      
     });
   }
 
   initMap() {
     //draw map
-    
-    this.mapx = new Map({
+    this.map = new Map({
       layers: [this.basemap, this.muncityvector],
       target: this.divmapid,
       view: new View({
@@ -171,14 +168,8 @@ export class MuncovidpreviewComponent implements OnInit {
     });
 
     var zoomslider = new ZoomSlider();
-    this.mapx.addControl(zoomslider);
-    this.mapx.getView().fit([13784343.025655, 814368.207926, 14048821.648763, 978738.393527]);
-
-    
-    // if (this.map){
-      // console.log(this.map);
-    // this.maploaded = true;
-    // }
-
+    this.map.addControl(zoomslider);
+    this.map.getView().fit([13784343.025655, 814368.207926, 14048821.648763, 978738.393527]);
+    this.map.getView().setZoom(9);
   }
 }

@@ -1,4 +1,3 @@
-import { BarchartModule } from './../../modules/barchart/barchart.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +9,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 import { DashboardPage } from './dashboard.page';
 import { ChartsModule } from 'ng2-charts';
 import { A2hsModule } from 'src/app/modules/a2hs/a2hs.module';
+import { MuncovidpreviewModule } from 'src/app/modules/muncovidpreview/muncovidpreview.module';
 
 @NgModule({
   imports: [
@@ -18,8 +18,9 @@ import { A2hsModule } from 'src/app/modules/a2hs/a2hs.module';
     IonicModule,
     DashboardPageRoutingModule,
     ChartsModule,
-    BarchartModule,
-    A2hsModule
+    A2hsModule,
+    MuncovidpreviewModule
+
   ],
   declarations: [
     DashboardPage

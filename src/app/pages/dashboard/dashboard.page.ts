@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { Chart } from "chart.js";
-import { AlertController, ToastController, Platform } from '@ionic/angular';
+import { AlertController, ToastController, Platform, LoadingController } from '@ionic/angular';
 import { A2hsService } from 'src/app/services/a2hs.service';
 
 
@@ -55,13 +55,16 @@ export class DashboardPage implements OnInit {
   private barChartCaseSummary7DayAverage: Chart;
 
   public chartloaded: boolean;
-
+  public barChartCanvasSummaryByMunicipality_loaded: boolean;
+  public barChartCanvasCaseSummary_loaded: boolean;
+  public barChartCanvasSummaryActiveCaseByGender_loaded: boolean;
+  public barChartCanvasCaseByAgeGroup_loaded: boolean;
   constructor(
     private coviddatasvc: CoviddataService,
     public a2hs: A2hsService,
-    public plt : Platform
-  ) { 
-   
+    public plt: Platform
+  ) {
+
     // A2HS - START
     a2hs.checkUserAgent();
     a2hs.trackStandalone();
@@ -90,19 +93,56 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.chartloaded = false;
     this.currentdatetime = new Date().toLocaleString();
+
+    //check online data if not available use local
+
+    // this.getdata()
+
     setTimeout((_) => this.getcovidtotals(), 2000);
     setTimeout((_) => this.createbarcharts(), 2000);
     setTimeout((_) => this.createprovincestackbarchart(), 2000);
 
-    setInterval(data => {
-      this.currentdatetime = new Date().toLocaleString();
-      this.updatebarcharts();
-      this.updateprovincestackbarchart();
-    }, 20000);
+    // setInterval(data => {
+    //   this.currentdatetime = new Date().toLocaleString();
+    //   this.updatebarcharts();
+    //   this.updateprovincestackbarchart();
+    // }, 20000);
+  }
+
+  getcovidtotals(){
+    this.coviddatasvc.bukidnoncovid19_view_summary().then(items => {
+      // console.log(items);
+      // this.totalconfirmed = items.filter(obj => obj.properties['classification'] === 'CONFIRMED').length;
+      this.totalactive = items[0].properties['totalactive'];
+      this.totalactivetoday = items[0].properties['totalactivetoday'];
+      this.totalrecovered = items[0].properties['totalrecovered'];
+      this.totalrecoveredtoday = items[0].properties['totalrecoveredtoday'];
+      this.totaldeceased = items[0].properties['totaldeceased'];
+      this.totaldeceasedtoday = items[0].properties['totaldeceasedtoday'];
+      this.totalconfirmed = items[0].properties['totalconfirmed'];
+      this.totalprobable = items[0].properties['totalprobable'];
+      this.totalprobabletoday = items[0].properties['totalprobabletoday'];
+      this.totalsuspect = items[0].properties['totalsuspect'];
+      this.totalsuspecttoday = items[0].properties['totalsuspecttoday'];
+      this.totalcompleted = items[0].properties['totalcompleted'];
+      this.totalcompletedtoday = items[0].properties['totalcompletedtoday'];
+      this.totalquarantined = items[0].properties['totalquarantined'];
+      this.totalconfirmedmale = items[0].properties['totalconfirmedmale'];
+      this.totalconfirmedfemale = items[0].properties['totalconfirmedfemale'];
+      this.totalconfirmed20below = items[0].properties['totalconfirmed20below'];
+      this.totalconfirmed20belowmale = items[0].properties['totalconfirmed20belowmale'];
+      this.totalconfirmed20belowfemale = items[0].properties['totalconfirmed20belowfemale'];
+      this.totalconfirmed60above = items[0].properties['totalconfirmed60above'];
+      this.totalconfirmed60abovemale = items[0].properties['totalconfirmed60abovemale'];
+      this.totalconfirmed60abovefemale = items[0].properties['totalconfirmed60abovefemale'];
+
+    });
   }
 
   createbarcharts(){
-    this.coviddatasvc.getCovidDataByMunicipality().then(items => {
+    this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then(items => {
+      this.barChartCanvasSummaryByMunicipality_loaded = true;
+      this.barChartCanvasSummaryActiveCaseByGender_loaded = true;
       this.barChartCaseByMunicipality = new Chart(this.barChartCanvasSummaryByMunicipality.nativeElement, {
         type: "horizontalBar",
         data: {
@@ -217,7 +257,8 @@ export class DashboardPage implements OnInit {
       });
     });
 
-    this.coviddatasvc.getCovidDataAgeGroup().then(items => {
+    this.coviddatasvc.bukidnoncovid19_view_agegroup_summary().then(items => {
+      this.barChartCanvasCaseByAgeGroup_loaded = true;
       // console.log(items.map(a => a.properties['agerange']));
       this.barChartCaseByAgeGroup = new Chart(this.barChartCanvasCaseByAgeGroup.nativeElement, {
         type: "horizontalBar",
@@ -284,7 +325,7 @@ export class DashboardPage implements OnInit {
     this.barChartCaseByAgeGroup.data.datasets.length = 0;
     this.barChartCaseByAgeGroup.update();
 
-    this.coviddatasvc.getCovidDataByMunicipality().then(items => {
+    this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then(items => {
       let data1 =  {
         labels: items.map(a => a.properties['address_muncity']),
         datasets: [
@@ -353,7 +394,7 @@ export class DashboardPage implements OnInit {
       this.barChartCaseByGender.update();
     });
 
-    this.coviddatasvc.getCovidDataAgeGroup().then(items => {
+    this.coviddatasvc.bukidnoncovid19_view_agegroup_summary().then(items => {
       let data3 = {
         labels:  items.map(a => a.properties['agerange']),
         datasets: [
@@ -386,38 +427,9 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  getcovidtotals(){
-    this.coviddatasvc.getCovidData().then(items => {
-      // console.log(items);
-      // this.totalconfirmed = items.filter(obj => obj.properties['classification'] === 'CONFIRMED').length;
-      this.totalactive = items[0].properties['totalactive'];
-      this.totalactivetoday = items[0].properties['totalactivetoday'];
-      this.totalrecovered = items[0].properties['totalrecovered'];
-      this.totalrecoveredtoday = items[0].properties['totalrecoveredtoday'];
-      this.totaldeceased = items[0].properties['totaldeceased'];
-      this.totaldeceasedtoday = items[0].properties['totaldeceasedtoday'];
-      this.totalconfirmed = items[0].properties['totalconfirmed'];
-      this.totalprobable = items[0].properties['totalprobable'];
-      this.totalprobabletoday = items[0].properties['totalprobabletoday'];
-      this.totalsuspect = items[0].properties['totalsuspect'];
-      this.totalsuspecttoday = items[0].properties['totalsuspecttoday'];
-      this.totalcompleted = items[0].properties['totalcompleted'];
-      this.totalcompletedtoday = items[0].properties['totalcompletedtoday'];
-      this.totalquarantined = items[0].properties['totalquarantined'];
-      this.totalconfirmedmale = items[0].properties['totalconfirmedmale'];
-      this.totalconfirmedfemale = items[0].properties['totalconfirmedfemale'];
-      this.totalconfirmed20below = items[0].properties['totalconfirmed20below'];
-      this.totalconfirmed20belowmale = items[0].properties['totalconfirmed20belowmale'];
-      this.totalconfirmed20belowfemale = items[0].properties['totalconfirmed20belowfemale'];
-      this.totalconfirmed60above = items[0].properties['totalconfirmed60above'];
-      this.totalconfirmed60abovemale = items[0].properties['totalconfirmed60abovemale'];
-      this.totalconfirmed60abovefemale = items[0].properties['totalconfirmed60abovefemale'];
-
-    });
-  }
-
   createprovincestackbarchart(){
-      this.coviddatasvc.getCovidProvinceDashboard().then(items => {
+      this.coviddatasvc.bukidnoncovid19_view_province_dashboard().then(items => {
+      this.barChartCanvasCaseSummary_loaded = true;
       this.barChartCaseSummary = new Chart(this.barChartCanvasCaseSummary.nativeElement, {
         type: "bar",
         data: {
@@ -487,7 +499,7 @@ export class DashboardPage implements OnInit {
   updateprovincestackbarchart(){
     this.barChartCaseSummary.data.datasets.length = 0;
     this.barChartCaseSummary.update();
-    this.coviddatasvc.getCovidProvinceDashboard().then(async items => {
+    this.coviddatasvc.bukidnoncovid19_view_province_dashboard().then(async items => {
       // console.log(items);
       let data = {
         labels: items.map(a => a.properties['selected_date']),

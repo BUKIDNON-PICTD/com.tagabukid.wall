@@ -34,7 +34,7 @@ export class CasesPage implements OnInit {
     const queryWords = this.queryText.split(" ").filter(w => !!w.trim().length);
     if (event) {
       setTimeout(() => {
-        this.coviddatasvc.getCases().then(items => {
+        this.coviddatasvc.bukidnoncovid19_view().then(items => {
           if (!items) {
             this.cases = [];
           } else {
@@ -57,7 +57,7 @@ export class CasesPage implements OnInit {
         }
       }, 500);
     } else {
-      this.coviddatasvc.getCases().then(items => {
+      this.coviddatasvc.bukidnoncovid19_view().then(items => {
         if (!items) {
           this.cases = [];
         } else {

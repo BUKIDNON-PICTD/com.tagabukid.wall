@@ -55,7 +55,7 @@ export class MuncitydashboardPage implements OnInit {
   ngOnInit() {
     this.currentdatetime = new Date().toLocaleString();
 
-    this.coviddatasvc.getCovidDataByMunicipality().then(async items => {
+    this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then(async items => {
       this.muncities = items.map(a => a.properties['address_muncity']);
       this.muncitydata = items;
       this.selectedMunicipality = "BAUNGON";
@@ -101,7 +101,7 @@ export class MuncitydashboardPage implements OnInit {
   }
 
   createbarchartdata(){
-      this.coviddatasvc.getCovidMunicipalityDashboard(this.selectedMunicipality).then(items => {
+      this.coviddatasvc.bukidnoncovid19_view_municipality_dashboard(this.selectedMunicipality).then(items => {
       this.barChart = new Chart(this.barChartCaseSummary.nativeElement, {
         type: "bar",
         data: {
@@ -171,7 +171,7 @@ export class MuncitydashboardPage implements OnInit {
   updatebarchartdata(){
     this.barChart.data.datasets.length = 0;
     this.barChart.update();
-    this.coviddatasvc.getCovidMunicipalityDashboard(this.selectedMunicipality).then(async items => {
+    this.coviddatasvc.bukidnoncovid19_view_municipality_dashboard(this.selectedMunicipality).then(async items => {
       let data = {
         labels: items.map(a => a.properties['selected_date']),
         datasets: [
@@ -229,7 +229,7 @@ export class MuncitydashboardPage implements OnInit {
     });
     this.pieChart.update();
 
-    this.coviddatasvc.getCovidDataAgeGroupByMunicipality(this.selectedMunicipality).then(items => {
+    this.coviddatasvc.bukidnoncovid19_view_agegroup_summary_municipality(this.selectedMunicipality).then(items => {
       // console.log(items.map(a => a.properties['agerange']));
       this.barChartCaseByAgeGroup = new Chart(this.barChartCanvasCaseByAgeGroup.nativeElement, {
         type: "horizontalBar",
@@ -311,7 +311,7 @@ export class MuncitydashboardPage implements OnInit {
     this.pieChart.data = data;
     this.pieChart.update();
 
-    this.coviddatasvc.getCovidDataAgeGroupByMunicipality(this.selectedMunicipality).then(items => {
+    this.coviddatasvc.bukidnoncovid19_view_agegroup_summary_municipality(this.selectedMunicipality).then(items => {
       let data3 = {
         labels:  items.map(a => a.properties['agerange']),
         datasets: [

@@ -171,7 +171,7 @@
           </div>
         </div>
        </div> -->
-       <div class="col-lg-12">
+       <div class="col-lg-8">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
         <div class="card-header">
             <ion-title class="card-title" color="primary">
@@ -181,11 +181,30 @@
           </div>
           <div class="card-body">
             <div style="height:400px">
+              <div class="overlay" *ngIf="!barChartCanvasSummaryByMunicipality_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
               <canvas #barChartCanvasSummaryByMunicipality></canvas>
           </div>
           </div>
         </div>
        </div>
+       <div class="col-lg-4">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+          <div class="card-body">
+            <div style="height:450px; text-align: center;">
+              <app-muncovidpreview></app-muncovidpreview>
+            </div>
+          </div>
+        </div>
+       </div>
+       <!-- <div class="col-lg-4">
+        <div class="card" style="position: relative; left: 0px; top: 0px;">
+          <div class="card-body">
+            <div style="height:450px; text-align: center;">
+              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FProvincial-Health-Office-Bukidnon-105831774663901%2F&tabs=timeline&width=340&height=331&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=139534969456997" width="340" height="331" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+            </div>
+          </div>
+        </div>
+       </div> -->
        <div class="col-lg-12">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
         <div class="card-header">
@@ -195,7 +214,8 @@
             </ion-title>
           </div>
           <div class="card-body">
-            <div style="height:350px">
+            <div style="height:400px;">
+              <div class="overlay" *ngIf="!barChartCanvasCaseSummary_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
               <canvas #barChartCanvasCaseSummary></canvas>
             </div>
           </div>
@@ -226,6 +246,7 @@
           </div>
           <div class="card-body">
             <div style="height:400px">
+              <div class="overlay" *ngIf="!barChartCanvasSummaryActiveCaseByGender_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
               <canvas #barChartCanvasSummaryActiveCaseByGender></canvas>
           </div>
           </div>
@@ -241,6 +262,7 @@
           </div>
           <div class="card-body">
             <div style="height:400px">
+              <div class="overlay" *ngIf="!barChartCanvasCaseByAgeGroup_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
               <canvas #barChartCanvasCaseByAgeGroup></canvas>
           </div>
           </div>
