@@ -14,6 +14,7 @@
       <ion-select-option *ngFor="let x of muncities">{{x}}</ion-select-option>
     </ion-select>
   </ion-item>
+
   &nbsp;
   <div class="container-fluid">
     <div class="row">
@@ -149,8 +150,9 @@
             </ion-title>
           </div>
           <div class="card-body">
-            <div style="height:350px">
-              <canvas #barChartCaseSummary></canvas>
+            <div style="height:350px"  >
+              <div class="overlay" *ngIf="!barChartCaseSummary_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
+              <canvas #barChartCaseSummary ></canvas>
             </div>
           </div>
         </div>
@@ -165,7 +167,8 @@
           </div>
           <div class="card-body">
             <div style="height:350px">
-              <canvas #pieChartGenderSummary></canvas>
+              <div class="overlay" *ngIf="!pieChartGenderSummary_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
+              <canvas #pieChartGenderSummary ></canvas>
             </div>
           </div>
         </div>
@@ -180,7 +183,8 @@
           </div>
           <div class="card-body">
             <div style="height:350px">
-              <canvas #barChartCanvasCaseByAgeGroup></canvas>
+              <div class="overlay" *ngIf="!barChartCanvasCaseByAgeGroup_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
+              <canvas #barChartCanvasCaseByAgeGroup ></canvas>
             </div>
           </div>
         </div>

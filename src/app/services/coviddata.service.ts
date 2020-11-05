@@ -17,6 +17,7 @@ export class CoviddataService {
     private toastController: ToastController,
     private storage: Storage
   ) {}
+  private latestdate: any;
 
   bukidnoncovid19_view_summary(): Promise<any> {
     return new Promise((resolve) => {
@@ -239,12 +240,32 @@ export class CoviddataService {
         })
       );
   }
-
-  bukidnoncovid19_view_province_dashboard(): Promise<any> {
-    return new Promise((resolve) => {
-      this.bukidnoncovid19_view_province_dashboard_online().subscribe((next) => {
-        this.storage.set("bukidnoncovid19_view_province_dashboard", next);
-        resolve(next);
+  
+ bukidnoncovid19_view_province_dashboard(): Promise<any> {
+    return new Promise(async (resolve) => {
+      this.latestdate = "2020-04-01";
+      await this.storage.get("bukidnoncovid19_view_province_dashboard_date").then((item) => {
+        if (item) {
+          this.latestdate = item;
+        }
+      });
+      
+      await this.bukidnoncovid19_view_province_dashboard_online(this.latestdate).subscribe((next) => {
+        this.storage.get("bukidnoncovid19_view_province_dashboard").then((items) => {
+          if (items) {
+            items.pop();
+            next.forEach((x) => {
+              items.push(x);
+            });
+            this.storage.set("bukidnoncovid19_view_province_dashboard", items);
+            this.storage.set("bukidnoncovid19_view_province_dashboard_date", items[items.length - 1].properties.selected_date);
+            resolve(items);
+          } else {
+            this.storage.set("bukidnoncovid19_view_province_dashboard", next);
+            this.storage.set("bukidnoncovid19_view_province_dashboard_date", next[next.length - 1].properties.selected_date);
+            resolve(next);
+          }
+        });
       }, (error) => {
         this.storage.get("bukidnoncovid19_view_province_dashboard").then((items) => {
           if (items) {
@@ -255,14 +276,16 @@ export class CoviddataService {
     });
   }
 
-  bukidnoncovid19_view_province_dashboard_online(): Observable<any[]> {
+  bukidnoncovid19_view_province_dashboard_online(latestdate): Observable<any[]> {
+    
     let headers = new HttpHeaders({
       Authorization: "Basic " + btoa("covidviewer:covidviewer"),
       "Content-Type": "application/json",
     });
 
     let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_municipality_dashboard&outputFormat=application%2Fjson`;
-    apiurl += `&viewparams=MUNCITY:;STARTDATE:2020-04-01`;
+    apiurl += `&viewparams=MUNCITY:;STARTDATE:${latestdate}`;
+
     return this.http
       .get<any>(apiurl, {
         headers: headers,
@@ -328,219 +351,6 @@ export class CoviddataService {
         })
       );
   }
-
-  // getCovidData(): Promise<any[]> {
-  //   let headers = new HttpHeaders({
-  //     Authorization: "Basic " + btoa("covidviewer:covidviewer"),
-  //     "Content-Type": "application/json",
-  //   });
-
-  //   let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_summary&maxFeatures=50&outputFormat=application%2Fjson`;
-  //   return this.http
-  //     .get<any>(apiurl, {
-  //       headers: headers,
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       map((res) => res.features),
-  //       tap((res) => {
-  //         return res;
-  //       }),
-  //       catchError((e) => {
-  //         let toast = this.toastController.create({
-  //           message: `Unable to download data from the server.`,
-  //           duration: 3000,
-  //           position: "bottom",
-  //         });
-  //         toast.then((toast) => toast.present());
-  //         throw new Error(e);
-  //       })
-  //     )
-  //     .toPromise();
-  // }
-
-  // getCovidDataByMunicipality(): Promise<any[]> {
-  //   let headers = new HttpHeaders({
-  //     Authorization: "Basic " + btoa("covidviewer:covidviewer"),
-  //     "Content-Type": "application/json",
-  //   });
-
-  //   let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_by_municipality_summary&maxFeatures=50&outputFormat=application%2Fjson`;
-  //   return this.http
-  //     .get<any>(apiurl, {
-  //       headers: headers,
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       map((res) => res.features),
-  //       tap((res) => {
-  //         return res;
-  //       }),
-  //       catchError((e) => {
-  //         let toast = this.toastController.create({
-  //           message: `Unable to download data from the server.`,
-  //           duration: 3000,
-  //           position: "bottom",
-  //         });
-  //         toast.then((toast) => toast.present());
-  //         throw new Error(e);
-  //       })
-  //     )
-  //     .toPromise();
-  // }
-
-  // getCovidDataAgeGroup(): Promise<any[]> {
-  //   let headers = new HttpHeaders({
-  //     Authorization: "Basic " + btoa("covidviewer:covidviewer"),
-  //     "Content-Type": "application/json",
-  //   });
-
-  //   let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_agegroup_summary&maxFeatures=50&outputFormat=application%2Fjson&viewparams=MUNCITY:`;
-  //   return this.http
-  //     .get<any>(apiurl, {
-  //       headers: headers,
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       map((res) => res.features),
-  //       tap((res) => {
-  //         return res;
-  //       }),
-  //       catchError((e) => {
-  //         let toast = this.toastController.create({
-  //           message: `Unable to download data from the server.`,
-  //           duration: 3000,
-  //           position: "bottom",
-  //         });
-  //         toast.then((toast) => toast.present());
-  //         throw new Error(e);
-  //       })
-  //     )
-  //     .toPromise();
-  // }
-
-  // getCovidDataAgeGroupByMunicipality(municipality): Promise<any[]> {
-  //   let headers = new HttpHeaders({
-  //     Authorization: "Basic " + btoa("covidviewer:covidviewer"),
-  //     "Content-Type": "application/json",
-  //   });
-
-  //   let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_agegroup_summary&maxFeatures=50&outputFormat=application%2Fjson`;
-  //   apiurl += `&viewparams=MUNCITY:` + municipality;
-  //   return this.http
-  //     .get<any>(apiurl, {
-  //       headers: headers,
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       map((res) => res.features),
-  //       tap((res) => {
-  //         return res;
-  //       }),
-  //       catchError((e) => {
-  //         let toast = this.toastController.create({
-  //           message: `Unable to download data from the server.`,
-  //           duration: 3000,
-  //           position: "bottom",
-  //         });
-  //         toast.then((toast) => toast.present());
-  //         throw new Error(e);
-  //       })
-  //     )
-  //     .toPromise();
-  // }
-
-  // getCovidMunicipalityDashboard(municipality): Promise<any[]> {
-  //   let headers = new HttpHeaders({
-  //     Authorization: "Basic " + btoa("covidviewer:covidviewer"),
-  //     "Content-Type": "application/json",
-  //   });
-
-  //   let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_municipality_dashboard&outputFormat=application%2Fjson`;
-  //   apiurl += `&viewparams=MUNCITY:` + municipality + `;STARTDATE:2020-04-01`;
-  //   return this.http
-  //     .get<any>(apiurl, {
-  //       headers: headers,
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       map((res) => res.features),
-  //       tap((res) => {
-  //         return res;
-  //       }),
-  //       catchError((e) => {
-  //         let toast = this.toastController.create({
-  //           message: `Unable to download data from the server.`,
-  //           duration: 3000,
-  //           position: "bottom",
-  //         });
-  //         toast.then((toast) => toast.present());
-  //         throw new Error(e);
-  //       })
-  //     )
-  //     .toPromise();
-  // }
-
-  // getCovidProvinceDashboard(): Promise<any[]> {
-  //   let headers = new HttpHeaders({
-  //     Authorization: "Basic " + btoa("covidviewer:covidviewer"),
-  //     "Content-Type": "application/json",
-  //   });
-
-  //   let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_municipality_dashboard&outputFormat=application%2Fjson`;
-  //   apiurl += `&viewparams=MUNCITY:;STARTDATE:2020-04-01`;
-  //   return this.http
-  //     .get<any>(apiurl, {
-  //       headers: headers,
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       map((res) => res.features),
-  //       tap((res) => {
-  //         return res;
-  //       }),
-  //       catchError((e) => {
-  //         let toast = this.toastController.create({
-  //           message: `Unable to download data from the server.`,
-  //           duration: 3000,
-  //           position: "bottom",
-  //         });
-  //         toast.then((toast) => toast.present());
-  //         throw new Error(e);
-  //       })
-  //     )
-  //     .toPromise();
-  // }
-
-  // getCases(): Promise<any[]> {
-  //   let headers = new HttpHeaders({
-  //     Authorization: "Basic " + btoa("covidviewer:covidviewer"),
-  //     "Content-Type": "application/json",
-  //   });
-
-  //   let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view&outputFormat=application%2Fjson`;
-  //   return this.http
-  //     .get<any>(apiurl, {
-  //       headers: headers,
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       map((res) => res.features),
-  //       tap((res) => {
-  //         return res;
-  //       }),
-  //       catchError((e) => {
-  //         let toast = this.toastController.create({
-  //           message: `Unable to download data from the server.`,
-  //           duration: 3000,
-  //           position: "bottom",
-  //         });
-  //         toast.then((toast) => toast.present());
-  //         throw new Error(e);
-  //       })
-  //     )
-  //     .toPromise();
-  // }
 
   showAlert(msg) {
     let alert = this.alertController.create({

@@ -61,14 +61,14 @@ export class MuncovidpreviewComponent implements OnInit {
   ngOnInit() {
     let divmap = this.renderer.createElement('div');
     this.renderer.addClass(divmap, 'map');
-    this.divmapid = "TEST" + this.create_UUID();
+    this.divmapid = "COVIDMAP" + this.create_UUID();
     this.renderer.setAttribute(divmap, 'id', this.divmapid);
     this.renderer.appendChild(this.el.nativeElement, divmap);
 
 
     var muncitylabelStyle = new Style({
       text: new Text({
-        font: "18px Calibri,sans-serif",
+        font: "12px Calibri,sans-serif",
         overflow: true,
         fill: new Fill({
           color: "#fff",
@@ -81,7 +81,7 @@ export class MuncovidpreviewComponent implements OnInit {
     });
     var muncitystylefill = new Style({
       fill: new Fill({
-        color: "rgba(255, 0, 0, 0.40)",
+        color: "rgba(255, 0, 0)",
       }),
       stroke: new Stroke({
         color: "#fcf403",
@@ -91,7 +91,7 @@ export class MuncovidpreviewComponent implements OnInit {
 
     var muncitystylefillgreen = new Style({
       fill: new Fill({
-        color: "rgba(0, 255, 0, 0.40)",
+        color: "rgba(0, 255, 0)",
       }),
       stroke: new Stroke({
         color: "#fcf403",

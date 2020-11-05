@@ -7,10 +7,6 @@ const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full'
   },
-  // {
-  //   path: 'folder/:id',
-  //   loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  // },
   {
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
@@ -70,10 +66,6 @@ const routes: Routes = [
   {
     path: 'reportlist',
     loadChildren: () => import('./reports/reportlist/reportlist.module').then( m => m.ReportlistPageModule)
-  },
-  {
-    path: 'dashboardonly',
-    loadChildren: () => import('./pages/dashboardonly/dashboardonly.module').then( m => m.DashboardonlyPageModule)
   }
 ];
 
