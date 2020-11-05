@@ -103,7 +103,7 @@ export class MuncitydashboardPage implements OnInit {
       await this.setmuncitydatavalues();
       await this.createbarchartdata();
       await this.createpiechartdata();
-      this.startinterval();
+      await this.startinterval();
     });
   
   }
