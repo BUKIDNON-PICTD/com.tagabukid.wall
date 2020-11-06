@@ -121,7 +121,7 @@ export class MuncovidpreviewComponent implements OnInit {
     });
 
     // add barangay boundaries
-    this.mapservice.getMunicipalBrdy().then(async (feature) => {
+    this.mapservice.MunicipalBdry().then(async (feature) => {
       await this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then((items) => {
         items
           .map((a) => a.properties["address_muncity"])

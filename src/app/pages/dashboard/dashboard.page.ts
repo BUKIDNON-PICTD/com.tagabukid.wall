@@ -135,6 +135,10 @@ export class DashboardPage implements OnInit {
    
   }
 
+  ionViewDidLeave(){
+    clearTimeout(this.timer);
+  }
+
   async updatedash() {
     this.currentdatetime = new Date().toLocaleString();
     await this.getcovidtotals();

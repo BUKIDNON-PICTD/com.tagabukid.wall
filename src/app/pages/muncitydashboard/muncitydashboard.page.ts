@@ -108,6 +108,10 @@ export class MuncitydashboardPage implements OnInit {
   
   }
 
+  ionViewDidLeave(){
+    clearTimeout(this.timer);
+  }
+
 
   async onMunicipalityChange(){
     // this.currentdatetime = new Date().toLocaleString();
