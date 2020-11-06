@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { tap, map , catchError } from 'rxjs/operators';
-
+import { Storage } from "@ionic/storage";
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,10 +14,25 @@ export class MapService {
   constructor(
     private http: HttpClient,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private storage: Storage
   ) { }
 
-  getMunicipalBrdy(): Promise<any[]> {
+  MunicipalBdry(): Promise<any> {
+    return new Promise((resolve) => {
+      this.storage.get("MunicipalBdry").then((items) => {
+        if (items) {
+          resolve(items);
+        }else {
+          this.getMunicipalBrdy().subscribe((next) => {
+            this.storage.set("MunicipalBdry", next);
+            resolve(next);
+          });
+        }
+      });
+    });
+  }
+  getMunicipalBrdy(): Observable<any[]> {
     let headers = new HttpHeaders({
       "Authorization": "Basic "+ btoa("covidviewer:covidviewer"),
       "Content-Type":  "application/json",
@@ -40,7 +56,7 @@ export class MapService {
         toast.then((toast) => toast.present());
         throw new Error(e);
       })
-    ).toPromise();
+    );
   }
   showAlert(msg) {
     let alert = this.alertController.create({
