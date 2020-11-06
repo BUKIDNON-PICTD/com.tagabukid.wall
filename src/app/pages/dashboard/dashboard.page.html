@@ -3,12 +3,23 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title >Data as of {{currentdatetime}}</ion-title>
+    <ion-title>Dashboard</ion-title>
+    <ion-item slot="end" lines="none">
+      <ion-label>Sync Dashboard</ion-label>
+      <ion-toggle color="primary" [(ngModel)]="sync" (ionChange)="updatesyncsettings()">
+      </ion-toggle>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <div class="container-fluid">
+    <ion-toolbar color="primary">
+      <nav class="navbar navbar-expand navbar-primary navbar-dark">
+        <ion-title>Data as of {{currentdatetime}}</ion-title>
+      </nav>
+    </ion-toolbar>
+    &nbsp;
     <app-a2hs-prompt></app-a2hs-prompt>
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -171,9 +182,9 @@
           </div>
         </div>
        </div> -->
-       <div class="col-lg-8">
+      <div class="col-lg-8">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
-        <div class="card-header">
+          <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
               Cases by Municipality
@@ -181,13 +192,14 @@
           </div>
           <div class="card-body">
             <div style="height:400px">
-              <div class="overlay" *ngIf="!barChartCanvasSummaryByMunicipality_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
+              <div class="overlay" *ngIf="!barChartCanvasSummaryByMunicipality_loaded"><img
+                  src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart" /></div>
               <canvas #barChartCanvasSummaryByMunicipality></canvas>
-          </div>
+            </div>
           </div>
         </div>
-       </div>
-       <div class="col-lg-4">
+      </div>
+      <div class="col-lg-4">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
           <div class="card-body">
             <div style="height:450px; text-align: center;">
@@ -195,8 +207,8 @@
             </div>
           </div>
         </div>
-       </div>
-       <!-- <div class="col-lg-4">
+      </div>
+      <!-- <div class="col-lg-4">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
           <div class="card-body">
             <div style="height:450px; text-align: center;">
@@ -205,9 +217,9 @@
           </div>
         </div>
        </div> -->
-       <div class="col-lg-12">
+      <div class="col-lg-12">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
-        <div class="card-header">
+          <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
               Case Summary
@@ -215,13 +227,14 @@
           </div>
           <div class="card-body">
             <div style="height:400px;">
-              <div class="overlay" *ngIf="!barChartCanvasCaseSummary_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
+              <div class="overlay" *ngIf="!barChartCanvasCaseSummary_loaded"><img src="https://i.imgur.com/fXUIBfi.gif"
+                  alt="Loading Chart" /></div>
               <canvas #barChartCanvasCaseSummary></canvas>
             </div>
           </div>
         </div>
-       </div>
-       <!-- <div class="col-lg-12">
+      </div>
+      <!-- <div class="col-lg-12">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
         <div class="card-header">
             <ion-title class="card-title" color="primary">
@@ -236,9 +249,9 @@
           </div>
         </div>
        </div> -->
-       <div class="col-lg-12">
+      <div class="col-lg-12">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
-        <div class="card-header">
+          <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
               Confirmed Cases by Gender
@@ -246,15 +259,16 @@
           </div>
           <div class="card-body">
             <div style="height:400px">
-              <div class="overlay" *ngIf="!barChartCanvasSummaryActiveCaseByGender_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
+              <div class="overlay" *ngIf="!barChartCanvasSummaryActiveCaseByGender_loaded"><img
+                  src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart" /></div>
               <canvas #barChartCanvasSummaryActiveCaseByGender></canvas>
-          </div>
+            </div>
           </div>
         </div>
-       </div>
-       <div class="col-lg-12">
+      </div>
+      <div class="col-lg-12">
         <div class="card" style="position: relative; left: 0px; top: 0px;">
-        <div class="card-header">
+          <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
               Case by Age Group
@@ -262,12 +276,13 @@
           </div>
           <div class="card-body">
             <div style="height:400px">
-              <div class="overlay" *ngIf="!barChartCanvasCaseByAgeGroup_loaded"><img src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart"/></div>
+              <div class="overlay" *ngIf="!barChartCanvasCaseByAgeGroup_loaded"><img
+                  src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart" /></div>
               <canvas #barChartCanvasCaseByAgeGroup></canvas>
-          </div>
+            </div>
           </div>
         </div>
-       </div>
+      </div>
     </div>
   </div>
 

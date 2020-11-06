@@ -61,6 +61,7 @@ export class DashboardPage implements OnInit {
   public barChartCanvasCaseByAgeGroup_loaded: boolean;
   countdown: number;
   timer: any;
+  sync: any;
   constructor(
     private coviddatasvc: CoviddataService,
     public a2hs: A2hsService,
@@ -98,14 +99,17 @@ export class DashboardPage implements OnInit {
     this.currentdatetime = new Date().toLocaleString();
 
     this.createdash();
-   
+    this.sync = true;
+  }
 
-    // setInterval(data => {
-    //   this.currentdatetime = new Date().toLocaleString();
-    //   this.getcovidtotals();
-    //   this.updatebarcharts();
-    //   this.updateprovincestackbarchart();
-    // }, 20000);
+  updatesyncsettings(){
+    if (!this.sync){
+      clearTimeout(this.timer);
+      this.timer = null;
+    }else{
+      this.startinterval();
+     
+    }
   }
 
   async createdash() {
@@ -114,6 +118,7 @@ export class DashboardPage implements OnInit {
     await this.createprovincestackbarchart();
     await this.startinterval();
   }
+
   startinterval(){
     this.countdown = 20;
     this.timer = setInterval(() => {
@@ -121,7 +126,7 @@ export class DashboardPage implements OnInit {
       this.countdown--;
       if (this.countdown <= 5){
         let toast = this.toastController.create({
-          message: `Reloading in ${this.countdown}`,
+          message: `Reloading dashboard data in ${this.countdown}`,
           duration: 1000,
           position: "bottom",
         });
@@ -129,14 +134,15 @@ export class DashboardPage implements OnInit {
       }
       if (this.countdown === 0){
         clearTimeout(this.timer);
+        this.timer = null;
         this.updatedash();
       }
     }, 1000);
-   
   }
 
   ionViewDidLeave(){
     clearTimeout(this.timer);
+    this.timer = null;
   }
 
   async updatedash() {

@@ -55,11 +55,22 @@ export class MuncitydashboardPage implements OnInit {
   public barChartCanvasCaseByAgeGroup_loaded: boolean;
   public timer: any;
   public countdown: any;
+  sync: boolean;
   constructor(private coviddatasvc: CoviddataService, private renderer: Renderer2, private el: ElementRef, public toastController: ToastController) { }
 
   ngOnInit() {
     this.currentdatetime = new Date().toLocaleString();
     this.loadmunicipalities();
+    this.sync = true;
+  }
+  updatesyncsettings(){
+    if (!this.sync){
+      clearTimeout(this.timer);
+      this.timer = null;
+    }else{
+      this.startinterval();
+     
+    }
   }
   startinterval(){
     this.countdown = 20;
@@ -67,7 +78,7 @@ export class MuncitydashboardPage implements OnInit {
       this.countdown--;
       if (this.countdown <= 5){
         let toast = this.toastController.create({
-          message: `Reloading in ${this.countdown}`,
+          message: `Reloading dashboard data in ${this.countdown}`,
           duration: 1000,
           position: "bottom",
         });
@@ -75,6 +86,7 @@ export class MuncitydashboardPage implements OnInit {
       }
       if (this.countdown === 0){
         clearTimeout(this.timer);
+        this.timer = null;
         this.createdash();
       }
     }, 1000);
@@ -84,6 +96,9 @@ export class MuncitydashboardPage implements OnInit {
       this.muncities = await items.map(a => a.properties['address_muncity']);
       this.selectedMunicipality = await "BAUNGON";
     });
+    if (!this.barChart){
+      this.createdash();
+    }
   }
   createdash() {
     
@@ -110,16 +125,11 @@ export class MuncitydashboardPage implements OnInit {
 
   ionViewDidLeave(){
     clearTimeout(this.timer);
+    this.timer = null;
   }
 
 
   async onMunicipalityChange(){
-    // this.currentdatetime = new Date().toLocaleString();
-    
-    // this.selectedMunicipalityData = await this.muncitydata.filter(o => o.properties['address_muncity'] === this.selectedMunicipality);
-    // await this.setmuncitydatavalues();
-    // await this.createbarchartdata();
-    // await this.createpiechartdata();
     this.createdash();
   }
 

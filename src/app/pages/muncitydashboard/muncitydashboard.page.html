@@ -3,18 +3,27 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Data as of {{currentdatetime}}</ion-title>
+    <ion-title>{{selectedMunicipality}} Dashboard</ion-title>
+    <ion-item slot="end" lines="none">
+      <ion-label>Sync Dashboard</ion-label>
+      <ion-toggle color="primary" [(ngModel)]="sync" (ionChange)="updatesyncsettings()">
+      </ion-toggle>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-label>Select Municipality</ion-label>
-    <ion-select [(ngModel)]="selectedMunicipality" (ionChange)="onMunicipalityChange()">
-      <ion-select-option *ngFor="let x of muncities">{{x}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-
+  <ion-toolbar color="primary">
+    <nav class="navbar navbar-expand navbar-primary navbar-dark">
+      <ion-title>Data as of {{currentdatetime}}</ion-title>
+    </nav>
+    <ion-item>
+      <ion-label>Select Municipality</ion-label>
+      <ion-select [(ngModel)]="selectedMunicipality" (ionChange)="onMunicipalityChange()">
+        <ion-select-option *ngFor="let x of muncities">{{x}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
   &nbsp;
   <div class="container-fluid">
     <div class="row">
