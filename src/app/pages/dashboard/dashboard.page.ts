@@ -1,22 +1,27 @@
-import { CoviddataService } from './../../services/coviddata.service';
-import { Component, OnInit } from '@angular/core';
+import { CoviddataService } from "./../../services/coviddata.service";
+import { Component, OnInit } from "@angular/core";
 // import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 // import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 // import { Label } from 'ng2-charts';
-import { ElementRef } from '@angular/core';
-import { ViewChild } from '@angular/core';
+import { ElementRef } from "@angular/core";
+import { ViewChild } from "@angular/core";
 import { Chart } from "chart.js";
-import { AlertController, ToastController, Platform, LoadingController } from '@ionic/angular';
-import { A2hsService } from 'src/app/services/a2hs.service';
-
+import {
+  AlertController,
+  ToastController,
+  Platform,
+  LoadingController,
+  MenuController,
+} from "@ionic/angular";
+import { A2hsService } from "src/app/services/a2hs.service";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.page.html",
+  styleUrls: ["./dashboard.page.scss"],
 })
 export class DashboardPage implements OnInit {
-
   public currentdatetime;
 
   public totalactive: number;
@@ -43,14 +48,18 @@ export class DashboardPage implements OnInit {
   public totalconfirmed60abovefemale: number;
 
   //chart
-  @ViewChild("barChartCanvasSummaryByMunicipality") barChartCanvasSummaryByMunicipality: ElementRef;
-  @ViewChild("barChartCanvasSummaryActiveCaseByGender") barChartCanvasSummaryActiveCaseByGender: ElementRef;
-  @ViewChild("barChartCanvasCaseByAgeGroup") barChartCanvasCaseByAgeGroup: ElementRef;
+  @ViewChild("barChartCanvasSummaryByMunicipality")
+  barChartCanvasSummaryByMunicipality: ElementRef;
+  @ViewChild("barChartCanvasSummaryActiveCaseByGender")
+  barChartCanvasSummaryActiveCaseByGender: ElementRef;
+  @ViewChild("barChartCanvasCaseByAgeGroup")
+  barChartCanvasCaseByAgeGroup: ElementRef;
   private barChartCaseByMunicipality: Chart;
   private barChartCaseByGender: Chart;
   private barChartCaseByAgeGroup: Chart;
   @ViewChild("barChartCanvasCaseSummary") barChartCanvasCaseSummary: ElementRef;
-  @ViewChild("barChartCanvasCaseSummary7DayAverage") barChartCanvasCaseSummary7DayAverage: ElementRef;
+  @ViewChild("barChartCanvasCaseSummary7DayAverage")
+  barChartCanvasCaseSummary7DayAverage: ElementRef;
   private barChartCaseSummary: Chart;
   private barChartCaseSummary7DayAverage: Chart;
 
@@ -66,14 +75,14 @@ export class DashboardPage implements OnInit {
     private coviddatasvc: CoviddataService,
     public a2hs: A2hsService,
     public plt: Platform,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private route: ActivatedRoute,
+    private menu: MenuController
   ) {
-
     // A2HS - START
     a2hs.checkUserAgent();
     a2hs.trackStandalone();
-    window.addEventListener('beforeinstallprompt', (e) => {
-
+    window.addEventListener("beforeinstallprompt", (e) => {
       // show the add button
       a2hs.promptIntercepted = true;
       // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -82,17 +91,14 @@ export class DashboardPage implements OnInit {
       // Stash the event so it can be displayed when the user wants.
       a2hs.deferredPrompt = e;
       a2hs.promptSaved = true;
-
     });
-    window.addEventListener('appinstalled', (evt) => {
+    window.addEventListener("appinstalled", (evt) => {
       a2hs.trackInstalled();
       // hide the add button
       // a2hs.promptIntercepted = false;
     });
     // A2HS - END
   }
-
-
 
   ngOnInit() {
     this.chartloaded = false;
@@ -102,13 +108,12 @@ export class DashboardPage implements OnInit {
     this.sync = true;
   }
 
-  updatesyncsettings(){
-    if (!this.sync){
+  updatesyncsettings() {
+    if (!this.sync) {
       clearTimeout(this.timer);
       this.timer = null;
-    }else{
+    } else {
       this.startinterval();
-     
     }
   }
 
@@ -119,12 +124,11 @@ export class DashboardPage implements OnInit {
     await this.startinterval();
   }
 
-  startinterval(){
+  startinterval() {
     this.countdown = 20;
     this.timer = setInterval(() => {
-    
       this.countdown--;
-      if (this.countdown <= 5){
+      if (this.countdown <= 5) {
         let toast = this.toastController.create({
           message: `Reloading dashboard data in ${this.countdown}`,
           duration: 1000,
@@ -132,7 +136,7 @@ export class DashboardPage implements OnInit {
         });
         toast.then((toast) => toast.present());
       }
-      if (this.countdown === 0){
+      if (this.countdown === 0) {
         clearTimeout(this.timer);
         this.timer = null;
         this.updatedash();
@@ -140,7 +144,7 @@ export class DashboardPage implements OnInit {
     }, 1000);
   }
 
-  ionViewDidLeave(){
+  ionViewDidLeave() {
     clearTimeout(this.timer);
     this.timer = null;
   }
@@ -153,210 +157,238 @@ export class DashboardPage implements OnInit {
     await this.startinterval();
   }
 
-  async getcovidtotals(){
-    await this.coviddatasvc.bukidnoncovid19_view_summary().then(items => {
+  async getcovidtotals() {
+    await this.coviddatasvc.bukidnoncovid19_view_summary().then((items) => {
       // console.log(items);
       // this.totalconfirmed = items.filter(obj => obj.properties['classification'] === 'CONFIRMED').length;
-      this.totalactive = items[0].properties['totalactive'];
-      this.totalactivetoday = items[0].properties['totalactivetoday'];
-      this.totalrecovered = items[0].properties['totalrecovered'];
-      this.totalrecoveredtoday = items[0].properties['totalrecoveredtoday'];
-      this.totaldeceased = items[0].properties['totaldeceased'];
-      this.totaldeceasedtoday = items[0].properties['totaldeceasedtoday'];
-      this.totalconfirmed = items[0].properties['totalconfirmed'];
-      this.totalprobable = items[0].properties['totalprobable'];
-      this.totalprobabletoday = items[0].properties['totalprobabletoday'];
-      this.totalsuspect = items[0].properties['totalsuspect'];
-      this.totalsuspecttoday = items[0].properties['totalsuspecttoday'];
-      this.totalcompleted = items[0].properties['totalcompleted'];
-      this.totalcompletedtoday = items[0].properties['totalcompletedtoday'];
-      this.totalquarantined = items[0].properties['totalquarantined'];
-      this.totalconfirmedmale = items[0].properties['totalconfirmedmale'];
-      this.totalconfirmedfemale = items[0].properties['totalconfirmedfemale'];
-      this.totalconfirmed20below = items[0].properties['totalconfirmed20below'];
-      this.totalconfirmed20belowmale = items[0].properties['totalconfirmed20belowmale'];
-      this.totalconfirmed20belowfemale = items[0].properties['totalconfirmed20belowfemale'];
-      this.totalconfirmed60above = items[0].properties['totalconfirmed60above'];
-      this.totalconfirmed60abovemale = items[0].properties['totalconfirmed60abovemale'];
-      this.totalconfirmed60abovefemale = items[0].properties['totalconfirmed60abovefemale'];
-
+      this.totalactive = items[0].properties["totalactive"];
+      this.totalactivetoday = items[0].properties["totalactivetoday"];
+      this.totalrecovered = items[0].properties["totalrecovered"];
+      this.totalrecoveredtoday = items[0].properties["totalrecoveredtoday"];
+      this.totaldeceased = items[0].properties["totaldeceased"];
+      this.totaldeceasedtoday = items[0].properties["totaldeceasedtoday"];
+      this.totalconfirmed = items[0].properties["totalconfirmed"];
+      this.totalprobable = items[0].properties["totalprobable"];
+      this.totalprobabletoday = items[0].properties["totalprobabletoday"];
+      this.totalsuspect = items[0].properties["totalsuspect"];
+      this.totalsuspecttoday = items[0].properties["totalsuspecttoday"];
+      this.totalcompleted = items[0].properties["totalcompleted"];
+      this.totalcompletedtoday = items[0].properties["totalcompletedtoday"];
+      this.totalquarantined = items[0].properties["totalquarantined"];
+      this.totalconfirmedmale = items[0].properties["totalconfirmedmale"];
+      this.totalconfirmedfemale = items[0].properties["totalconfirmedfemale"];
+      this.totalconfirmed20below = items[0].properties["totalconfirmed20below"];
+      this.totalconfirmed20belowmale =
+        items[0].properties["totalconfirmed20belowmale"];
+      this.totalconfirmed20belowfemale =
+        items[0].properties["totalconfirmed20belowfemale"];
+      this.totalconfirmed60above = items[0].properties["totalconfirmed60above"];
+      this.totalconfirmed60abovemale =
+        items[0].properties["totalconfirmed60abovemale"];
+      this.totalconfirmed60abovefemale =
+        items[0].properties["totalconfirmed60abovefemale"];
     });
   }
 
-  async createbarcharts(){
-    await this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then(items => {
-      this.barChartCanvasSummaryByMunicipality_loaded = true;
-      this.barChartCanvasSummaryActiveCaseByGender_loaded = true;
-      this.barChartCaseByMunicipality = new Chart(this.barChartCanvasSummaryByMunicipality.nativeElement, {
-        type: "horizontalBar",
-        data: {
-          labels: items.map(a => a.properties['address_muncity']),
-          datasets: [
-            {
-              label: 'Active Cases',
-              data: items.map(a => a.properties['totalactive']),
-              backgroundColor: "rgba(255, 99, 132, 0.2)",
-              borderColor:  "rgba(255,99,132,1)",
-              borderWidth: 1
+  async createbarcharts() {
+    await this.coviddatasvc
+      .bukidnoncovid19_view_by_municipality_summary()
+      .then((items) => {
+        this.barChartCanvasSummaryByMunicipality_loaded = true;
+        this.barChartCanvasSummaryActiveCaseByGender_loaded = true;
+        this.barChartCaseByMunicipality = new Chart(
+          this.barChartCanvasSummaryByMunicipality.nativeElement,
+          {
+            type: "horizontalBar",
+            data: {
+              labels: items.map((a) => a.properties["address_muncity"]),
+              datasets: [
+                {
+                  label: "Active Cases",
+                  data: items.map((a) => a.properties["totalactive"]),
+                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+                  borderColor: "rgba(255,99,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Recovered",
+                  data: items.map((a) => a.properties["totalrecovered"]),
+                  backgroundColor: "rgba(99, 255, 132, 0.2)",
+                  borderColor: "rgba(99,255,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Deceased",
+                  data: items.map((a) => a.properties["totaldeceased"]),
+                  backgroundColor: "rgba(128,128,128, 0.2)",
+                  borderColor: "rgba(128,128,128,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Probable",
+                  data: items.map((a) => a.properties["totalprobable"]),
+                  backgroundColor: "rgba(102, 16, 242, 0.2)",
+                  borderColor: "rgba(102, 16, 242,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Suspect",
+                  data: items.map((a) => a.properties["totalsuspect"]),
+                  backgroundColor: "rgba(255, 193, 7, 0.2)",
+                  borderColor: "rgba(255, 193, 7,1)",
+                  borderWidth: 1,
+                },
+              ],
             },
-            {
-              label: 'Recovered',
-              data: items.map(a => a.properties['totalrecovered']),
-              backgroundColor: "rgba(99, 255, 132, 0.2)",
-              borderColor:  "rgba(99,255,132,1)",
-              borderWidth: 1
+            options: {
+              title: {
+                display: false,
+                text: "Covid Summary by Muincipality",
+              },
+              tooltips: {
+                mode: "index",
+                intersect: false,
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                xAxes: [
+                  {
+                    stacked: true,
+                    ticks: {
+                      stepSize: 1,
+                    },
+                  },
+                ],
+                yAxes: [
+                  {
+                    stacked: true,
+                  },
+                ],
+              },
             },
-            {
-              label: 'Deceased',
-              data: items.map(a => a.properties['totaldeceased']),
-              backgroundColor: "rgba(128,128,128, 0.2)",
-              borderColor:  "rgba(128,128,128,1)",
-              borderWidth: 1
+          }
+        );
+
+        this.barChartCaseByGender = new Chart(
+          this.barChartCanvasSummaryActiveCaseByGender.nativeElement,
+          {
+            type: "horizontalBar",
+            data: {
+              labels: items.map((a) => a.properties["address_muncity"]),
+              datasets: [
+                {
+                  label: "Male",
+                  data: items.map((a) => a.properties["totalconfirmedmale"]),
+                  backgroundColor: "rgba(99, 99, 255, 0.2)",
+                  borderColor: "rgba(99, 99, 255,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Female",
+                  data: items.map((a) => a.properties["totalconfirmedfemale"]),
+                  backgroundColor: "rgba(255, 255, 99, 0.2)",
+                  borderColor: "rgba(255, 255, 99,1)",
+                  borderWidth: 1,
+                },
+              ],
             },
-            {
-              label: 'Probable',
-              data: items.map(a => a.properties['totalprobable']),
-              backgroundColor: "rgba(102, 16, 242, 0.2)",
-              borderColor:  "rgba(102, 16, 242,1)",
-              borderWidth: 1
+            options: {
+              title: {
+                display: false,
+                text: "Confirmed Cases by Gender",
+              },
+              tooltips: {
+                mode: "index",
+                intersect: false,
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                xAxes: [
+                  {
+                    stacked: true,
+                    ticks: {
+                      stepSize: 1,
+                    },
+                  },
+                ],
+                yAxes: [
+                  {
+                    stacked: true,
+                  },
+                ],
+              },
             },
-            {
-              label: 'Suspect',
-              data: items.map(a => a.properties['totalsuspect']),
-              backgroundColor: "rgba(255, 193, 7, 0.2)",
-              borderColor:  "rgba(255, 193, 7,1)",
-              borderWidth: 1
-            }
-          ]
-        },
-        options: {
-          title: {
-            display: false,
-            text: 'Covid Summary by Muincipality'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect : false
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              stacked: true,
-              ticks: {
-                  stepSize: 1
-              }
-            }],
-            yAxes: [{
-              stacked: true,
-            }]
-          },
-        }
+          }
+        );
       });
 
-      this.barChartCaseByGender = new Chart(this.barChartCanvasSummaryActiveCaseByGender.nativeElement, {
-        type: "horizontalBar",
-        data: {
-          labels: items.map(a => a.properties['address_muncity']),
-          datasets: [
-            {
-              label: 'Male',
-              data: items.map(a => a.properties['totalconfirmedmale']),
-              backgroundColor: "rgba(99, 99, 255, 0.2)",
-              borderColor:  "rgba(99, 99, 255,1)",
-              borderWidth: 1
+    await this.coviddatasvc
+      .bukidnoncovid19_view_agegroup_summary()
+      .then((items) => {
+        this.barChartCanvasCaseByAgeGroup_loaded = true;
+        // console.log(items.map(a => a.properties['agerange']));
+        this.barChartCaseByAgeGroup = new Chart(
+          this.barChartCanvasCaseByAgeGroup.nativeElement,
+          {
+            type: "horizontalBar",
+            data: {
+              labels: items.map((a) => a.properties["agerange"]),
+              datasets: [
+                {
+                  label: "Active Cases",
+                  data: items.map((a) => a.properties["totalactive"]),
+                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+                  borderColor: "rgba(255,99,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Recovered",
+                  data: items.map((a) => a.properties["totalrecovered"]),
+                  backgroundColor: "rgba(99, 255, 132, 0.2)",
+                  borderColor: "rgba(99,255,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Deceased",
+                  data: items.map((a) => a.properties["totaldeceased"]),
+                  backgroundColor: "rgba(128,128,128, 0.2)",
+                  borderColor: "rgba(128,128,128,1)",
+                  borderWidth: 1,
+                },
+              ],
             },
-            {
-              label: 'Female',
-              data: items.map(a => a.properties['totalconfirmedfemale']),
-              backgroundColor: "rgba(255, 255, 99, 0.2)",
-              borderColor:  "rgba(255, 255, 99,1)",
-              borderWidth: 1
-            }
-          ]
-        },
-        options: {
-          title: {
-            display: false,
-            text: 'Confirmed Cases by Gender'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect : false
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              stacked: true,
-              ticks: {
-                  stepSize: 1
-              }
-            }],
-            yAxes: [{
-              stacked: true,
-            }]
-          },
-        }
+            options: {
+              title: {
+                display: false,
+                text: "Cases by Age Group",
+              },
+              tooltips: {
+                mode: "index",
+                intersect: false,
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                xAxes: [
+                  {
+                    stacked: true,
+                    ticks: {
+                      stepSize: 1,
+                    },
+                  },
+                ],
+                yAxes: [
+                  {
+                    stacked: true,
+                  },
+                ],
+              },
+            },
+          }
+        );
       });
-    });
-
-    await this.coviddatasvc.bukidnoncovid19_view_agegroup_summary().then(items => {
-      this.barChartCanvasCaseByAgeGroup_loaded = true;
-      // console.log(items.map(a => a.properties['agerange']));
-      this.barChartCaseByAgeGroup = new Chart(this.barChartCanvasCaseByAgeGroup.nativeElement, {
-        type: "horizontalBar",
-        data: {
-          labels: items.map(a => a.properties['agerange']),
-          datasets: [
-            {
-              label: 'Active Cases',
-              data: items.map(a => a.properties['totalactive']),
-              backgroundColor: "rgba(255, 99, 132, 0.2)",
-              borderColor:  "rgba(255,99,132,1)",
-              borderWidth: 1
-            },
-            {
-              label: 'Recovered',
-              data: items.map(a => a.properties['totalrecovered']),
-              backgroundColor: "rgba(99, 255, 132, 0.2)",
-              borderColor:  "rgba(99,255,132,1)",
-              borderWidth: 1
-            },
-            {
-              label: 'Deceased',
-              data: items.map(a => a.properties['totaldeceased']),
-              backgroundColor: "rgba(128,128,128, 0.2)",
-              borderColor:  "rgba(128,128,128,1)",
-              borderWidth: 1
-            },
-          ]
-        },
-        options: {
-          title: {
-            display: false,
-            text: 'Cases by Age Group'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect : false
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              stacked: true,
-              ticks: {
-                  stepSize: 1
-              }
-            }],
-            yAxes: [{
-              stacked: true,
-            }]
-          },
-        }
-      });
-    });
   }
 
   async updatebarcharts() {
@@ -369,211 +401,233 @@ export class DashboardPage implements OnInit {
     this.barChartCaseByAgeGroup.data.datasets.length = 0;
     this.barChartCaseByAgeGroup.update();
 
-    await this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then(items => {
-      let data1 =  {
-        labels: items.map(a => a.properties['address_muncity']),
-        datasets: [
-          {
-            label: 'Active Cases',
-            data: items.map(a => a.properties['totalactive']),
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            borderColor:  "rgba(255,99,132,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Recovered',
-            data: items.map(a => a.properties['totalrecovered']),
-            backgroundColor: "rgba(99, 255, 132, 0.2)",
-            borderColor:  "rgba(99,255,132,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Deceased',
-            data: items.map(a => a.properties['totaldeceased']),
-            backgroundColor: "rgba(128,128,128, 0.2)",
-            borderColor:  "rgba(128,128,128,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Probable',
-            data: items.map(a => a.properties['totalprobable']),
-            backgroundColor: "rgba(102, 16, 242, 0.2)",
-            borderColor:  "rgba(102, 16, 242,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Suspect',
-            data: items.map(a => a.properties['totalsuspect']),
-            backgroundColor: "rgba(255, 193, 7, 0.2)",
-            borderColor:  "rgba(255, 193, 7,1)",
-            borderWidth: 1
-          }
-        ]
-      };
-
-      let data2 = {
-        labels: items.map(a => a.properties['address_muncity']),
-        datasets: [
-          {
-            label: 'Male',
-            data: items.map(a => a.properties['totalconfirmedmale']),
-            backgroundColor: "rgba(99, 99, 255, 0.2)",
-            borderColor:  "rgba(99, 99, 255,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Female',
-            data: items.map(a => a.properties['totalconfirmedfemale']),
-            backgroundColor: "rgba(255, 255, 99, 0.2)",
-            borderColor:  "rgba(255, 255, 99,1)",
-            borderWidth: 1
-          }
-        ]
-      };
-
-      this.barChartCaseByMunicipality.data = data1;
-      this.barChartCaseByMunicipality.update();
-
-      this.barChartCaseByGender.data = data2;
-      this.barChartCaseByGender.update();
-    });
-
-    await this.coviddatasvc.bukidnoncovid19_view_agegroup_summary().then(items => {
-      let data3 = {
-        labels:  items.map(a => a.properties['agerange']),
-        datasets: [
-          {
-            label: 'Active Cases',
-            data: items.map(a => a.properties['totalactive']),
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            borderColor:  "rgba(255,99,132,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Recovered',
-            data: items.map(a => a.properties['totalrecovered']),
-            backgroundColor: "rgba(99, 255, 132, 0.2)",
-            borderColor:  "rgba(99,255,132,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Deceased',
-            data: items.map(a => a.properties['totaldeceased']),
-            backgroundColor: "rgba(128,128,128, 0.2)",
-            borderColor:  "rgba(128,128,128,1)",
-            borderWidth: 1
-          },
-        ]
-      };
-
-      this.barChartCaseByAgeGroup.data = data3;
-      this.barChartCaseByAgeGroup.update();
-    });
-  }
-
-  async createprovincestackbarchart(){
-    await this.coviddatasvc.bukidnoncovid19_view_province_dashboard().then(items => {
-      this.barChartCanvasCaseSummary_loaded = true;
-      this.barChartCaseSummary = new Chart(this.barChartCanvasCaseSummary.nativeElement, {
-        type: "bar",
-        data: {
-          labels: items.map(a => a.properties['selected_date']),
+    await this.coviddatasvc
+      .bukidnoncovid19_view_by_municipality_summary()
+      .then((items) => {
+        let data1 = {
+          labels: items.map((a) => a.properties["address_muncity"]),
           datasets: [
             {
-              label: 'Active Cases',
-              data: items.map(a => a.properties['totalactive']),
+              label: "Active Cases",
+              data: items.map((a) => a.properties["totalactive"]),
               backgroundColor: "rgba(255, 99, 132, 0.2)",
-              borderColor:  "rgba(255,99,132,1)",
-              borderWidth: 1
+              borderColor: "rgba(255,99,132,1)",
+              borderWidth: 1,
             },
             {
-              label: 'Recovered',
-              data: items.map(a => a.properties['totalrecovered']),
+              label: "Recovered",
+              data: items.map((a) => a.properties["totalrecovered"]),
               backgroundColor: "rgba(99, 255, 132, 0.2)",
-              borderColor:  "rgba(99,255,132,1)",
-              borderWidth: 1
+              borderColor: "rgba(99,255,132,1)",
+              borderWidth: 1,
             },
             {
-              label: 'Deceased',
-              data: items.map(a => a.properties['totaldeceased']),
+              label: "Deceased",
+              data: items.map((a) => a.properties["totaldeceased"]),
               backgroundColor: "rgba(128,128,128, 0.2)",
-              borderColor:  "rgba(128,128,128,1)",
-              borderWidth: 1
-            }
-          ]
-        },
-        options: {
-          title: {
-            display: false,
-            text: 'Cases Dashboard'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect : true
-          },
-          plugins: {
-            datalabels: {
-                display: false,
+              borderColor: "rgba(128,128,128,1)",
+              borderWidth: 1,
             },
-          },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              stacked: true,
-              ticks: {
-                stepSize: 10
-              }
-            }],
-            yAxes: [{
-              stacked: true,
-              ticks: {
-                stepSize: 1,
-                suggestedMin: 1,
-                suggestedMax: this.totalconfirmed + 50
-              }
-            }]
-          },
-        }
+            {
+              label: "Probable",
+              data: items.map((a) => a.properties["totalprobable"]),
+              backgroundColor: "rgba(102, 16, 242, 0.2)",
+              borderColor: "rgba(102, 16, 242,1)",
+              borderWidth: 1,
+            },
+            {
+              label: "Suspect",
+              data: items.map((a) => a.properties["totalsuspect"]),
+              backgroundColor: "rgba(255, 193, 7, 0.2)",
+              borderColor: "rgba(255, 193, 7,1)",
+              borderWidth: 1,
+            },
+          ],
+        };
+
+        let data2 = {
+          labels: items.map((a) => a.properties["address_muncity"]),
+          datasets: [
+            {
+              label: "Male",
+              data: items.map((a) => a.properties["totalconfirmedmale"]),
+              backgroundColor: "rgba(99, 99, 255, 0.2)",
+              borderColor: "rgba(99, 99, 255,1)",
+              borderWidth: 1,
+            },
+            {
+              label: "Female",
+              data: items.map((a) => a.properties["totalconfirmedfemale"]),
+              backgroundColor: "rgba(255, 255, 99, 0.2)",
+              borderColor: "rgba(255, 255, 99,1)",
+              borderWidth: 1,
+            },
+          ],
+        };
+
+        this.barChartCaseByMunicipality.data = data1;
+        this.barChartCaseByMunicipality.update();
+
+        this.barChartCaseByGender.data = data2;
+        this.barChartCaseByGender.update();
       });
-      this.barChartCaseSummary.update();
-    });
+
+    await this.coviddatasvc
+      .bukidnoncovid19_view_agegroup_summary()
+      .then((items) => {
+        let data3 = {
+          labels: items.map((a) => a.properties["agerange"]),
+          datasets: [
+            {
+              label: "Active Cases",
+              data: items.map((a) => a.properties["totalactive"]),
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255,99,132,1)",
+              borderWidth: 1,
+            },
+            {
+              label: "Recovered",
+              data: items.map((a) => a.properties["totalrecovered"]),
+              backgroundColor: "rgba(99, 255, 132, 0.2)",
+              borderColor: "rgba(99,255,132,1)",
+              borderWidth: 1,
+            },
+            {
+              label: "Deceased",
+              data: items.map((a) => a.properties["totaldeceased"]),
+              backgroundColor: "rgba(128,128,128, 0.2)",
+              borderColor: "rgba(128,128,128,1)",
+              borderWidth: 1,
+            },
+          ],
+        };
+
+        this.barChartCaseByAgeGroup.data = data3;
+        this.barChartCaseByAgeGroup.update();
+      });
   }
 
-  async updateprovincestackbarchart(){
+  async createprovincestackbarchart() {
+    await this.coviddatasvc
+      .bukidnoncovid19_view_province_dashboard()
+      .then((items) => {
+        this.barChartCanvasCaseSummary_loaded = true;
+        this.barChartCaseSummary = new Chart(
+          this.barChartCanvasCaseSummary.nativeElement,
+          {
+            type: "bar",
+            data: {
+              labels: items.map((a) => a.properties["selected_date"]),
+              datasets: [
+                {
+                  label: "Active Cases",
+                  data: items.map((a) => a.properties["totalactive"]),
+                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+                  borderColor: "rgba(255,99,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Recovered",
+                  data: items.map((a) => a.properties["totalrecovered"]),
+                  backgroundColor: "rgba(99, 255, 132, 0.2)",
+                  borderColor: "rgba(99,255,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Deceased",
+                  data: items.map((a) => a.properties["totaldeceased"]),
+                  backgroundColor: "rgba(128,128,128, 0.2)",
+                  borderColor: "rgba(128,128,128,1)",
+                  borderWidth: 1,
+                },
+              ],
+            },
+            options: {
+              title: {
+                display: false,
+                text: "Cases Dashboard",
+              },
+              tooltips: {
+                mode: "index",
+                intersect: true,
+              },
+              plugins: {
+                datalabels: {
+                  display: false,
+                },
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                xAxes: [
+                  {
+                    stacked: true,
+                    ticks: {
+                      stepSize: 10,
+                    },
+                  },
+                ],
+                yAxes: [
+                  {
+                    stacked: true,
+                    ticks: {
+                      stepSize: 1,
+                      suggestedMin: 1,
+                      suggestedMax: this.totalconfirmed + 50,
+                    },
+                  },
+                ],
+              },
+            },
+          }
+        );
+        this.barChartCaseSummary.update();
+      });
+  }
+
+  async updateprovincestackbarchart() {
     this.barChartCaseSummary.data.datasets.length = 0;
     this.barChartCaseSummary.update();
-    await this.coviddatasvc.bukidnoncovid19_view_province_dashboard().then(async items => {
-      // console.log(items);
-      let data = {
-        labels: items.map(a => a.properties['selected_date']),
-        datasets: [
-          {
-            label: 'Active Cases',
-            data: items.map(a => a.properties['totalactive']),
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            borderColor:  "rgba(255,99,132,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Recovered',
-            data: items.map(a => a.properties['totalrecovered']),
-            backgroundColor: "rgba(99, 255, 132, 0.2)",
-            borderColor:  "rgba(99,255,132,1)",
-            borderWidth: 1
-          },
-          {
-            label: 'Deceased',
-            data: items.map(a => a.properties['totaldeceased']),
-            backgroundColor: "rgba(128,128,128, 0.2)",
-            borderColor:  "rgba(128,128,128,1)",
-            borderWidth: 1
-          }
-        ]
-      };
-      this.barChartCaseSummary.data = data;
-      this.barChartCaseSummary.update();
-    });
+    await this.coviddatasvc
+      .bukidnoncovid19_view_province_dashboard()
+      .then(async (items) => {
+        // console.log(items);
+        let data = {
+          labels: items.map((a) => a.properties["selected_date"]),
+          datasets: [
+            {
+              label: "Active Cases",
+              data: items.map((a) => a.properties["totalactive"]),
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255,99,132,1)",
+              borderWidth: 1,
+            },
+            {
+              label: "Recovered",
+              data: items.map((a) => a.properties["totalrecovered"]),
+              backgroundColor: "rgba(99, 255, 132, 0.2)",
+              borderColor: "rgba(99,255,132,1)",
+              borderWidth: 1,
+            },
+            {
+              label: "Deceased",
+              data: items.map((a) => a.properties["totaldeceased"]),
+              backgroundColor: "rgba(128,128,128, 0.2)",
+              borderColor: "rgba(128,128,128,1)",
+              borderWidth: 1,
+            },
+          ],
+        };
+        this.barChartCaseSummary.data = data;
+        this.barChartCaseSummary.update();
+      });
   }
-
+  async ionViewDidEnter() {
+    const mode = this.route.snapshot.paramMap.get("mode");
+    if (mode === "nomenu"){
+      this.menu.enable(false);
+    }else {
+      this.menu.enable(true);
+    }
+  }
 }
