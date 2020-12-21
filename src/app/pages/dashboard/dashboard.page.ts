@@ -5,7 +5,7 @@ import { Component, OnInit } from "@angular/core";
 // import { Label } from 'ng2-charts';
 import { ElementRef } from "@angular/core";
 import { ViewChild } from "@angular/core";
-import { Chart } from "chart.js";
+import * as Chart from 'chart.js';
 import {
   AlertController,
   ToastController,
@@ -15,7 +15,7 @@ import {
 } from "@ionic/angular";
 import { A2hsService } from "src/app/services/a2hs.service";
 import { ActivatedRoute } from '@angular/router';
-
+// Chart.defaults.global.legend.display = true;
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.page.html",
