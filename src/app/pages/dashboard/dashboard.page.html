@@ -27,8 +27,8 @@
         <!-- small box -->
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3 [hidden]="!totalactive">{{totalactive}}-{{(totalactive/totalconfirmed) * 100 | number:'1.0-1' }}%</h3>
-            <p>Active Cases</p>
+            <h3 [hidden]="!totalactive">{{totalactive}}</h3>
+            <p>Active Cases ({{(totalactive/totalconfirmed) * 100 | number:'1.0-1' }}%)</p>
             <label>{{totalactivetoday}} New Confirmed Cases Today</label>
           </div>
           <div class="icon">
@@ -42,8 +42,8 @@
         <!-- small box -->
         <div class="small-box bg-success">
           <div class="inner">
-            <h3 [hidden]="!totalrecovered">{{totalrecovered}}-{{(totalrecovered/totalconfirmed) * 100 | number:'1.0-1' }}%</h3>
-            <p>Recovered</p>
+            <h3 [hidden]="!totalrecovered">{{totalrecovered}}</h3>
+            <p>Recovered ({{(totalrecovered/totalconfirmed) * 100 | number:'1.0-1' }}%)</p>
             <label>{{totalrecoveredtoday}} New Recovered Cases Today</label>
           </div>
           <div class="icon">
@@ -56,8 +56,8 @@
         <!-- small box -->
         <div class="small-box bg-secondary">
           <div class="inner">
-            <h3 [hidden]="!totaldeceased">{{totaldeceased}}-{{(totaldeceased/totalconfirmed) * 100 | number:'1.0-1' }}%</h3>
-            <p>Deceased</p>
+            <h3 [hidden]="!totaldeceased">{{totaldeceased}}</h3>
+            <p>Deceased ({{(totaldeceased/totalconfirmed) * 100 | number:'1.0-1' }}%)</p>
             <label>{{totaldeceasedtoday}} Deceased Today</label>
           </div>
           <div class="icon">
