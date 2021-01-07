@@ -105,7 +105,8 @@ export class DashboardPage implements OnInit {
     this.currentdatetime = new Date().toLocaleString();
 
     this.createdash();
-    this.sync = true;
+
+    this.sync = false;
   }
 
   updatesyncsettings() {
@@ -121,7 +122,7 @@ export class DashboardPage implements OnInit {
     await this.getcovidtotals();
     await this.createbarcharts();
     await this.createprovincestackbarchart();
-    await this.startinterval();
+    await this.updatesyncsettings();
   }
 
   startinterval() {

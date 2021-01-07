@@ -61,7 +61,8 @@ export class MuncitydashboardPage implements OnInit {
   ngOnInit() {
     this.currentdatetime = new Date().toLocaleString();
     this.loadmunicipalities();
-    this.sync = true;
+
+    this.sync = false;
   }
   updatesyncsettings(){
     if (!this.sync){
@@ -100,6 +101,7 @@ export class MuncitydashboardPage implements OnInit {
       this.createdash();
     }
   }
+
   createdash() {
     
     this.timer = null;
@@ -118,7 +120,7 @@ export class MuncitydashboardPage implements OnInit {
       await this.setmuncitydatavalues();
       await this.createbarchartdata();
       await this.createpiechartdata();
-      await this.startinterval();
+      await this.updatesyncsettings();
     });
   
   }
