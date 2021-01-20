@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vaccine Survey</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of items" #slidingItem>
+      <ion-item class="centeritem breakword">
+        <ion-label>
+          <div class="breakword">
+            <h3>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</h3>
+          </div>
+          <div>
+            <h3>{{item.address.text}}</h3>
+          </div>
+        </ion-label>
+        <div class="btn-group" slot="end">
+          <button type="button" class="btn btn-success btn-sm" (click)="clickyes(item)">YES</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="clickno(item)">NO</button>
+        </div>
+      </ion-item>
+      
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list-header [hidden]="items?.length > 0">
+    No Items Found
+  </ion-list-header>
+</ion-content>
