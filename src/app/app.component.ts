@@ -64,6 +64,11 @@ export class AppComponent implements OnInit {
       icon: "medkit",
     },
     {
+      title: "Vaccine Survey Dashboard",
+      url: "vaccinesurveydashboard",
+      icon: "chart",
+    },
+    {
       title: "QR Profile List",
       url: "qrprofilelist",
       icon: "list",

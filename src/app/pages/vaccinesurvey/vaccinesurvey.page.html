@@ -17,8 +17,9 @@
           </div>
         </ion-label>
         <div class="btn-group" slot="end">
-          <button type="button" class="btn btn-success btn-sm" (click)="clickyes(item)">YES</button>
-          <button type="button" class="btn btn-danger btn-sm" (click)="clickno(item)">NO</button>
+          <button type="button" class="btn btn-success btn-sm" (click)="clickchoice(item, 'YES')">YES</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="clickchoice(item, 'NO')">NO</button>
+          <button type="button" class="btn btn-info btn-sm" (click)="clickchoice(item, 'UNDECIDED')">UNDECIDED</button>
         </div>
       </ion-item>
       

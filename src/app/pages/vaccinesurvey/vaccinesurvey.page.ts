@@ -42,4 +42,21 @@ export class VaccinesurveyPage implements OnInit {
 
   }
 
+  clickchoice(item, choice){
+    const profilephoto = item?.photo;
+    delete item.photo;
+    const newitem = {
+      objid: item.objid,
+      profilephoto: profilephoto,
+      profiledata: JSON.stringify({item}),
+      answer: choice,
+      reason: "SAMPLE REASON"
+    };
+    this.vaccineSurvey.addItem(newitem).then(response => {
+      if (response === 200) console.log(`${item.objid} has been added!`)
+    }, (error) => {
+      if (error) console.log(error)
+    })
+  }
+
 }
