@@ -25,38 +25,31 @@ export class VaccinesurveyPage implements OnInit {
     })
   }
 
-  clickyes(item){
-    console.log(item);
-    const newitem = {
-      objid: item.objid,
-      profiledata: JSON.stringify(item),
-      answer: "YES",
-      reason: "SAMPLE REASON"
-    };
-    this.vaccineSurvey.addItem(newitem).then(item => {
-      console.log(item);
-    })
-  }
-
-  clickno(item){
-
-  }
-
   clickchoice(item, choice){
-    const profilephoto = item?.photo;
-    delete item.photo;
-    const newitem = {
-      objid: item.objid,
-      profilephoto: profilephoto,
-      profiledata: JSON.stringify({item}),
-      answer: choice,
-      reason: "SAMPLE REASON"
-    };
-    this.vaccineSurvey.addItem(newitem).then(response => {
-      if (response === 200) console.log(`${item.objid} has been added!`)
-    }, (error) => {
-      if (error) console.log(error)
-    })
+    this.vaccineSurvey.addItem(
+      {
+        objid: item.objid,
+        profilephoto: item.photo,
+        lastname: item.lastname,
+        firstname: item.firstname,
+        middlename: item.middlename,
+        birthdate: item.birthdate,
+        gender: item.gender,
+        civilstatus: item.civilstatus,
+        mobileno: item.mobileno,
+        address_province_code: item.address.province.code,
+        address_province_lguname: item.address.province.lguname,
+        address_municipality_code: item.address.municipality.code,
+        address_municipality_lguname: item.address.municipality.lguname,
+        address_barangay_code: item.address.barangay.code,
+        address_barangay_lguname: item.address.barangay.lguname,
+        address_street: item.address.street,
+        answer: choice,
+        reason: "SAMPLE REASON"
+      }
+    )
+    .then(item => {
+      console.log(item)
+    });
   }
-
 }
