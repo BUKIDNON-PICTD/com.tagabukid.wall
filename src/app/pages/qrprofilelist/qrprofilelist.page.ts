@@ -122,4 +122,12 @@ export class QrprofilelistPage implements OnInit {
       this.loadItems();
   }
 
+  clickyes(item){
+    this.showToast('yes');
+  }
+
+  clickno(item){
+    this.showToast('no');
+  }
+
 }

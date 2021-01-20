@@ -14,7 +14,7 @@ export const environment = {
     appId: "1:804070504344:web:12b59e6d24316a679f5ded"
   },
   geoserver :  "https://geoserver.bukidnon.gov.ph", 
-  panganud :  "https://panganud.bukidnon.gov.ph",
+  panganud :  "http://localhost:9000",
   reportserver :  "https://reports.bukidnon.gov.ph/jasperserver",
   key:"love one another. do not love another one." 
 };

@@ -70,7 +70,11 @@ const routes: Routes = [
   {
     path: 'reportlist',
     loadChildren: () => import('./reports/reportlist/reportlist.module').then( m => m.ReportlistPageModule)
+  },  {
+    path: 'vaccinesurvey',
+    loadChildren: () => import('./pages/vaccinesurvey/vaccinesurvey.module').then( m => m.VaccinesurveyPageModule)
   }
+
 ];
 
 @NgModule({

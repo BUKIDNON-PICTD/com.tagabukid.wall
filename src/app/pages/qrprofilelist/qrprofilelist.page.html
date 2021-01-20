@@ -31,7 +31,10 @@
                   </ngx-qrcode>
                 </div>
               </ion-label>
+             
             </ion-item>
+            <button type="button" class="btn btn-block btn-success btn-sm" (click)="clickyes(item)">YES</button>
+            <button type="button" class="btn btn-block btn-danger btn-sm" (click)="clickno(item)">NO</button>
             <ion-item-options>
               <a class="btn btn-app btn-danger btn-sm" routerLink="/qrprofile/{{item.objid}}">
                 <i class="fas fa-edit"></i>
