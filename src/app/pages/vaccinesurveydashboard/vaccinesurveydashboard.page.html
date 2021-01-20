@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vaccine Surey Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="row">
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          <h3>{{totals?.totalyes}}</h3>
+
+          <p>YES</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h3>{{totals?.totalno}}</h3>
+
+          <p>NO</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-stats-bars"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3>{{totals?.totalundecided}}</h3>
+
+          <p>UNDECIDED</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-person-add"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-danger">
+        <div class="inner">
+          <h3>{{totals?.totalprofiles}}</h3>
+
+          <p>TOTAL PROFILES</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-pie-graph"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-6">
+      <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card-header">
+          <ion-title class="card-title" color="primary">
+            <i class="ion ion-stats-bars"></i>
+            MALE SURVEY
+          </ion-title>
+        </div>
+        <div class="card-body">
+          <div style="height:400px">
+            <div class="overlay" *ngIf="!pieChartSurveyByGender_loaded"><img
+                src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart" /></div>
+            <canvas #pieChartSurveyByGenderCanvas></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</ion-content>

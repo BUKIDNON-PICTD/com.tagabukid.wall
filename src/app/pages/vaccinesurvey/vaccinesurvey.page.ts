@@ -26,14 +26,28 @@ export class VaccinesurveyPage implements OnInit {
   }
 
   clickyes(item){
+    // console.log(item);
+    // var profiledata = item;
+    // var profilephoto = item?.photo;
+    // delete profiledata.photo;
+    // const newitem = {
+    //   objid: item.objid,
+    //   profiledata: JSON.stringify(profiledata),
+    //   profilephoto: profilephoto,
+    //   answer: "YES",
+    //   reason: "SAMPLE REASON"
+    // };
     console.log(item);
-    const newitem = {
-      objid: item.objid,
-      profiledata: JSON.stringify(item),
-      answer: "YES",
-      reason: "SAMPLE REASON"
-    };
-    this.vaccineSurvey.addItem(newitem).then(item => {
+    item.address_province_code = item.address.province.code;
+    item.address_province_lguname = item.address.province.lguname;
+    item.address_municipality_code = item.address.municipality.code;
+    item.address_municipality_lguname = item.address.municipality.lguname;
+    item.address_barangay_code = item.address.barangay.code;
+    item.address_barangay_lguname = item.address.barangay.lguname;
+    item.address_street = item.address.street;
+    item.answer = "YES";
+    item.reason = "SAMPLE REASON"
+    this.vaccineSurvey.addItem(item).then(item => {
       console.log(item);
     })
   }

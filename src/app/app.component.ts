@@ -59,11 +59,6 @@ export class AppComponent implements OnInit {
       icon: "person-add",
     },
     {
-      title: "Vaccine Survey",
-      url: "vaccinesurvey",
-      icon: "medkit",
-    },
-    {
       title: "QR Profile List",
       url: "qrprofilelist",
       icon: "list",
@@ -77,6 +72,16 @@ export class AppComponent implements OnInit {
       title: "QR Log List",
       url: "qrloglist",
       icon: "list",
+    },
+    {
+      title: "Vaccine Survey",
+      url: "vaccinesurvey",
+      icon: "medkit",
+    },
+    {
+      title: "Vaccine Dashboard",
+      url: "vaccinesurveydashboard",
+      icon: "bar-chart",
     },
     {
       title: "Reports",
