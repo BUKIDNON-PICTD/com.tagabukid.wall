@@ -1,0 +1,35 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>You chose {{choice}},</ion-card-subtitle>
+    <ion-card-title>Please tell us why...</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list>
+      <ion-radio-group value="fear" (ionChange)="radioGroupChange($event)">
+        <ion-item>
+          <ion-label>I fear for its side effects.</ion-label>
+          <ion-radio slot="start" value="fear" ng-model="reason"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>I don't trust the vaccine.</ion-label>
+          <ion-radio slot="start" value="distrust" ng-model="reason"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>I hate the government.</ion-label>
+          <ion-radio slot="start" value="hate" ng-model="reason"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>I'm being pressured by my peers.</ion-label>
+          <ion-radio slot="start" value="pressure" ng-model="reason"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+    <ion-button (click)="dismissModal('cancel')">
+      Cancel
+    </ion-button>
+    <ion-button (click)="dismissModal('submit', reason)">
+      Submit
+    </ion-button>
+  </ion-card-content>
+</ion-card>

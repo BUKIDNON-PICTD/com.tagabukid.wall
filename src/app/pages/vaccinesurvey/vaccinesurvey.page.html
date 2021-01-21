@@ -16,11 +16,18 @@
             <h3>{{item.address.text}}</h3>
           </div>
         </ion-label>
-        <div class="btn-group" slot="end">
-          <button type="button" class="btn btn-success btn-sm" (click)="clickchoice(item, 'YES')">YES</button>
-          <button type="button" class="btn btn-danger btn-sm" (click)="clickchoice(item, 'NO')">NO</button>
-          <button type="button" class="btn btn-info btn-sm" (click)="clickchoice(item, 'UNDECIDED')">UNDECIDED</button>
-        </div>
+        <ion-card slot="end">
+          <ion-card-header>
+            <ion-card-subtitle>Will you be getting the Covid-19 vaccine?</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="btn-group">
+              <button type="button" class="btn btn-success btn-sm" (click)="choiceClicked(item, 'yes')">YES</button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="choiceClicked(item, 'no')">NO</button>
+              <button type="button" class="btn btn-info btn-sm" (click)="choiceClicked(item, 'undecided')">UNDECIDED</button>
+            </div>
+          </ion-card-content>
+        </ion-card>
       </ion-item>
       
     </ion-item-sliding>
