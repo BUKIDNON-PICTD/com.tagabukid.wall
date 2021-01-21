@@ -14,6 +14,7 @@ export class VaccinesurveyPage implements OnInit {
   public surveys: any;
   public currentItem: any;
   reasonModalResponse: any;
+  // flaggedExisting: any;
 
   constructor(
     public qrcodeService: QrcodeService,
@@ -39,6 +40,11 @@ export class VaccinesurveyPage implements OnInit {
     })
   }
 
+  // checkForExisting() {
+  //   const existing = this.items.foreach(item => this.surveys.find(survey => survey.objid === item.objid ))
+  //   console.log(existing)
+  // }
+ 
   choiceClicked(item, choice) {
     this.currentItem = item;
     choice === "yes" ? this.sendSurveyData(this.currentItem, choice, "vaccineissafe")
@@ -85,16 +91,22 @@ export class VaccinesurveyPage implements OnInit {
       }
     )
     .then(status => {
-      this.presentToast()
+      this.presentToast(status)
     });
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: "Your survey data has been saved.",
-      duration: 2000,
-      color: "success"
-    });
+  async presentToast(type) {
+    const toast = type === 201 ?
+      await this.toastController.create({
+        message: "Your survey data has been saved.",
+        duration: 2000,
+        color: "success"
+      }) : 
+      await this.toastController.create({
+        message: "An error occured when saving your survey data.",
+        duration: 2000,
+        color: "danger"
+      })
     toast.present();
   }
 
