@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
     {
       title: "Vaccine Survey Dashboard",
       url: "vaccinesurveydashboard",
-      icon: "chart",
+      icon: "grid",
     },
     {
       title: "QR Profile List",
