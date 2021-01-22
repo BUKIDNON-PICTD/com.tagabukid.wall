@@ -1,9 +1,122 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>vaccinesurveydashboard</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Vaccine Survey Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <div class="container-fluid">
+    <ion-toolbar color="primary">
+      <nav class="navbar navbar-expand navbar-primary navbar-dark">
+        <ion-title>Data as of {{ currentDateTime }}</ion-title>
+      </nav>
+    </ion-toolbar>
+    &nbsp;
+    <app-a2hs-prompt></app-a2hs-prompt>
+    <div class="row">
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{totalMalesYes}} men</h3>
+            <p>({{(totalMalesYes/totalMales) * 100 | number:'1.0-1'}}%)</p>
+            <label>Said Yes</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-thumbsup"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>{{totalMalesNo}} men</h3>
+            <p>({{(totalMalesNo/totalMales) * 100 | number:'1.0-1'}}%)</p>
+            <label>Said No</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-thumbsdown"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{totalMalesUndecided}} men</h3>
+            <p>({{(totalMalesUndecided/totalMales) * 100 | number:'1.0-1'}}%)</p>
+            <label>Was Undecided</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-help"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{totalFemalesYes}} women</h3>
+            <p>({{(totalFemalesYes/totalFemales) * 100 | number:'1.0-1'}}%)</p>
+            <label>Said Yes</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-thumbsup"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>{{totalFemalesNo}} women</h3>
+            <p>({{(totalFemalesNo/totalFemales) * 100 | number:'1.0-1'}}%)</p>
+            <label>Said No</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-thumbsdown"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{totalFemalesUndecided}} women</h3>
+            <p>({{(totalFemalesUndecided/totalFemales) * 100 | number:'1.0-1'}}%)</p>
+            <label>Was Undecided</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-help"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-7">
+        <div class="small-box bg-primary">
+          <div class="inner">
+            <h3>{{totalMales}} men</h3>
+            <p>{{(totalMales/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+            <label>Total of male respondents</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-male"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-7">
+        <div class="small-box bg-secondary">
+          <div class="inner">
+            <h3>{{totalFemales}} women</h3>
+            <p>{{(totalFemales/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+            <label>Total of female respondents</label>
+          </div>
+          <div class="icon">
+            <i class="ion ion-female"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
