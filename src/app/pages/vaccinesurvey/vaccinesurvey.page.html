@@ -22,9 +22,9 @@
           </ion-card-header>
           <ion-card-content>
             <div class="btn-group">
-              <button type="button" class="btn btn-success btn-sm" (click)="choiceClicked(item, 'yes')">YES</button>
-              <button type="button" class="btn btn-danger btn-sm" (click)="choiceClicked(item, 'no')">NO</button>
-              <button type="button" class="btn btn-info btn-sm" (click)="choiceClicked(item, 'undecided')">UNDECIDED</button>
+              <button [disabled]="item.answer === 'yes'" type="button" class="btn btn-success btn-sm" (click)="choiceClicked(item, 'yes')">YES</button>
+              <button [disabled]="item.answer === 'no'" type="button" class="btn btn-danger btn-sm" (click)="choiceClicked(item, 'no')">NO</button>
+              <button [disabled]="item.answer === 'undecided'" type="button" class="btn btn-info btn-sm" (click)="choiceClicked(item, 'undecided')">UNDECIDED</button>
             </div>
           </ion-card-content>
         </ion-card>
