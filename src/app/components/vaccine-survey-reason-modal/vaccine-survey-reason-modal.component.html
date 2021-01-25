@@ -23,7 +23,14 @@
           <ion-label>I'm being pressured by my peers.</ion-label>
           <ion-radio slot="start" value="pressure" ng-model="reason"></ion-radio>
         </ion-item>
+        <ion-item>
+          <ion-label>Others (please specify)</ion-label>
+          <ion-radio slot="start" value="others" ng-model="reason"></ion-radio>
+        </ion-item>
       </ion-radio-group>
+      <ion-item [hidden]="selectedReason !== 'others'">
+        <ion-input type="text" placeholder="Enter reason" [(ngModel)]="customReason"></ion-input>
+      </ion-item>
     </ion-list>
     <ion-button (click)="dismissModal('cancel')">
       Cancel
