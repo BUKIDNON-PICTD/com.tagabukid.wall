@@ -8,6 +8,8 @@ import { ModalController } from '@ionic/angular';
 })
 export class VaccineSurveyReasonModalComponent implements OnInit {
   [x: string]: any;
+  selectedReason: any;
+  customReason: any;
 
   @Input() choice: string;
 
@@ -23,7 +25,11 @@ export class VaccineSurveyReasonModalComponent implements OnInit {
  
   dismissModal(action) {
     this.modalController.dismiss({
-      "reason": action === "cancel" ? undefined : this.selectedReason,
+      "reason": action === "cancel" ?
+      undefined
+      : this.selectedReason === "others" ?
+      this.customReason
+      : this.selectedReason,
       "choice": this.choice
     });
   }
