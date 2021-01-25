@@ -1,6 +1,6 @@
 import { VaccinesurveyService } from './../../services/vaccinesurvey.service';
 import { QrcodeService } from './../../services/qrcode.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { VaccineSurveyReasonModalComponent } from 'src/app/components/vaccine-survey-reason-modal/vaccine-survey-reason-modal.component';
 
@@ -14,13 +14,13 @@ export class VaccinesurveyPage implements OnInit {
   public surveys: any;
   public currentItem: any;
   reasonModalResponse: any;
-  // flaggedExisting: any;
 
   constructor(
     public qrcodeService: QrcodeService,
     public vaccineSurveyService: VaccinesurveyService,
     public modalController: ModalController,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -39,15 +39,22 @@ export class VaccinesurveyPage implements OnInit {
       this.surveys = surveys;
     })
   }
-
-  // checkForExisting() {
-  //   const existing = this.items.foreach(item => this.surveys.find(survey => survey.objid === item.objid ))
-  //   console.log(existing)
-  // }
  
+  // choiceClicked(item, choice) {
+  //   this.currentItem = item;
+  //   const alreadyExist = this.surveys.find(survey => survey.objid === item.objid)
+  //   alreadyExist.answer === choice? this.vaccineSurveyService.showAlert("alreadyExist") :
+  //   choice === "yes" ? this.saveSurveyData(this.currentItem, choice, "vaccineissafe")
+  //   : this.presentModal(choice);
+  // }
+
   choiceClicked(item, choice) {
     this.currentItem = item;
-    choice === "yes" ? this.sendSurveyData(this.currentItem, choice, "vaccineissafe")
+    // const alreadyExist = this.surveys.find(survey => survey.objid === item.objid)
+    // alreadyExist && alreadyExist.answer === choice ? 
+    // this.vaccineSurveyService.showAlert("alreadyExist")
+    // :
+    choice === "yes" ? this.saveSurveyData(this.currentItem, choice, "vaccineissafe")
     : this.presentModal(choice);
   }
 
@@ -61,13 +68,67 @@ export class VaccinesurveyPage implements OnInit {
 
     modal.onDidDismiss().then((data: any) => {
       this.reasonModalResponse = data ;
-      if (this.reasonModalResponse.data.reason) this.sendSurveyData(this.currentItem, this.reasonModalResponse.data.choice, this.reasonModalResponse.data.reason)
+      if (this.reasonModalResponse.data.reason) this.saveSurveyData(this.currentItem, this.reasonModalResponse.data.choice, this.reasonModalResponse.data.reason)
     })
 
     return await modal.present();
   }
 
-  sendSurveyData(item, choice, reason){
+  saveSurveyData(item, choice, reason){
+    const alreadyExist = this.surveys ? this.surveys.find(survey => survey.objid === item.objid) : 0
+    alreadyExist ?
+    this.vaccineSurveyService.updateItem(
+      {
+        objid: item.objid,
+        profilephoto: item.photo,
+        lastname: item.lastname,
+        firstname: item.firstname,
+        middlename: item.middlename,
+        birthdate: item.birthdate,
+        gender: item.gender,
+        civilstatus: item.civilstatus,
+        mobileno: item.mobileno,
+        address: {
+          barangay: {
+            code : item.address.barangay.code,
+            lguname: item.address.barangay.lguname,
+          },
+          province: {
+            code: item.address.province.code,
+            lguname: item.address.province.lguname
+          },
+          municipality: {
+            code: item.address.municipality.code,
+            lguname: item.address.municipality.lguname
+          },
+          street: item.address.street,
+          text: item.address.text
+        },
+        barangay: {
+          code : item.address.barangay.code,
+          lguname: item.address.barangay.lguname,
+        },
+        province: {
+          code: item.address.province.code,
+          lguname: item.address.province.lguname
+        },
+        municipality: {
+          code: item.address.municipality.code,
+          lguname: item.address.municipality.lguname
+        },
+        nameextension: item.nameextension,
+        answer: choice,
+        reason: reason
+      }
+    )
+    .then(status => {
+      const type = status === 200 ? "success" : "fail"
+      this.zone.run(() => {
+        this.loadprofiles();
+      });
+      this.presentToast(type)
+    })
+    :
     this.vaccineSurveyService.addItem(
       {
         objid: item.objid,
@@ -79,24 +140,50 @@ export class VaccinesurveyPage implements OnInit {
         gender: item.gender,
         civilstatus: item.civilstatus,
         mobileno: item.mobileno,
-        address_province_code: item.address.province.code,
-        address_province_lguname: item.address.province.lguname,
-        address_municipality_code: item.address.municipality.code,
-        address_municipality_lguname: item.address.municipality.lguname,
-        address_barangay_code: item.address.barangay.code,
-        address_barangay_lguname: item.address.barangay.lguname,
-        address_street: item.address.street,
+        address: {
+          barangay: {
+            code : item.address.barangay.code,
+            lguname: item.address.barangay.lguname,
+          },
+          province: {
+            code: item.address.province.code,
+            lguname: item.address.province.lguname
+          },
+          municipality: {
+            code: item.address.municipality.code,
+            lguname: item.address.municipality.lguname
+          },
+          street: item.address.street,
+          text: item.address.text
+        },
+        barangay: {
+          code : item.address.barangay.code,
+          lguname: item.address.barangay.lguname,
+        },
+        province: {
+          code: item.address.province.code,
+          lguname: item.address.province.lguname
+        },
+        municipality: {
+          code: item.address.municipality.code,
+          lguname: item.address.municipality.lguname
+        },
+        nameextension: item.nameextension,
         answer: choice,
         reason: reason
       }
     )
     .then(status => {
-      this.presentToast(status)
-    });
+      const type = status === 201 ? "success" : "fail"
+      this.zone.run(() => {
+        this.loadprofiles();
+      });
+      this.presentToast(type)
+    })
   }
 
   async presentToast(type) {
-    const toast = type === 201 ?
+    const toast = type === "success"?
       await this.toastController.create({
         message: "Your survey data has been saved.",
         duration: 2000,

@@ -17,6 +17,10 @@
               <ion-label>
                   <div class="breakword">
                     <h3>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</h3>
+                    <div>
+                      <h4>Vaccine Survey:</h4>
+                      <ion-badge color="primary">Answer: {{item.answer.toUpperCase()}}</ion-badge>
+                    </div>
                   </div>
                   <div >
                     <h3>{{item.address.text}}</h3>
@@ -33,8 +37,6 @@
               </ion-label>
              
             </ion-item>
-            <button type="button" class="btn btn-block btn-success btn-sm" (click)="clickyes(item)">YES</button>
-            <button type="button" class="btn btn-block btn-danger btn-sm" (click)="clickno(item)">NO</button>
             <ion-item-options>
               <a class="btn btn-app btn-danger btn-sm" routerLink="/qrprofile/{{item.objid}}">
                 <i class="fas fa-edit"></i>
