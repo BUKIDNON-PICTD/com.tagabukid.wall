@@ -73,6 +73,10 @@ const routes: Routes = [
   },  {
     path: 'vaccinesurvey',
     loadChildren: () => import('./pages/vaccinesurvey/vaccinesurvey.module').then( m => m.VaccinesurveyPageModule)
+  },
+  {
+    path: 'vaccinesurveydashboard',
+    loadChildren: () => import('./pages/vaccinesurveydashboard/vaccinesurveydashboard.module').then( m => m.VaccinesurveydashboardPageModule)
   }
 
 ];

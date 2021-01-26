@@ -12,17 +12,26 @@
     <div class="card">
       <div class="card-body table-responsive p-0">
         <ion-list>
-          <ion-item-sliding *ngFor="let item of items" #slidingItem>
-            <ion-item (click)="printQR(item)" class="centeritem breakword">
+          <ion-item-sliding *ngFor="let item of items" #slidingItem class="centeritem">
+            <ion-item (click)="printQR(item)" class="breakword">
               <ion-label>
+                <div class="row">
+                <div class="col-lg-3 col-3">
+                  <img [src]="item.photo" width="100%"/>
+                </div>
+
+                <div class="col-lg-6 col-6">
                   <div class="breakword">
-                    <h3>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</h3>
+                    <b>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</b>
                   </div>
-                  <div >
-                    <h3>{{item.address.text}}</h3>
+                  <div>
+                    <h3><b>BARANGAY:</b> {{ item.address.street}}, {{item.address.barangay.lguname}}</h3>
+                    <h3><b>MUNICIPALITY:</b> {{item.address.municipality.lguname}}</h3>
+                    <h3><b>PROVINCE:</b> {{item.address.province.lguname}}</h3>
                   </div>
-                  <img [src]="item.photo" width="256px"/>
-                <div id="{{item.objid}}">
+                </div>
+
+                <div class="col-lg-3 col-3" id="{{item.objid}}">
                   <ngx-qrcode 
                     [elementType]="elementType" 
                     [value]="item.qrdata | json"
@@ -30,11 +39,18 @@
                     errorCorrectionLevel="L">
                   </ngx-qrcode>
                 </div>
-              </ion-label>
-             
-            </ion-item>
-            <button type="button" class="btn btn-block btn-success btn-sm" (click)="clickyes(item)">YES</button>
-            <button type="button" class="btn btn-block btn-danger btn-sm" (click)="clickno(item)">NO</button>
+              </div>
+              </ion-label>             
+            </ion-item>            
+              
+            <div class="col-lg-12 col-12">
+              <div class="row">
+                <div class="col-4"><button type="button" class="btn btn-block btn-success btn-md" (click)="clickyes(item)">YES</button></div>
+                <div class="col-4"><button type="button" class="btn btn-block btn-danger btn-md" (click)="clickno(item)">NO</button></div>
+                <div class="col-4"><button type="button" class="btn btn-block btn-dark btn-md" (click)="clickundecided(item)">UNDECIDED</button></div>
+              </div>
+            </div>
+
             <ion-item-options>
               <a class="btn btn-app btn-danger btn-sm" routerLink="/qrprofile/{{item.objid}}">
                 <i class="fas fa-edit"></i>
