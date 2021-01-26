@@ -1,10 +1,11 @@
 import { environment } from 'src/environments/environment';
 import { QrcodeService } from './../../services/qrcode.service';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
 import * as CryptoJS from 'crypto-js';
 import * as moment from 'moment';
+import { VaccinesurveyService } from 'src/app/services/vaccinesurvey.service';
 
 @Component({
   selector: 'app-qrprofilelist',
@@ -23,7 +24,9 @@ export class QrprofilelistPage implements OnInit {
     private toastController: ToastController,
     private loadingController: LoadingController,
     private socket: Socket,
-    private qrcodesvc: QrcodeService
+    private qrcodesvc: QrcodeService,
+    public vaccinesurveyService: VaccinesurveyService,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -122,12 +125,192 @@ export class QrprofilelistPage implements OnInit {
       this.loadItems();
   }
 
-  clickyes(item){
-    this.showToast('yes');
+  async clickyes(item){
+    
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Brand of Vaccine',
+      subHeader: 'What vaccine do you prefer?',
+      inputs: [
+        {
+          name: 'company',
+          type: 'radio',
+          label: 'AstraZeneca',
+          value: 'AstraZeneca',
+        },
+        {
+          name: 'company',
+          type: 'radio',
+          label: 'Covovax',
+          value: 'Covovax',
+        },
+        {
+          name: 'company',
+          type: 'radio',
+          label: '​​​​Moderna',
+          value: '​​​​Moderna',
+        },
+        {
+          name: 'company',
+          type: 'radio',
+          label: '​​​​Pfizer-BioNTech',
+          value: 'Pfizer-BioNTech',
+        },
+        {
+          name: 'company',
+          type: 'radio',
+          label: 'Sinovac',
+          value: 'Sinovac',
+        },        
+        {
+          name: 'company',
+          type: 'radio',
+          label: 'Undecided',
+          value: '​​​​Undecided',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log("Brand choice: " + data);
+            const newitem = {
+              objid: item.objid,
+              lastname: item.lastname,
+              firstname: item.firstname,
+              middlename: item.middlename,
+              birthdate: item.birthdate,
+              gender: item.gender,
+              civilstatus: item.civilstatus,
+              mobileno: item.mobileno,
+              address_province_code: item.address.province.code,
+              address_province_lguname: item.address.province.lguname,
+              address_municipality_code: item.address.municipality.code,
+              address_municipality_lguname: item.address.municipality.lguname,
+              address_barangay_code: item.address.barangay.code,
+              address_barangay_lguname: item.address.barangay.lguname,
+              address_street: item.address.street,
+              answer: "YES",
+              brand: data,
+              reason: "Approved"
+            };
+            this.vaccinesurveyService.addItem(newitem).then(item => {
+              console.log(item);
+            })
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
-  clickno(item){
-    this.showToast('no');
+  async clickno(item) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Additional Information',
+      inputs: [
+        {
+          name: 'reason',
+          type: 'textarea',
+          placeholder: 'Explain your reason in 10 sentences.'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            const newitem = {
+              objid: item.objid,
+              lastname: item.lastname,
+              firstname: item.firstname,
+              middlename: item.middlename,
+              birthdate: item.birthdate,
+              gender: item.gender,
+              civilstatus: item.civilstatus,
+              mobileno: item.mobileno,
+              address_province_code: item.address.province.code,
+              address_province_lguname: item.address.province.lguname,
+              address_municipality_code: item.address.municipality.code,
+              address_municipality_lguname: item.address.municipality.lguname,
+              address_barangay_code: item.address.barangay.code,
+              address_barangay_lguname: item.address.barangay.lguname,
+              address_street: item.address.street,
+              answer: "NO",
+              reason: data.reason
+            };
+            this.vaccinesurveyService.addItem(newitem).then(item => {
+              console.log(item.data);
+            });     
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async clickundecided(item) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Additional Information',
+      inputs: [
+        {
+          name: 'reason',
+          type: 'textarea',
+          placeholder: 'Explain your reason in 10 paragraph.'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            const newitem = {
+              objid: item.objid,
+              lastname: item.lastname,
+              firstname: item.firstname,
+              middlename: item.middlename,
+              birthdate: item.birthdate,
+              gender: item.gender,
+              civilstatus: item.civilstatus,
+              mobileno: item.mobileno,
+              address_province_code: item.address.province.code,
+              address_province_lguname: item.address.province.lguname,
+              address_municipality_code: item.address.municipality.code,
+              address_municipality_lguname: item.address.municipality.lguname,
+              address_barangay_code: item.address.barangay.code,
+              address_barangay_lguname: item.address.barangay.lguname,
+              address_street: item.address.street,
+              answer: "UNDECIDED",
+              reason: data.reason
+            };
+            this.vaccinesurveyService.addItem(newitem).then(item => {
+              console.log(item.data);
+            });     
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

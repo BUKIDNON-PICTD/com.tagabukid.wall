@@ -1,9 +1,24 @@
 .centeritem {
-    text-align: center;
+    // text-align: center;
     border: 3px solid green;
+    border-radius: 5px;
+    margin: 5px 0px;
+    padding-bottom: 5px;
    
 }
 
 .breakword {
     word-wrap: break-word;
+}
+
+.tocenter {
+    text-align: center;
+}
+
+.qrborder {
+    border: 2px solid black
+}
+
+div {
+    // border: 1px dashed chartreuse;
 }

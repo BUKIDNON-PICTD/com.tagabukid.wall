@@ -1,25 +1,25 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Vaccine Survey</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of items" #slidingItem>
+    <ion-item-sliding *ngFor="let item of items; let i=index" #slidingItem>
       <ion-item class="centeritem breakword">
         <ion-label>
-          <div class="breakword">
-            <h3>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</h3>
-          </div>
-          <div>
-            <h3>{{item.address.text}}</h3>
+          <div class="inline" id="answercolor">
+            <b>Person {{ i+1 }}</b>
+            <h6>{{ item.address_municipality_lguname }}</h6>
           </div>
         </ion-label>
         <div class="btn-group" slot="end">
-          <button type="button" class="btn btn-success btn-sm" (click)="clickyes(item)">YES</button>
-          <button type="button" class="btn btn-danger btn-sm" (click)="clickno(item)">NO</button>
-          <button type="button" class="btn btn-info btn-sm" (click)="clickundecided(item)">UNDECIDED</button>
+          <!-- <ion-button disabled style="width: 110px;" size="medium" [color]="item.answer=='YES' ? 'success' : (item.answer=='NO' ? 'danger' : 'warning')">{{ item.answer }}</ion-button> -->
+          <!-- <ion-button size="medium" color="dark" (click)="clickchange(item)">Change</ion-button> -->
         </div>
       </ion-item>
       

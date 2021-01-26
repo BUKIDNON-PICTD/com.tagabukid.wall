@@ -12,8 +12,8 @@ export class VaccinesurveyPage implements OnInit {
   public items: any;
   constructor(
     public qrcodeService: QrcodeService,
-    public vaccineSurvey: VaccinesurveyService,
-    private alertController: AlertController
+    public vaccinesurveyService: VaccinesurveyService,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -21,7 +21,7 @@ export class VaccinesurveyPage implements OnInit {
   }
 
   loadprofiles(){
-    this.qrcodeService.getItems().then( items => {
+    this.vaccinesurveyService.getItems().then( items => {
       console.log(items);
       this.items = items;
     })
@@ -38,31 +38,37 @@ export class VaccinesurveyPage implements OnInit {
           name: 'company',
           type: 'radio',
           label: 'AstraZeneca',
-          value: 'AstraZeneca',
+          value: 'ASTRAZENECA',
         },
         {
           name: 'company',
           type: 'radio',
           label: 'Covovax',
-          value: 'Covovax',
+          value: 'COVOVAX',
         },
         {
           name: 'company',
           type: 'radio',
           label: '​​​​Moderna',
-          value: '​​​​Moderna',
+          value: 'MODERNA',
+        },
+        {
+          name: 'company',
+          type: 'radio',
+          label: 'Novavax',
+          value: 'NOVAVAX',
         },
         {
           name: 'company',
           type: 'radio',
           label: '​​​​Pfizer-BioNTech',
-          value: 'Pfizer-BioNTech',
+          value: 'PFIZER-BIONTECH',
         },
         {
           name: 'company',
           type: 'radio',
           label: 'Sinovac',
-          value: 'Sinovac',
+          value: 'SINOVAC',
         },        
         {
           name: 'company',
@@ -85,12 +91,25 @@ export class VaccinesurveyPage implements OnInit {
             console.log("Brand choice: " + data);
             const newitem = {
               objid: item.objid,
-              profiledata: JSON.stringify(item),
+              lastname: item.lastname,
+              firstname: item.firstname,
+              middlename: item.middlename,
+              birthdate: item.birthdate,
+              gender: item.gender,
+              civilstatus: item.civilstatus,
+              mobileno: item.mobileno,
+              address_province_code: item.address.province.code,
+              address_province_lguname: item.address.province.lguname,
+              address_municipality_code: item.address.municipality.code,
+              address_municipality_lguname: item.address.municipality.lguname,
+              address_barangay_code: item.address.barangay.code,
+              address_barangay_lguname: item.address.barangay.lguname,
+              address_street: item.address.street,
               answer: "YES",
               brand: data,
               reason: "Approved"
             };
-            this.vaccineSurvey.addItem(newitem).then(item => {
+            this.vaccinesurveyService.addItem(newitem).then(item => {
               console.log(item);
             })
           }
@@ -98,8 +117,6 @@ export class VaccinesurveyPage implements OnInit {
       ]
     });
     await alert.present();
-
-
   }
 
   async clickno(item) {
@@ -126,11 +143,24 @@ export class VaccinesurveyPage implements OnInit {
           handler: (data) => {
             const newitem = {
               objid: item.objid,
-              profiledata: JSON.stringify(item),
+              lastname: item.lastname,
+              firstname: item.firstname,
+              middlename: item.middlename,
+              birthdate: item.birthdate,
+              gender: item.gender,
+              civilstatus: item.civilstatus,
+              mobileno: item.mobileno,
+              address_province_code: item.address.province.code,
+              address_province_lguname: item.address.province.lguname,
+              address_municipality_code: item.address.municipality.code,
+              address_municipality_lguname: item.address.municipality.lguname,
+              address_barangay_code: item.address.barangay.code,
+              address_barangay_lguname: item.address.barangay.lguname,
+              address_street: item.address.street,
               answer: "NO",
               reason: data.reason
             };
-            this.vaccineSurvey.addItem(newitem).then(item => {
+            this.vaccinesurveyService.addItem(newitem).then(item => {
               console.log(item.data);
             });     
           }
@@ -164,11 +194,24 @@ export class VaccinesurveyPage implements OnInit {
           handler: (data) => {
             const newitem = {
               objid: item.objid,
-              profiledata: JSON.stringify(item),
+              lastname: item.lastname,
+              firstname: item.firstname,
+              middlename: item.middlename,
+              birthdate: item.birthdate,
+              gender: item.gender,
+              civilstatus: item.civilstatus,
+              mobileno: item.mobileno,
+              address_province_code: item.address.province.code,
+              address_province_lguname: item.address.province.lguname,
+              address_municipality_code: item.address.municipality.code,
+              address_municipality_lguname: item.address.municipality.lguname,
+              address_barangay_code: item.address.barangay.code,
+              address_barangay_lguname: item.address.barangay.lguname,
+              address_street: item.address.street,
               answer: "UNDECIDED",
               reason: data.reason
             };
-            this.vaccineSurvey.addItem(newitem).then(item => {
+            this.vaccinesurveyService.addItem(newitem).then(item => {
               console.log(item.data);
             });     
           }
