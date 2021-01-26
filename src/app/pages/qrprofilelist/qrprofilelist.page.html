@@ -19,7 +19,7 @@
                     <h3>{{item.lastname + ', ' + item.firstname + ' ' + item.middlename}}</h3>
                     <div>
                       <h4>Vaccine Survey:</h4>
-                      <ion-badge color="primary">Answer: {{item.answer.toUpperCase()}}</ion-badge>
+                      <ion-badge [ngStyle]="{'background-color':item.answer === 'yes' ? 'green' : item.answer === 'no' ? red : blue }">{{item.answer.toUpperCase()}}</ion-badge>
                     </div>
                   </div>
                   <div >
