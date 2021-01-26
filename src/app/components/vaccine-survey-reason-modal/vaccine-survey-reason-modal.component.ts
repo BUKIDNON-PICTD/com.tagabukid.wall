@@ -22,6 +22,10 @@ export class VaccineSurveyReasonModalComponent implements OnInit {
   radioGroupChange(event) {
     this.selectedReason = event.detail.value;
   }
+
+  textInputChange(event) {
+    this.customReason = event.target.value;
+  }
  
   dismissModal(action) {
     this.modalController.dismiss({
