@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { VaccinesurveydashboardserviceService } from './../../services/vaccinesurveydashboardservice.service';
 
 @Component({
   selector: 'app-vaccinesurveydashboard',
@@ -7,34 +8,53 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VaccinesurveydashboardPage implements OnInit {
   public currentDateTime;
-
-  public totalMalesYes: number;
-  public totalMalesNo: number;
-  public totalMalesUndecided: number;
-  public totalMales: number;
+  
+  public totalYes: number;
+  public totalNo: number;
+  public totalUndecided: number;
   public totalRespondents: number;
+  public totalMaleYes: number;
+  public totalMaleNo: number;
+  public totalMaleUndecided: number;
+  public totalFemaleYes: number;
+  public totalFemaleNo: number;
+  public totalFemaleUndecided: number;
+  public totalYoungAdult: number;
+  public totalEarlyAdult: number;
+  public totalAdult: number;
+  public totalMiddleAdult: number;
+  public totalLateAdult: number;
+  public totalSenior: number;
 
-  public totalFemalesYes: number;
-  public totalFemalesNo: number;
-  public totalFemalesUndecided: number;
-  public totalFemales: number;
-
-  constructor() { }
+  constructor(
+    public vaccineSurveyDashboardService: VaccinesurveydashboardserviceService
+  ) { }
 
   ngOnInit() {
     this.currentDateTime = new Date().toLocaleString();
+    this.loadTotals();
+  }
 
-    this.totalMalesYes = 2;
-    this.totalMalesNo = 21;
-    this.totalMalesUndecided = 19;
-    this.totalMales = this.totalMalesYes + this.totalMalesNo + this.totalMalesUndecided;
+  loadTotals(){
+    this.vaccineSurveyDashboardService.getItems().then( items => {
 
-    this.totalFemalesYes = 4;
-    this.totalFemalesNo = 17;
-    this.totalFemalesUndecided = 24;
-    this.totalFemales = this.totalFemalesYes + this.totalFemalesNo + this.totalFemalesUndecided;
-
-    this.totalRespondents = 87;
+    this.totalYes = items.totalYes;
+    this.totalNo = items.totalNo;
+    this.totalUndecided = items.totalUndecided;
+    this.totalRespondents = items.totalRespondents;
+    this.totalMaleYes = items.totalMaleYes;
+    this.totalMaleNo = items.totalMaleNo;
+    this.totalMaleUndecided = items.totalMaleUndecided;
+    this.totalFemaleYes = items.totalFemaleYes;
+    this.totalFemaleNo = items.totalFemaleNo;
+    this.totalFemaleUndecided = items.totalFemaleUndecided;
+    this.totalYoungAdult = items.totalYoungAdult;
+    this.totalEarlyAdult = items.totalEarlyAdult;
+    this.totalAdult = items.totalAdult;
+    this.totalMiddleAdult = items.totalMiddleAdult;
+    this.totalLateAdult = items.totalLateAdult;
+    this.totalSenior = items.totalSenior;
+    })
   }
 
 }

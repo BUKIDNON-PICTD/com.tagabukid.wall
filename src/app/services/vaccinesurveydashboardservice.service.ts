@@ -16,7 +16,7 @@ export class VaccinesurveydashboardserviceService {
 
   getItems(): Promise<any[]> {
     return this.http
-      .get<any>(`${environment.panganud}/api/vaccinesurveydashboard`)
+      .get<any>(`${environment.panganud}/api/vaccinesurveydashboard/gettotals`)
       .pipe(
         tap((res) => {
           return res;

@@ -20,8 +20,9 @@
       <div class="col-lg-4 col-6">
         <div class="small-box bg-success">
           <div class="inner">
-            <h3>{{totalMalesYes}} men</h3>
-            <p>({{(totalMalesYes/totalMales) * 100 | number:'1.0-1'}}%)</p>
+            <h3>{{totalMaleYes}} males</h3>
+            <h3>{{totalFemaleYes}} females</h3>
+            <p>({{(totalYes/totalRespondents) * 100 | number:'1.0-1'}}%)</p>
             <label>Said Yes</label>
           </div>
           <div class="icon">
@@ -32,8 +33,9 @@
       <div class="col-lg-4 col-6">
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3>{{totalMalesNo}} men</h3>
-            <p>({{(totalMalesNo/totalMales) * 100 | number:'1.0-1'}}%)</p>
+            <h3>{{totalMaleNo}} males</h3>
+            <h3>{{totalFemaleNo}} females</h3>
+            <p>({{(totalNo/totalRespondents) * 100 | number:'1.0-1'}}%)</p>
             <label>Said No</label>
           </div>
           <div class="icon">
@@ -44,8 +46,9 @@
       <div class="col-lg-4 col-6">
         <div class="small-box bg-info">
           <div class="inner">
-            <h3>{{totalMalesUndecided}} men</h3>
-            <p>({{(totalMalesUndecided/totalMales) * 100 | number:'1.0-1'}}%)</p>
+            <h3>{{totalMaleUndecided}} males</h3>
+            <h3>{{totalFemaleUndecided}} females</h3>
+            <p>({{(totalUndecided/totalRespondents) * 100 | number:'1.0-1'}}%)</p>
             <label>Was Undecided</label>
           </div>
           <div class="icon">
@@ -56,67 +59,71 @@
     </div>
     <div class="row">
       <div class="col-lg-4 col-6">
-        <div class="small-box bg-success">
-          <div class="inner">
-            <h3>{{totalFemalesYes}} women</h3>
-            <p>({{(totalFemalesYes/totalFemales) * 100 | number:'1.0-1'}}%)</p>
-            <label>Said Yes</label>
-          </div>
-          <div class="icon">
-            <i class="ion ion-thumbsup"></i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-6">
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <h3>{{totalFemalesNo}} women</h3>
-            <p>({{(totalFemalesNo/totalFemales) * 100 | number:'1.0-1'}}%)</p>
-            <label>Said No</label>
-          </div>
-          <div class="icon">
-            <i class="ion ion-thumbsdown"></i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-6">
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>{{totalFemalesUndecided}} women</h3>
-            <p>({{(totalFemalesUndecided/totalFemales) * 100 | number:'1.0-1'}}%)</p>
-            <label>Was Undecided</label>
-          </div>
-          <div class="icon">
-            <i class="ion ion-help"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-6 col-7">
         <div class="small-box bg-primary">
           <div class="inner">
-            <h3>{{totalMales}} men</h3>
-            <p>{{(totalMales/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Total of male respondents</label>
-          </div>
-          <div class="icon">
-            <i class="ion ion-male"></i>
+            <h3>{{totalYoungAdult}}</h3>
+            <p>{{(totalYoungAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+            <label>Total of respondents aging from 18 to 23</label>
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-7">
-        <div class="small-box bg-secondary">
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-primary">
           <div class="inner">
-            <h3>{{totalFemales}} women</h3>
-            <p>{{(totalFemales/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Total of female respondents</label>
-          </div>
-          <div class="icon">
-            <i class="ion ion-female"></i>
+            <h3>{{totalEarlyAdult}}</h3>
+            <p>{{(totalEarlyAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+            <label>Total of respondents aging from 24 to 33</label>
           </div>
         </div>
       </div>
-    </div>
+      <div class="col-lg-4 col-6">
+        <div class="small-box bg-primary">
+          <div class="inner">
+            <h3>{{totalAdult}}</h3>
+            <p>{{(totalAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+            <label>Total of respondents aging from 34 to 43</label>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-6">
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h3>{{totalMiddleAdult}}</h3>
+              <p>{{(totalMiddleAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+              <label>Total of respondents aging from 44 to 53</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-6">
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h3>{{totalLateAdult}}</h3>
+              <p>{{(totalLateAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+              <label>Total of respondents aging from 54 to 59</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-6">
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h3>{{totalSenior}}</h3>
+              <p>{{(totalSenior/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
+              <label>Overall total of respondents aging 60 above</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-9">
+          <div class="small-box bg-secondary">
+            <div class="inner">
+              <h3>{{totalRespondents}}</h3>
+              <label>Overall total of respondents</label>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </ion-content>
