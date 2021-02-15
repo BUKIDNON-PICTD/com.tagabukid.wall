@@ -7,14 +7,14 @@ import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class VaccinesurveydashboardserviceService {
+export class VaccinesurveydashboardService {
 
   constructor(
     public http: HttpClient,
     public alertController: AlertController
   ) {}
 
-  getItems(): Promise<any[]> {
+  getItems(): Promise<any> {
     return this.http
       .get<any>(`${environment.panganud}/api/vaccinesurveydashboard/gettotals`)
       .pipe(

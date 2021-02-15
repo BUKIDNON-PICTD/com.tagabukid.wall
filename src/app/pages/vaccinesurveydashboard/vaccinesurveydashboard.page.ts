@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VaccinesurveydashboardserviceService } from './../../services/vaccinesurveydashboardservice.service';
+import { VaccinesurveydashboardService } from './../../services/vaccinesurveydashboard.service';
 
 @Component({
   selector: 'app-vaccinesurveydashboard',
@@ -27,7 +27,7 @@ export class VaccinesurveydashboardPage implements OnInit {
   public totalSenior: number;
 
   constructor(
-    public vaccineSurveyDashboardService: VaccinesurveydashboardserviceService
+    public vaccineSurveyDashboardService: VaccinesurveydashboardService
   ) { }
 
   ngOnInit() {
@@ -36,24 +36,24 @@ export class VaccinesurveydashboardPage implements OnInit {
   }
 
   loadTotals(){
-    this.vaccineSurveyDashboardService.getItems().then( items => {
+    this.vaccineSurveyDashboardService.getItems().then( item => {
 
-    this.totalYes = items.totalYes;
-    this.totalNo = items.totalNo;
-    this.totalUndecided = items.totalUndecided;
-    this.totalRespondents = items.totalRespondents;
-    this.totalMaleYes = items.totalMaleYes;
-    this.totalMaleNo = items.totalMaleNo;
-    this.totalMaleUndecided = items.totalMaleUndecided;
-    this.totalFemaleYes = items.totalFemaleYes;
-    this.totalFemaleNo = items.totalFemaleNo;
-    this.totalFemaleUndecided = items.totalFemaleUndecided;
-    this.totalYoungAdult = items.totalYoungAdult;
-    this.totalEarlyAdult = items.totalEarlyAdult;
-    this.totalAdult = items.totalAdult;
-    this.totalMiddleAdult = items.totalMiddleAdult;
-    this.totalLateAdult = items.totalLateAdult;
-    this.totalSenior = items.totalSenior;
+    this.totalYes = item.totalYes;
+    this.totalNo = item.totalNo;
+    this.totalUndecided = item.totalUndecided;
+    this.totalRespondents = item.totalRespondents;
+    this.totalMaleYes = item.totalMaleYes;
+    this.totalMaleNo = item.totalMaleNo;
+    this.totalMaleUndecided = item.totalMaleUndecided;
+    this.totalFemaleYes = item.totalFemaleYes;
+    this.totalFemaleNo = item.totalFemaleNo;
+    this.totalFemaleUndecided = item.totalFemaleUndecided;
+    this.totalYoungAdult = item.totalYoungAdult;
+    this.totalEarlyAdult = item.totalEarlyAdult;
+    this.totalAdult = item.totalAdult;
+    this.totalMiddleAdult = item.totalMiddleAdult;
+    this.totalLateAdult = item.totalLateAdult;
+    this.totalSenior = item.totalSenior;
     })
   }
 

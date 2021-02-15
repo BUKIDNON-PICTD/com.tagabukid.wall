@@ -20,10 +20,10 @@
       <div class="col-lg-4 col-6">
         <div class="small-box bg-success">
           <div class="inner">
-            <h3>{{totalMaleYes}} males</h3>
-            <h3>{{totalFemaleYes}} females</h3>
+            <h3>YES</h3>
+            <h2 *ngIf="totalMaleYes <= 1">{{totalMaleYes}} male | {{totalFemaleYes}} female</h2>
+            <h2 *ngIf="totalMaleYes > 1">{{totalMaleYes}} males | {{totalFemaleYes}} females</h2>
             <p>{{(totalYes/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Said Yes</label>
           </div>
           <div class="icon">
             <i class="ion ion-thumbsup"></i>
@@ -33,10 +33,10 @@
       <div class="col-lg-4 col-6">
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3>{{totalMaleNo}} males</h3>
-            <h3>{{totalFemaleNo}} females</h3>
+            <h3>NO</h3>
+            <h2 *ngIf="totalMaleNo <= 1">{{totalMaleNo}} male | {{totalFemaleNo}} female</h2>
+            <h2 *ngIf="totalMaleNo > 1">{{totalMaleNo}} males | {{totalFemaleNo}} females</h2>
             <p>{{(totalNo/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Said No</label>
           </div>
           <div class="icon">
             <i class="ion ion-thumbsdown"></i>
@@ -46,10 +46,10 @@
       <div class="col-lg-4 col-6">
         <div class="small-box bg-info">
           <div class="inner">
-            <h3>{{totalMaleUndecided}} males</h3>
-            <h3>{{totalFemaleUndecided}} females</h3>
+            <h3>UNDECIDED</h3>
+            <h2 *ngIf="totalMaleUndecided <= 1">{{totalMaleUndecided}} male | {{totalFemaleUndecided}} female</h2>
+            <h2 *ngIf="totalMaleUndecided > 1">{{totalMaleUndecided}} males | {{totalFemaleUndecided}} females</h2>
             <p>{{(totalUndecided/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Was Undecided</label>
           </div>
           <div class="icon">
             <i class="ion ion-help"></i>
@@ -62,8 +62,8 @@
         <div class="small-box bg-primary">
           <div class="inner">
             <h3>{{totalYoungAdult}}</h3>
+            <label>YOUNG ADULT (ages 18 to 23)</label>
             <p>{{(totalYoungAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Total of respondents aging from 18 to 23</label>
           </div>
         </div>
       </div>
@@ -71,8 +71,8 @@
         <div class="small-box bg-primary">
           <div class="inner">
             <h3>{{totalEarlyAdult}}</h3>
+            <label>EARLY ADULT (ages 24 to 33)</label>
             <p>{{(totalEarlyAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Total of respondents aging from 24 to 33</label>
           </div>
         </div>
       </div>
@@ -80,8 +80,8 @@
         <div class="small-box bg-primary">
           <div class="inner">
             <h3>{{totalAdult}}</h3>
+            <label>ADULT (ages 34 to 43)</label>
             <p>{{(totalAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-            <label>Total of respondents aging from 34 to 43</label>
           </div>
         </div>
       </div>
@@ -91,8 +91,8 @@
           <div class="small-box bg-primary">
             <div class="inner">
               <h3>{{totalMiddleAdult}}</h3>
+              <label>MIDDLEAGE ADULT (ages 44 to 53)</label>
               <p>{{(totalMiddleAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-              <label>Total of respondents aging from 44 to 53</label>
             </div>
           </div>
         </div>
@@ -100,8 +100,8 @@
           <div class="small-box bg-primary">
             <div class="inner">
               <h3>{{totalLateAdult}}</h3>
+              <label>LATE ADULT (ages 54 to 59)</label>
               <p>{{(totalLateAdult/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-              <label>Total of respondents aging from 54 to 59</label>
             </div>
           </div>
         </div>
@@ -109,8 +109,8 @@
           <div class="small-box bg-primary">
             <div class="inner">
               <h3>{{totalSenior}}</h3>
+              <label>SENIOR (age 60 and above)</label>
               <p>{{(totalSenior/totalRespondents) * 100 | number:'1.0-1'}}% of total surveyed</p>
-              <label>Overall total of respondents aging 60 above</label>
             </div>
           </div>
         </div>
@@ -120,7 +120,8 @@
           <div class="small-box bg-secondary">
             <div class="inner">
               <h3>{{totalRespondents}}</h3>
-              <label>Total of respondents</label>
+              <p>{{totalYes}} Yes and {{totalNo}} No</p>
+              <label>Total of Respondents</label>
             </div>
           </div>
         </div>
