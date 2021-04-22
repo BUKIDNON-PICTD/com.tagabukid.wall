@@ -40,7 +40,7 @@ export class CoviddataService {
       "Content-Type": "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_summary&maxFeatures=50&outputFormat=application%2Fjson`;
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3Abukidnoncovid19_view_summary&maxFeatures=50&outputFormat=application%2Fjson`;
     return this.http
       .get<any>(apiurl, {
         headers: headers,
@@ -84,7 +84,7 @@ export class CoviddataService {
       "Content-Type": "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_by_municipality_summary&maxFeatures=50&outputFormat=application%2Fjson`;
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3Abukidnoncovid19_view_by_municipality_summary&maxFeatures=50&outputFormat=application%2Fjson`;
     return this.http
       .get<any>(apiurl, {
         headers: headers,
@@ -128,7 +128,7 @@ export class CoviddataService {
       "Content-Type": "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_agegroup_summary&maxFeatures=50&outputFormat=application%2Fjson&viewparams=MUNCITY:`;
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3Abukidnoncovid19_view_agegroup_summary&maxFeatures=50&outputFormat=application%2Fjson&viewparams=MUNCITY:`;
     return this.http
       .get<any>(apiurl, {
         headers: headers,
@@ -172,7 +172,7 @@ export class CoviddataService {
       "Content-Type": "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_agegroup_summary&maxFeatures=50&outputFormat=application%2Fjson`;
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3Abukidnoncovid19_view_agegroup_summary&maxFeatures=50&outputFormat=application%2Fjson`;
     apiurl += `&viewparams=MUNCITY:` + municipality;
     return this.http
       .get<any>(apiurl, {
@@ -217,7 +217,7 @@ export class CoviddataService {
       "Content-Type": "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_municipality_dashboard&outputFormat=application%2Fjson`;
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3Abukidnoncovid19_view_municipality_dashboard&outputFormat=application%2Fjson`;
     apiurl += `&viewparams=MUNCITY:` + municipality + `;STARTDATE:2020-04-01`;
     return this.http
       .get<any>(apiurl, {
@@ -283,7 +283,7 @@ export class CoviddataService {
       "Content-Type": "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view_municipality_dashboard&outputFormat=application%2Fjson`;
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3Abukidnoncovid19_view_municipality_dashboard&outputFormat=application%2Fjson`;
     apiurl += `&viewparams=MUNCITY:;STARTDATE:${latestdate}`;
 
     return this.http
@@ -329,7 +329,7 @@ export class CoviddataService {
       "Content-Type": "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3Abukidnoncovid19_view&outputFormat=application%2Fjson`;
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3Abukidnoncovid19_view&outputFormat=application%2Fjson`;
     return this.http
       .get<any>(apiurl, {
         headers: headers,

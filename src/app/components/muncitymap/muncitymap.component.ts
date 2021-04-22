@@ -168,11 +168,11 @@ export class MuncitymapComponent implements OnInit {
 
     this.covidcasessource = new ImageWMS({
       ratio: 1,
-      url: "https://geoserver.bukidnon.gov.ph/geoserver/pgb/wms",
+      url: "https://geoserver.bukidnon.gov.ph/geoserver/covid19/wms",
       params: {
         FORMAT: "image/png",
         VERSION: "1.1.1",
-        LAYERS: "pgb:bukidnoncovid19_view",
+        LAYERS: "covid19:bukidnoncovid19_view",
         exceptions: "application/vnd.ogc.se_inimage",
       },
     });

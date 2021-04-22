@@ -38,7 +38,7 @@ export class MapService {
       "Content-Type":  "application/json",
     });
 
-    let apiurl = `${environment.geoserver}/geoserver/pgb/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pgb%3AMunicipalBdry&maxFeatures=50&outputFormat=application%2Fjson`
+    let apiurl = `${environment.geoserver}/geoserver/covid19/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=covid19%3AMunicipalBdry&maxFeatures=50&outputFormat=application%2Fjson`
     return this.http.get<any>(apiurl, {
       headers: headers,
       withCredentials: true
