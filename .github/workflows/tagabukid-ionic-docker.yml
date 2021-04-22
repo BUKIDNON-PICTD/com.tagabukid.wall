@@ -1,0 +1,14 @@
+name: Tagabukid Covid19App Cloud Deployment
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout Code 
+      uses: actions/checkout@v2
+    - name: Run Docker Compose
+      run: docker-compose up --build -d
