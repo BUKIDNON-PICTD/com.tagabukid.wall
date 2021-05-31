@@ -25,7 +25,7 @@ import { PushnotificationService } from './services/pushnotification.service';
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 const config: SocketIoConfig = {
@@ -49,7 +49,8 @@ const config: SocketIoConfig = {
       enabled: environment.production
     }),
     SocketIoModule.forRoot(config),
-    FormsModule
+    FormsModule,
+    NgxDatatableModule
     // NgxQRCodeModule
   ],
   providers: [

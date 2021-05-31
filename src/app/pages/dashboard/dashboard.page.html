@@ -6,7 +6,11 @@
     <ion-title>Dashboard</ion-title>
     <ion-item slot="end" lines="none">
       <ion-label>Sync Dashboard</ion-label>
-      <ion-toggle color="primary" [(ngModel)]="sync" (ionChange)="updatesyncsettings()">
+      <ion-toggle
+        color="primary"
+        [(ngModel)]="sync"
+        (ionChange)="updatesyncsettings()"
+      >
       </ion-toggle>
     </ion-item>
   </ion-toolbar>
@@ -28,7 +32,10 @@
         <div class="small-box bg-danger">
           <div class="inner">
             <h3 [hidden]="!totalactive">{{totalactive}}</h3>
-            <p>Active Cases ({{(totalactive/totalconfirmed) * 100 | number:'1.0-1' }}%)</p>
+            <p>
+              Active Cases ({{(totalactive/totalconfirmed) * 100 |
+              number:'1.0-1' }}%)
+            </p>
             <label>{{totalactivetoday}} New Confirmed Cases Today</label>
           </div>
           <div class="icon">
@@ -43,7 +50,10 @@
         <div class="small-box bg-success">
           <div class="inner">
             <h3 [hidden]="!totalrecovered">{{totalrecovered}}</h3>
-            <p>Recovered ({{(totalrecovered/totalconfirmed) * 100 | number:'1.0-1' }}%)</p>
+            <p>
+              Recovered ({{(totalrecovered/totalconfirmed) * 100 |
+              number:'1.0-1' }}%)
+            </p>
             <label>{{totalrecoveredtoday}} New Recovered Cases Today</label>
           </div>
           <div class="icon">
@@ -57,7 +67,10 @@
         <div class="small-box bg-secondary">
           <div class="inner">
             <h3 [hidden]="!totaldeceased">{{totaldeceased}}</h3>
-            <p>Deceased ({{(totaldeceased/totalconfirmed) * 100 | number:'1.0-1' }}%)</p>
+            <p>
+              Deceased ({{(totaldeceased/totalconfirmed) * 100 | number:'1.0-1'
+              }}%)
+            </p>
             <label>{{totaldeceasedtoday}} Deceased Today</label>
           </div>
           <div class="icon">
@@ -183,7 +196,7 @@
         </div>
        </div> -->
       <div class="col-lg-8">
-        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card" style="position: relative; left: 0px; top: 0px">
           <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
@@ -191,18 +204,25 @@
             </ion-title>
           </div>
           <div class="card-body">
-            <div style="height:400px">
-              <div class="overlay" *ngIf="!barChartCanvasSummaryByMunicipality_loaded"><img
-                  src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart" /></div>
+            <div style="height: 400px">
+              <div
+                class="overlay"
+                *ngIf="!barChartCanvasSummaryByMunicipality_loaded"
+              >
+                <img
+                  src="https://i.imgur.com/fXUIBfi.gif"
+                  alt="Loading Chart"
+                />
+              </div>
               <canvas #barChartCanvasSummaryByMunicipality></canvas>
             </div>
           </div>
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card" style="position: relative; left: 0px; top: 0px">
           <div class="card-body">
-            <div style="height:450px; text-align: center;">
+            <div style="height: 450px; text-align: center">
               <app-muncovidpreview></app-muncovidpreview>
             </div>
           </div>
@@ -218,7 +238,64 @@
         </div>
        </div> -->
       <div class="col-lg-12">
-        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card" style="position: relative; left: 0px; top: 0px">
+          <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              AVERAGE DAILY ATTACK RATE (ADAR)
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="ion-padding">
+                <ngx-datatable
+                  class="dark"
+                  [limit]="22"
+                  [rows]="rows"
+                  [rowHeight]="50"
+                  [columns]="columns"
+                  [columnMode]="'force'"
+                  [sortType]="'multi'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [scrollbarH]="true"
+                >
+                  <!-- <ngx-datatable-column *ngFor="let column of columns; let i = index;" name="{{column.name}}"
+                    prop="{{column.prop}}" [width]="column.width">
+                   <ng-template let-value="value" let-row="row"  ngx-datatable-cell-template>
+                      {{(column.prop === 'createdAt' ) ? (row.createdAt | date) : value}}
+                   </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Actions" sortable="false" prop="id" width="250">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-success btn-sm" (click)="approve(value)">Approve</button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="disapprove(value)">Disapprove</button>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column> -->
+
+                  <ngx-datatable-column *ngFor="let column of columns; let i = index;" name="{{column.name}}" prop="{{column.prop}}" [width]="column.width">
+
+                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                      <span *ngIf="['averageincidentcases'].includes(column.prop); else attackrate" >{{value | number:'.2-2'}}</span> 
+                      <ng-template #attackrate>
+                        <span *ngIf="['attackrate'].includes(column.prop); else adar"  >{{value | number:'.2-2'}}</span>     
+                      </ng-template>   
+                      <ng-template #adar>   
+                        <div *ngIf="['adar'].includes(column.prop);else others" [ngClass]="{'LOW' : 'bg-success', 'MEDIUM'  : 'bg-warning', 'HIGH' : 'bg-danger'}[value]"><center><b>{{value}}</b></center></div>
+                      </ng-template>    
+                      <ng-template #others><div [innerHTML]="value"></div></ng-template>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px">
           <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
@@ -226,9 +303,13 @@
             </ion-title>
           </div>
           <div class="card-body">
-            <div style="height:400px;">
-              <div class="overlay" *ngIf="!barChartCanvasCaseSummary_loaded"><img src="https://i.imgur.com/fXUIBfi.gif"
-                  alt="Loading Chart" /></div>
+            <div style="height: 400px">
+              <div class="overlay" *ngIf="!barChartCanvasCaseSummary_loaded">
+                <img
+                  src="https://i.imgur.com/fXUIBfi.gif"
+                  alt="Loading Chart"
+                />
+              </div>
               <canvas #barChartCanvasCaseSummary></canvas>
             </div>
           </div>
@@ -250,7 +331,7 @@
         </div>
        </div> -->
       <div class="col-lg-12">
-        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card" style="position: relative; left: 0px; top: 0px">
           <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
@@ -258,16 +339,23 @@
             </ion-title>
           </div>
           <div class="card-body">
-            <div style="height:400px">
-              <div class="overlay" *ngIf="!barChartCanvasSummaryActiveCaseByGender_loaded"><img
-                  src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart" /></div>
+            <div style="height: 400px">
+              <div
+                class="overlay"
+                *ngIf="!barChartCanvasSummaryActiveCaseByGender_loaded"
+              >
+                <img
+                  src="https://i.imgur.com/fXUIBfi.gif"
+                  alt="Loading Chart"
+                />
+              </div>
               <canvas #barChartCanvasSummaryActiveCaseByGender></canvas>
             </div>
           </div>
         </div>
       </div>
       <div class="col-lg-12">
-        <div class="card" style="position: relative; left: 0px; top: 0px;">
+        <div class="card" style="position: relative; left: 0px; top: 0px">
           <div class="card-header">
             <ion-title class="card-title" color="primary">
               <i class="ion ion-stats-bars"></i>
@@ -275,9 +363,13 @@
             </ion-title>
           </div>
           <div class="card-body">
-            <div style="height:400px">
-              <div class="overlay" *ngIf="!barChartCanvasCaseByAgeGroup_loaded"><img
-                  src="https://i.imgur.com/fXUIBfi.gif" alt="Loading Chart" /></div>
+            <div style="height: 400px">
+              <div class="overlay" *ngIf="!barChartCanvasCaseByAgeGroup_loaded">
+                <img
+                  src="https://i.imgur.com/fXUIBfi.gif"
+                  alt="Loading Chart"
+                />
+              </div>
               <canvas #barChartCanvasCaseByAgeGroup></canvas>
             </div>
           </div>
@@ -285,5 +377,4 @@
       </div>
     </div>
   </div>
-
 </ion-content>

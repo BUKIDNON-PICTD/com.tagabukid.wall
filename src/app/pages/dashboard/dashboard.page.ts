@@ -47,6 +47,9 @@ export class DashboardPage implements OnInit {
   public totalconfirmed60abovemale: number;
   public totalconfirmed60abovefemale: number;
 
+  public columns: any;
+  public rows: any;
+
   //chart
   @ViewChild("barChartCanvasSummaryByMunicipality")
   barChartCanvasSummaryByMunicipality: ElementRef;
@@ -98,6 +101,23 @@ export class DashboardPage implements OnInit {
       // a2hs.promptIntercepted = false;
     });
     // A2HS - END
+
+
+    this.columns = [
+      { prop: 'municipality', name: "Municipality", width:100 },
+      { prop: 'totalcasesforpast2weeks', name: "Total Cases (past 2 weeks)", width:100  },
+      { prop: 'averageincidentcases', name: "Average Incident Cases", width:100  },
+      { prop: 'attackrate', name: "Attack Rate %", width:100  },
+      { prop: 'adar', name: "Average Daily Attack Rate" }
+    ];
+    this.loadrows();
+  }
+
+
+  loadrows(){
+    this.coviddatasvc.getADAR().then((items) => {
+      this.rows = items;
+    });
   }
 
   ngOnInit() {

@@ -579,6 +579,51 @@ export class CoviddataService {
       );
   }
 
+  getADAR(): Promise<any> {
+    return new Promise((resolve) => {
+      this.getADAR_online().subscribe((next) => {
+        this.storage.set("adar", next);
+        resolve(next);
+      }, (error) => {
+        this.storage.get("adar").then((items) => {
+          if (items) {
+            resolve(items);
+          }
+        });
+      });
+    });
+  }
+
+  getADAR_online(): Observable<any[]> {
+
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+    });
+
+    let apiurl = `${environment.panganud}/api/getadar`;
+
+    return this.http
+      .get<any>(apiurl, {
+        headers: headers
+      })
+      .pipe(
+        map((res) => res),
+        tap((res) => {
+          return res;
+        }),
+        catchError((e) => {
+          let toast = this.toastController.create({
+            message: `Unable to download data from the server.`,
+            duration: 3000,
+            position: "bottom",
+          });
+          toast.then((toast) => toast.present());
+          throw new Error(e);
+        })
+      );
+  }
+
+
   showAlert(msg) {
     let alert = this.alertController.create({
       message: msg,

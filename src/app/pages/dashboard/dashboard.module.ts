@@ -10,7 +10,7 @@ import { DashboardPage } from './dashboard.page';
 import { ChartsModule } from 'ng2-charts';
 import { A2hsModule } from 'src/app/modules/a2hs/a2hs.module';
 import { MuncovidpreviewModule } from 'src/app/modules/muncovidpreview/muncovidpreview.module';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +19,8 @@ import { MuncovidpreviewModule } from 'src/app/modules/muncovidpreview/muncovidp
     DashboardPageRoutingModule,
     ChartsModule,
     A2hsModule,
-    MuncovidpreviewModule
+    MuncovidpreviewModule,
+    NgxDatatableModule
 
   ],
   declarations: [
