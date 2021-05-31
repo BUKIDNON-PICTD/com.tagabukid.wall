@@ -8,7 +8,7 @@ import {
 import Map from "ol/Map";
 import View from "ol/View";
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
-import { ZoomSlider} from "ol/control";
+import { ZoomSlider } from "ol/control";
 import { Vector as VectorSource, XYZ } from "ol/source";
 import { Fill, Stroke, Style, Text } from "ol/style";
 import Projection from "ol/proj/Projection";
@@ -48,7 +48,7 @@ export class MuncovidpreviewComponent implements OnInit {
 
   create_UUID() {
     var dt = new Date().getTime();
-    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
+    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (
       c
     ) {
       var r = (dt + Math.random() * 16) % 16 | 0;
@@ -123,22 +123,20 @@ export class MuncovidpreviewComponent implements OnInit {
     // add barangay boundaries
     this.mapservice.MunicipalBdry().then(async (feature) => {
       await this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then((items) => {
-        items
-          .map((a) => a.properties["address_muncity"])
-          .forEach((muncity) => {
-            feature["features"] = feature["features"].map((a) => {
-              if (a.properties["mun_city"] === muncity) {
-                let muncityfeature = items.find(
-                  (a) => a.properties["address_muncity"] === muncity
-                );
-                a.properties["totalactive"] =
-                  muncityfeature.properties["totalactive"];
-                return a;
-              } else {
-                return a;
-              }
-            });
+        items.map((a) => a.address_muncity).forEach((muncity) => {
+          feature["features"] = feature["features"].map((fa) => {
+            
+            if (fa.properties["mun_city"].toUpperCase() === muncity.toUpperCase()) {
+              let muncityfeature = items.find(
+                (ma) => ma.address_muncity === muncity
+              );
+              fa.properties["totalactive"] = muncityfeature.totalactive;
+              return fa;
+            } else {
+              return fa;
+            }
           });
+        });
       });
       await this.muncitysource.addFeatures(new GeoJSON().readFeatures(feature));
       await this.muncityvector.setStyle((feature, resolution) => {
@@ -148,7 +146,7 @@ export class MuncovidpreviewComponent implements OnInit {
             feature.get("mun_city") + " - " + feature.get("totalactive")
           );
 
-        if (feature.get("totalactive") === 0){
+        if (feature.get("totalactive") === 0) {
           return muncitystylegreen;
         }
         return muncitystyle;

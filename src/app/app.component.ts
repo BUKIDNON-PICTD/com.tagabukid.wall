@@ -73,16 +73,16 @@ export class AppComponent implements OnInit {
       url: "qrloglist",
       icon: "list",
     },
-    {
-      title: "Vaccine Survey",
-      url: "vaccinesurvey",
-      icon: "medkit",
-    },
-    {
-      title: "Vaccine Dashboard",
-      url: "vaccinesurveydashboard",
-      icon: "bar-chart",
-    },
+    // {
+    //   title: "Vaccine Survey",
+    //   url: "vaccinesurvey",
+    //   icon: "medkit",
+    // },
+    // {
+    //   title: "Vaccine Dashboard",
+    //   url: "vaccinesurveydashboard",
+    //   icon: "bar-chart",
+    // },
     {
       title: "Reports",
       url: "reportlist",

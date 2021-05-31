@@ -70,14 +70,15 @@ const routes: Routes = [
   {
     path: 'reportlist',
     loadChildren: () => import('./reports/reportlist/reportlist.module').then( m => m.ReportlistPageModule)
-  },  {
-    path: 'vaccinesurvey',
-    loadChildren: () => import('./pages/vaccinesurvey/vaccinesurvey.module').then( m => m.VaccinesurveyPageModule)
-  },
-  {
-    path: 'vaccinesurveydashboard',
-    loadChildren: () => import('./pages/vaccinesurveydashboard/vaccinesurveydashboard.module').then( m => m.VaccinesurveydashboardPageModule)
   }
+  // {
+  //   path: 'vaccinesurvey',
+  //   loadChildren: () => import('./pages/vaccinesurvey/vaccinesurvey.module').then( m => m.VaccinesurveyPageModule)
+  // },
+  // {
+  //   path: 'vaccinesurveydashboard',
+  //   loadChildren: () => import('./pages/vaccinesurveydashboard/vaccinesurveydashboard.module').then( m => m.VaccinesurveydashboardPageModule)
+  // }
 
 ];
 

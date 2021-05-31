@@ -220,15 +220,15 @@ export class MuncitymapComponent implements OnInit {
     this.mapservice.MunicipalBdry().then(async (feature) => {
       await this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then((items) => {
         items
-          .map((a) => a.properties["address_muncity"])
+          .map((a) => a.address_muncity)
           .forEach((muncity) => {
             feature["features"] = feature["features"].map((a) => {
-              if (a.properties["mun_city"] === muncity) {
+              if (a.properties["mun_city"].toUpperCase() === muncity.toUpperCase()) {
                 let muncityfeature = items.find(
-                  (a) => a.properties["address_muncity"] === muncity
+                  (a) => a.address_muncity === muncity
                 );
                 a.properties["totalactive"] =
-                  muncityfeature.properties["totalactive"];
+                  muncityfeature.totalactive;
                 return a;
               } else {
                 return a;
