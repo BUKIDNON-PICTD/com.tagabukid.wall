@@ -283,7 +283,7 @@
                         <span *ngIf="['attackrate'].includes(column.prop); else adar"  >{{value | number:'.2-2'}}</span>     
                       </ng-template>   
                       <ng-template #adar>   
-                        <div *ngIf="['adar'].includes(column.prop);else others" [ngClass]="{'LOW' : 'bg-success', 'MEDIUM'  : 'bg-warning', 'HIGH' : 'bg-danger'}[value]"><center><b>{{value}}</b></center></div>
+                        <div *ngIf="['adar'].includes(column.prop);else others" [ngClass]="{'LOW' : 'bg-success', 'MEDIUM'  : 'bg-warning', 'HIGH' : 'bg-danger'}[value]"><b>{{value}}</b></div>
                       </ng-template>    
                       <ng-template #others><div [innerHTML]="value"></div></ng-template>
                     </ng-template>
