@@ -134,6 +134,51 @@ export class CoviddataService {
       );
   }
 
+  bukidnoncovid19_view_by_barangay_summary(municipality): Promise<any> {
+    return new Promise((resolve) => {
+      this.bukidnoncovid19_view_by_barangay_summary_online(municipality).subscribe((next) => {
+        this.storage.set("bukidnoncovid19_view_by_barangay_summary", next);
+        resolve(next);
+      }, (error) => {
+        this.storage.get("bukidnoncovid19_view_by_barangay_summary").then((items) => {
+          if (items) {
+            resolve(items);
+          }
+        });
+      });
+    });
+  }
+
+  bukidnoncovid19_view_by_barangay_summary_online(municipality): Observable<any[]> {
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+    });
+    let params = new HttpParams();
+    params = params.append('muncity', municipality);
+
+    let apiurl = `${environment.panganud}/api/bukidnoncovid19_view_by_barangay_summary`;
+    return this.http
+      .get<any>(apiurl, {
+        headers: headers,
+        params: params
+      })
+      .pipe(
+        map((res) => res),
+        tap((res) => {
+          return res;
+        }),
+        catchError((e) => {
+          let toast = this.toastController.create({
+            message: `Unable to download data from the server.`,
+            duration: 3000,
+            position: "bottom",
+          });
+          toast.then((toast) => toast.present());
+          throw new Error(e);
+        })
+      );
+  }
+
   bukidnoncovid19_view_by_municipality_summary_online_geoserver(): Observable<any[]> {
     let headers = new HttpHeaders({
       Authorization: "Basic " + btoa("covidviewer:covidviewer"),

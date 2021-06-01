@@ -46,13 +46,16 @@ export class MuncitydashboardPage implements OnInit {
   @ViewChild("barChartCaseSummary") barChartCaseSummary: ElementRef;
   @ViewChild("pieChartGenderSummary") pieChartGenderSummary: ElementRef;
   @ViewChild("barChartCanvasCaseByAgeGroup") barChartCanvasCaseByAgeGroup: ElementRef;
+  @ViewChild("barChartCanvasSummaryByBarangay")  barChartCanvasSummaryByBarangay: ElementRef;
   private barChart: Chart;
   private pieChart: Chart;
   private barChartCaseByAgeGroup: Chart;
-  
+  private barChartCaseByBarangay: Chart;
+
   public barChartCaseSummary_loaded: boolean;
   public pieChartGenderSummary_loaded: boolean;
   public barChartCanvasCaseByAgeGroup_loaded: boolean;
+  public barChartCanvasSummaryByBarangay_loaded: boolean;
   public timer: any;
   public countdown: any;
   sync: boolean;
@@ -114,11 +117,13 @@ export class MuncitydashboardPage implements OnInit {
     this.barChartCaseSummary_loaded =  false;
     this.pieChartGenderSummary_loaded =  false;
     this.barChartCanvasCaseByAgeGroup_loaded =  false;
+    this.barChartCanvasSummaryByBarangay_loaded = false;
     this.coviddatasvc.bukidnoncovid19_view_by_municipality_summary().then(async items => {
       this.pieChartGenderSummary_loaded = true;
       this.selectedMunicipalityData = items.filter(o => o.address_muncity === this.selectedMunicipality);
       await this.setmuncitydatavalues();
       await this.createbarchartdata();
+      await this.createbarchartsbarangay();
       await this.createpiechartdata();
       await this.updatesyncsettings();
     });
@@ -183,6 +188,90 @@ export class MuncitydashboardPage implements OnInit {
       }
     });
     this.pieChart.update();
+  }
+
+  async createbarchartsbarangay() {
+    await this.coviddatasvc
+      .bukidnoncovid19_view_by_barangay_summary(this.selectedMunicipality)
+      .then((items) => {
+        if (this.barChartCaseByBarangay != undefined){
+          this.barChartCaseByBarangay.destroy();
+        }
+        this.barChartCanvasSummaryByBarangay_loaded = true;
+        this.barChartCaseByBarangay = new Chart(
+          this.barChartCanvasSummaryByBarangay.nativeElement,
+          {
+            type: "horizontalBar",
+            data: {
+              labels: items.map((a) => a.barangay === null ? "BARANGAY NOT DEFIEND" : a.barangay),
+              datasets: [
+                {
+                  label: "Active Cases",
+                  data: items.map((a) => a.totalactive),
+                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+                  borderColor: "rgba(255,99,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Recovered",
+                  data: items.map((a) => a.totalrecovered),
+                  backgroundColor: "rgba(99, 255, 132, 0.2)",
+                  borderColor: "rgba(99,255,132,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Deceased",
+                  data: items.map((a) => a.totaldeceased),
+                  backgroundColor: "rgba(128,128,128, 0.2)",
+                  borderColor: "rgba(128,128,128,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Probable",
+                  data: items.map((a) => a.totalprobable),
+                  backgroundColor: "rgba(102, 16, 242, 0.2)",
+                  borderColor: "rgba(102, 16, 242,1)",
+                  borderWidth: 1,
+                },
+                {
+                  label: "Suspect",
+                  data: items.map((a) => a.totalsuspect),
+                  backgroundColor: "rgba(255, 193, 7, 0.2)",
+                  borderColor: "rgba(255, 193, 7,1)",
+                  borderWidth: 1,
+                },
+              ],
+            },
+            options: {
+              title: {
+                display: false,
+                text: "Covid Summary by Muincipality",
+              },
+              tooltips: {
+                mode: "index",
+                intersect: false,
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                xAxes: [
+                  {
+                    stacked: true,
+                    ticks: {
+                      stepSize: 1,
+                    },
+                  },
+                ],
+                yAxes: [
+                  {
+                    stacked: true,
+                  },
+                ],
+              },
+            },
+          }
+        );
+      });
   }
 
   async createbarchartdata(){
