@@ -227,8 +227,7 @@ export class MuncitymapComponent implements OnInit {
                 let muncityfeature = items.find(
                   (a) => a.address_muncity === muncity
                 );
-                a.properties["totalactive"] =
-                  muncityfeature.totalactive;
+                a.properties["totalactive"] = muncityfeature.totalactive;
                 return a;
               } else {
                 return a;
@@ -243,8 +242,8 @@ export class MuncitymapComponent implements OnInit {
           .setText(
             feature.get("mun_city") + " - " + feature.get("totalactive")
           );
-
-        if (feature.get("totalactive") === 0){
+        
+        if (feature.get("totalactive") === "0"){
           return muncitystylegreen;
         }  
         return muncitystyle;

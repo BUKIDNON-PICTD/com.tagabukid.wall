@@ -252,7 +252,6 @@
                   class="dark"
                   [limit]="22"
                   [rows]="rows"
-                  [rowHeight]="50"
                   [columns]="columns"
                   [columnMode]="'force'"
                   [sortType]="'multi'"
@@ -285,6 +284,42 @@
                       <ng-template #adar>   
                         <div *ngIf="['adar'].includes(column.prop);else others" [ngClass]="{'LOW' : 'bg-success', 'MEDIUM'  : 'bg-warning', 'HIGH' : 'bg-danger'}[value]"><b>{{value}}</b></div>
                       </ng-template>    
+                      <ng-template #others><div [innerHTML]="value"></div></ng-template>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="card" style="position: relative; left: 0px; top: 0px">
+          <div class="card-header">
+            <ion-title class="card-title" color="primary">
+              <i class="ion ion-stats-bars"></i>
+              TWO-WEEK GROWTH COMPARISON
+            </ion-title>
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="ion-padding">
+                <ngx-datatable
+                  class="dark"
+                  [limit]="22"
+                  [rows]="rowstwoweekgrowthrate"
+                  [columns]="columnstwoweekgrowthrate"
+                  [columnMode]="'force'"
+                  [sortType]="'multi'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [scrollbarH]="true"
+                >
+
+                  <ngx-datatable-column *ngFor="let column of columnstwoweekgrowthrate; let i = index;" name="{{column.name}}" prop="{{column.prop}}" [width]="column.width">
+
+                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                      <div *ngIf="['twoweekgrowthrate'].includes(column.prop);else others" [ngClass]="{'LOW' : 'bg-success', 'MEDIUM'  : 'bg-warning', 'HIGH' : 'bg-danger'}[value]"><b>{{value}}</b></div>
                       <ng-template #others><div [innerHTML]="value"></div></ng-template>
                     </ng-template>
                   </ngx-datatable-column>

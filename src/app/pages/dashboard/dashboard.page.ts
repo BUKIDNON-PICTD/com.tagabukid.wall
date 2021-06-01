@@ -15,6 +15,7 @@ import {
 } from "@ionic/angular";
 import { A2hsService } from "src/app/services/a2hs.service";
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 // Chart.defaults.global.legend.display = true;
 @Component({
   selector: "app-dashboard",
@@ -49,6 +50,9 @@ export class DashboardPage implements OnInit {
 
   public columns: any;
   public rows: any;
+  public columnstwoweekgrowthrate: any;
+  public rowstwoweekgrowthrate: any;
+
 
   //chart
   @ViewChild("barChartCanvasSummaryByMunicipality")
@@ -108,15 +112,29 @@ export class DashboardPage implements OnInit {
       { prop: 'totalcasesforpast2weeks', name: "Total Cases (past 2 weeks)", width:100  },
       { prop: 'averageincidentcases', name: "Average Incident Cases", width:100  },
       { prop: 'attackrate', name: "Attack Rate %", width:100  },
-      { prop: 'adar', name: "Average Daily Attack Rate" }
+      { prop: 'adar', name: "Risk" }
     ];
     this.loadrows();
+
+    this.columnstwoweekgrowthrate = [
+      { prop: 'municipality', name: "Municipality", width:100 },
+      { prop: 'totalcasesforpast2weeks2', name: moment().subtract(29, 'days').format("YYYY-MM-DD") + " to " + moment().subtract(15, 'days').format("YYYY-MM-DD"), width:200  },
+      { prop: 'totalcasesforpast2weeks1', name: moment().subtract(14, 'days').format("YYYY-MM-DD") + " to " + moment().format("YYYY-MM-DD"), width:200  },
+      { prop: 'twoweekgrowthrate', name: "Growth Rate %", width:100  }
+    ];
+    this.loadrowstwoweekgrowthrate();
   }
 
 
   loadrows(){
     this.coviddatasvc.getADAR().then((items) => {
       this.rows = items;
+    });
+  }
+
+  loadrowstwoweekgrowthrate(){
+    this.coviddatasvc.gettwoweekgrowthrate().then((items) => {
+      this.rowstwoweekgrowthrate = items;
     });
   }
 
