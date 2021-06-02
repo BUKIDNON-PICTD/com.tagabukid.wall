@@ -252,7 +252,7 @@ export class MuncitydashboardPage implements OnInit {
                 intersect: false,
               },
               responsive: true,
-              maintainAspectRatio: false,
+              maintainAspectRatio: true,
               scales: {
                 xAxes: [
                   {
