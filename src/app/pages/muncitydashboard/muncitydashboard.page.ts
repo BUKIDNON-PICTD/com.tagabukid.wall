@@ -112,6 +112,7 @@ export class MuncitydashboardPage implements OnInit {
       this.barChart.destroy();
       this.pieChart.destroy();
       this.barChartCaseByAgeGroup.destroy();
+      this.barChartCaseByBarangay.destroy();
     }
     this.currentdatetime = new Date().toLocaleString();
     this.barChartCaseSummary_loaded =  false;
