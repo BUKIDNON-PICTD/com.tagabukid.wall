@@ -369,7 +369,6 @@ export class CoviddataService {
 
   bukidnoncovid19_view_municipality_dashboard_online(municipality): Observable<any[]> {
     let headers = new HttpHeaders({
-      Authorization: "Basic " + btoa("covidviewer:covidviewer"),
       "Content-Type": "application/json",
     });
     var today = new Date();
@@ -406,6 +405,7 @@ export class CoviddataService {
         })
       );
   }
+
 
   bukidnoncovid19_view_municipality_dashboard_online_geoserver(municipality): Observable<any[]> {
     let headers = new HttpHeaders({
@@ -524,7 +524,7 @@ export class CoviddataService {
     params = params.append('enddate', enddate);
 
 
-    let apiurl = `${environment.panganud}/api/bukidnoncovid19_view_municipality_dashboard`;
+    let apiurl = `${environment.panganud}/api/bukidnoncovid19_view_province_dashboard`;
 
     return this.http
       .get<any>(apiurl, {
