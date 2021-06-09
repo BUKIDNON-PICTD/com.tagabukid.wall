@@ -70,7 +70,12 @@ const routes: Routes = [
   {
     path: 'reportlist',
     loadChildren: () => import('./reports/reportlist/reportlist.module').then( m => m.ReportlistPageModule)
+  },
+  {
+    path: 'prevac',
+    loadChildren: () => import('./pages/prevac/prevac.module').then( m => m.PrevacPageModule)
   }
+
   // {
   //   path: 'vaccinesurvey',
   //   loadChildren: () => import('./pages/vaccinesurvey/vaccinesurvey.module').then( m => m.VaccinesurveyPageModule)

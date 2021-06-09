@@ -32,6 +32,11 @@ export class AppComponent implements OnInit {
       url: "muncitydashboard",
       icon: "bar-chart",
     },
+    {
+      title: "Pre Vaccination Registration",
+      url: "prevac",
+      icon: "bandage",
+    },
     // ,
     // {
     //   title: 'PICTD Map Portal',
