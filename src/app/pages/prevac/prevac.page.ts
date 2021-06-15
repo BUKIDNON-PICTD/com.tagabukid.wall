@@ -602,7 +602,7 @@ export class PrevacPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Success',
       subHeader: 'Registration Confirmed',
-      message: 'Your vaccine schedule is at ' + moment(scheddate).format('dddd, MMMM DD, YYYY')  + '. Vaccination will start at 8 AM to 5 PM. Thank you!',
+      message: 'Your vaccine schedule is at ' + moment(scheddate).format('dddd, MMMM DD, YYYY')  + '. Vaccination will start at 8 AM to 2 PM. Thank you!',
       buttons: [
         {
           text: 'Okay',
