@@ -61,30 +61,18 @@ export class PrevacPage implements OnInit {
     private prevacsvc: PrevacService,
     private alertController: AlertController
   ) {
-    this.allowcreate = false;
-    this.allowexceed = false;
+    // this.allowcreate = false;
+    // this.allowexceed = false;
    
 
     this.platform.ready().then(source => {
-      this.qrcodesvc.getItems().then(items => {
         if (this.platform.is("android")) {
-          this.allowexceed = false;
+          // this.allowexceed = false;
         } else if (this.platform.is("ios")) {
-          this.allowexceed = false;
+          // this.allowexceed = false;
         } else {
-          this.allowexceed = true;
+          // this.allowexceed = true;
         }
-
-        if (!items){
-          this.allowcreate = true;
-        } else {
-          if (items.length <= 9 || this.allowexceed){
-            this.allowcreate = true;
-          }
-        }
-      });
-
-   
     });
 
     this.personInformationForm = this.formBuilder.group({
@@ -385,7 +373,6 @@ export class PrevacPage implements OnInit {
   ngOnInit() {
     this.mode = "create";
     this.matches = [];
-   
   }
 
   next() {
@@ -495,40 +482,40 @@ export class PrevacPage implements OnInit {
 
   async ionViewDidEnter() {
     this.viewEntered = true;
-    
-    const objid = this.route.snapshot.paramMap.get("objid");
+    this.personInformationForm.reset(this.personInformationForm.value);
+    // const objid = this.route.snapshot.paramMap.get("objid");
     this.defaultHref =
-      `/qrprofilelist`;
-    if (objid) {
-      this.mode = "edit";
-      await this.qrcodesvc.getItem(objid).then(async item => {
-        // console.log(JSON.stringify(item));
-        await this.personInformationForm.patchValue(item);
-        await this.getMunicipalities().subscribe(result => {
-          this.municipalities = result['RECORDS'].filter(o => o.parentid === item.address.province.code);
-          this.municipalities = this.municipalities.sort((a, b) =>
-            a.lguname > b.lguname ? 1 : -1
-          );
-          this.personInformationForm.patchValue({
-            municipality: { code: item.address.municipality.code}
-          });
-        });
-        await this.getBarangays().subscribe(result => {
-          this.barangays = result['RECORDS'].filter(o => o.parentid === item.address.municipality.code);
-          this.barangays = this.barangays.sort((a, b) =>
-            a.lguname > b.lguname ? 1 : -1
-          );
-          this.personInformationForm.patchValue({
-            barangay: { code: item.address.barangay.code}
-          });
-        });
+      `/dashboard`;
+    // if (objid) {
+    //   this.mode = "edit";
+    //   await this.qrcodesvc.getItem(objid).then(async item => {
+    //     // console.log(JSON.stringify(item));
+    //     await this.personInformationForm.patchValue(item);
+    //     await this.getMunicipalities().subscribe(result => {
+    //       this.municipalities = result['RECORDS'].filter(o => o.parentid === item.address.province.code);
+    //       this.municipalities = this.municipalities.sort((a, b) =>
+    //         a.lguname > b.lguname ? 1 : -1
+    //       );
+    //       this.personInformationForm.patchValue({
+    //         municipality: { code: item.address.municipality.code}
+    //       });
+    //     });
+    //     await this.getBarangays().subscribe(result => {
+    //       this.barangays = result['RECORDS'].filter(o => o.parentid === item.address.municipality.code);
+    //       this.barangays = this.barangays.sort((a, b) =>
+    //         a.lguname > b.lguname ? 1 : -1
+    //       );
+    //       this.personInformationForm.patchValue({
+    //         barangay: { code: item.address.barangay.code}
+    //       });
+    //     });
 
-        await this.personInformationForm.patchValue(item.address);
+    //     await this.personInformationForm.patchValue(item.address);
         
-        this.person = item;
-        this.photo = item.photo;
-      });
-    }
+    //     this.person = item;
+    //     this.photo = item.photo;
+    //   });
+    // }
   }
 
   saveprofile() {

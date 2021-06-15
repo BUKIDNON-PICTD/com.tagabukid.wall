@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar *ngIf="viewEntered && allowcreate">
+  <ion-toolbar >
     <ion-title>Pre-Vaccination Registration -
       {{personInformationForm.get('lastname').value + ', ' + personInformationForm.get('firstname').value + ' ' + personInformationForm.get('middlename').value}}
     </ion-title>
@@ -19,11 +19,11 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar *ngIf="!allowcreate">
+  <!-- <ion-toolbar *ngIf="!allowcreate">
     <ion-title>QR LIMIT EXCEEDED</ion-title>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
-<ion-content class="ion-padding" *ngIf="viewEntered && allowcreate">
+<ion-content class="ion-padding" >
   <ion-slides #personProfileSlider pager='true' (ionSlideWillChange)="slideChanged()" (ionSlidesDidLoad)="slideLoad()">
     <ion-slide>
       <form [formGroup]="personInformationForm">
