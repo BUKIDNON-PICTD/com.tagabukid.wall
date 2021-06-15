@@ -76,6 +76,20 @@ export class PrevacPage implements OnInit {
     });
 
     this.personInformationForm = this.formBuilder.group({
+      vaccinationfacility: [
+        "",
+        Validators.compose([
+          Validators.maxLength(100),
+          Validators.required
+        ])
+      ], 
+      prioritygroup: [
+        "",
+        Validators.compose([
+          Validators.maxLength(100),
+          Validators.required
+        ])
+      ], 
       lastname: [
         "",
         Validators.compose([
@@ -141,6 +155,20 @@ export class PrevacPage implements OnInit {
     });
    
     this.validation_messages = {
+      vaccinationfacility: [
+        { type: "required", message: "Vaccination Facility is required." },
+        {
+          type: "maxlength",
+          message: "Vaccination Facility cannot be more than 100 characters long."
+        },
+        {
+          type: "pattern",
+          message: "Vaccination Facility must contain only letters."
+        }
+      ],
+      prioritygroup: [
+        { type: "required", message: "Priority Group is required." }
+      ],
       lastname: [
         { type: "required", message: "Last Name is required." },
         {

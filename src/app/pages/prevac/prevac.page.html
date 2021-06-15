@@ -27,6 +27,44 @@
   <ion-slides #personProfileSlider pager='true' (ionSlideWillChange)="slideChanged()" (ionSlidesDidLoad)="slideLoad()">
     <ion-slide>
       <form [formGroup]="personInformationForm">
+        <ion-toolbar color="primary">
+          <nav class="navbar navbar-expand navbar-primary navbar-dark">
+            <ion-title>Vaccination Facility</ion-title>
+          </nav>
+        </ion-toolbar>
+        <ion-item>
+          <ion-label position="floating">Select Vaccination Facility</ion-label>
+          <ion-select placeholder="Select One" formControlName="vaccinationfacility">
+            <ion-select-option value="MALAYBALAY CITY">MALAYBALAY CITY</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngFor="let validation of validation_messages.vaccinationfacility">
+          <ng-container
+            *ngIf="(isSubmitted && personInformationForm.get('vaccinationfacility')?.hasError(validation.type)) || (personInformationForm.get('vaccinationfacility')?.hasError(validation.type) && (personInformationForm.get('vaccinationfacility')?.dirty || personInformationForm.get('vaccinationfacility')?.touched))">
+            <small class="text-danger">{{ validation.message }}</small>
+          </ng-container>
+        </div>
+       
+        <ion-toolbar color="primary">
+          <nav class="navbar navbar-expand navbar-primary navbar-dark">
+            <ion-title>Priority Group</ion-title>
+          </nav>
+        </ion-toolbar>
+        <ion-item>
+          <ion-label position="floating">Priority Group</ion-label>
+          <ion-select placeholder="Select One" formControlName="prioritygroup">
+            <ion-select-option value="A1">A1</ion-select-option>
+            <ion-select-option value="A2">A2</ion-select-option>
+            <ion-select-option value="A3">A3</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngFor="let validation of validation_messages.prioritygroup">
+          <ng-container
+            *ngIf="(isSubmitted && personInformationForm.get('prioritygroup')?.hasError(validation.type)) || (personInformationForm.get('prioritygroup')?.hasError(validation.type) && (personInformationForm.get('prioritygroup')?.dirty || personInformationForm.get('prioritygroup')?.touched))">
+            <small class="text-danger">{{ validation.message }}</small>
+          </ng-container>
+        </div>
+
         <!-- {{personInformationForm.value | json}} -->
         <ion-toolbar color="primary">
           <nav class="navbar navbar-expand navbar-primary navbar-dark">
